@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from "react";
 
+
+// page imports
+import Home from "./pages/Home/home";
+
+
 export default function App() {
 
-  return <h1>hola mundo</h1>
+  return <Home/>
 }
+
+
+

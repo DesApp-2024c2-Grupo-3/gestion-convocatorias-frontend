@@ -1,0 +1,32 @@
+
+.container-fluid {
+    margin: 0;
+    padding: 0;
+}
+
+
+.row-principal {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 100vh;
+}
+
+.col-sidebar {
+    max-width: 20%;
+}
+
+.col-home {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+h2 {
+    color: gray;
+}
+
+.col-home .btn-convocatoria {
+    width: 40%;
+}
