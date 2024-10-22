@@ -2,7 +2,7 @@ import React from 'react';
 
 import Sidebar from '../../components/sidebar/sidebar';
 import './home.css'
-import ButtonConvocatoria from '../../components/button-convocatoria/ButtonConvocatoria';
+import ButtonConvocatoria from '../../components/button-convocatoria/Button';
 import Convocatoria from '../../components/convocatoria/Convocatoria'
 import UserDropdown from '../../components/UserDropdropdown/UserDropdown';
 
@@ -34,7 +34,11 @@ const Home = () => {
     ) : (
         <>
             <h2>No hay convocatorias en curso</h2>
-            <ButtonConvocatoria nombre='Nueva Convocatoria' />
+            <ButtonConvocatoria 
+                className='btn-convocatoria'
+                nombre='Nueva Convocatoria'
+                iconoDelBoton={<i className="bi bi-plus"></i>} 
+            />
         </>
     );
 
