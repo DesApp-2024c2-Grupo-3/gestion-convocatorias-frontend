@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
+import Home from "./pages/Home/Home";
 
 
 // page imports
-import Home from "./pages/Home/home";
+
 
 
 export default function App() {
 
-  return <Home/>
+  return <Home />
 }
 
 

@@ -3,22 +3,31 @@ import React from 'react';
 import Sidebar from '../../components/sidebar/sidebar';
 import './home.css'
 import ButtonConvocatoria from '../../components/button-convocatoria/ButtonConvocatoria';
-import Convocatoria from '../../components/Convocatoria'
+import Convocatoria from '../../components/convocatoria/Convocatoria'
 
 
 const Home = () => {
 
     const listConvocatorias = [
-        {nombre:'Convocatoria 1'},
-        {nombre:'Convocatoria 2'},
-        {nombre: 'Convocatoria 3'}
+        {
+            "titulo": "Convocatoria 1",
+            "descripcion": "descripcion de Convocatoria 1",
+            "fechaFin": "1-02-2024"
+        },
+        {
+            "titulo": "Convocatoria 2",
+            "descripcion": "descripcion de Convocatoria 2",
+            "fechaFin": "2024-02-01"
+        }
     ];
 
     const convocatorias = listConvocatorias.length ? ( 
             listConvocatorias.map((convoc, index) => (
                 <Convocatoria 
                 key={index}
-                nombre={convoc.nombre}
+                titulo={convoc.titulo}
+                descripcion={convoc.descripcion}
+                fechaFin={new Date(convoc.fechaFin)}
                 /> 
             ))
     ) : (
