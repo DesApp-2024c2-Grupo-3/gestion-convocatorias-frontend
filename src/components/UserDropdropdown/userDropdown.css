@@ -1,0 +1,9 @@
+.user-dropdown {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+#dropdown-basic i {
+    color:#56A42C
+}

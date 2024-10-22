@@ -4,6 +4,7 @@ import Sidebar from '../../components/sidebar/sidebar';
 import './home.css'
 import ButtonConvocatoria from '../../components/button-convocatoria/ButtonConvocatoria';
 import Convocatoria from '../../components/convocatoria/Convocatoria'
+import UserDropdown from '../../components/UserDropdropdown/UserDropdown';
 
 
 const Home = () => {
@@ -48,6 +49,7 @@ const Home = () => {
 
                 {/* col home */}
                 <div className='col col-home'>
+                    <UserDropdown />
                     {convocatorias}
                 </div>
             </div>
