@@ -1,5 +1,6 @@
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { useNavigate } from 'react-router-dom';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 import Logo from './Logo';
 import { colors } from '@mui/material';
 
@@ -15,8 +16,7 @@ const inputStyle = {
 };
 
 const containerShadowStyle = {
-  
-  
+
   margin: '0',  
   padding: '0',  // sacar relleno
 };
@@ -29,6 +29,12 @@ const columnStyle = {
 
 
 const Login = () => {
+  const navigate = useNavigate();
+
+  const ingresarLogin = () => {
+    navigate('/');
+  };
+
   return (
     <div className="container-fluid vh-100">
       <div className="row">
@@ -39,7 +45,7 @@ const Login = () => {
       </div>
 
       <div className="row d-flex justify-content-center align-items-center">
-        <div className="row w-100" style={{ maxWidth: '1100px', ...containerShadowStyle }}>
+        <div className="row" style={{ maxWidth: '1100', ...containerShadowStyle }}>
           {/* Columna izquierda (verde) */}
           <div className="col-md-6 bg-success text-white d-flex flex-column justify-content-center align-items-center p-5" style={{ ...columnStyle, minHeight: '75vh', borderRadius: '5px 0 0 5px' }}>
             <h3 style={userContraStyle}>Iniciar sesión</h3>
@@ -48,7 +54,7 @@ const Login = () => {
           </div>
           {/* Columna derecha (form) */}
           <div className="col-md-6 p-4 d-flex flex-column justify-content-center" style={{ ...columnStyle, minHeight: '75vh', border: '1px solid', borderRadius: '0 5px 5px 0' }}>
-            <form>
+            <form onSubmit={ingresarLogin}> {/* manejar el evento de envío */}
               <div className="mb-3">
                 <label htmlFor="usuario" className="form-label" style={{fontSize: '28px'}}>Usuario</label>
                 <input type="text" className="form-control" id="usuario" style={inputStyle} />

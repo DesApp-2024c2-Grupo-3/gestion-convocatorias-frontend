@@ -1,7 +1,7 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from '../button-convocatoria/Button'
-import './convocatoria.css'
+import '/src/components/convocatoria/convocatoria.css'
 
 interface Props {
     titulo:string;

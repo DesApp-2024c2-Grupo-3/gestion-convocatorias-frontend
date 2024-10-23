@@ -8,6 +8,7 @@ interface Props {
     iconoDelBoton?: React.ReactNode;
 }
 
+
 const ButtonConvocatoria: React.FC<Props> = ({nombre, className, iconoDelBoton}) => {
     return <Button variant="primary" className={className}>{nombre} {iconoDelBoton}</Button>
 }

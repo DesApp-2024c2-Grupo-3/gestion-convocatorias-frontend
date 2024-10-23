@@ -1,5 +1,4 @@
 import React from 'react';
-
 import Sidebar from '../../components/sidebar/sidebar';
 import './home.css'
 import ButtonConvocatoria from '../../components/button-convocatoria/Button';

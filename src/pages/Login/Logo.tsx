@@ -1,5 +1,5 @@
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
+//import 'bootstrap/dist/css/bootstrap.min.css';
 import logoUnahur from '../../assets/Unahur_logo2.png';  
 
 const Logo = () => {
