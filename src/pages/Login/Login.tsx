@@ -33,6 +33,7 @@ const Login = () => {
     <div className="container-fluid vh-100">
       <div className="row">
         <div className="col-12 mt-3">
+          <div className="col-12 mt-3"></div>
            <Logo/>
         </div>
       </div>
