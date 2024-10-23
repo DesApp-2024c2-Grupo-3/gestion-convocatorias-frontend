@@ -12,13 +12,36 @@ const Home = () => {
     const listConvocatorias = [
         {
             "titulo": "Convocatoria 1",
-            "descripcion": "descripcion de Convocatoria 1",
+            "descripcion": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi iusto tempora ipsa deleniti quo sed dolore nostrum blanditiis aspernatur doloremque quos cupiditate omnis, unde beatae esse dolorem numquam odio quibusdam!",
             "fechaFin": "1-02-2024"
-        },
-        {
-            "titulo": "Convocatoria 2",
-            "descripcion": "descripcion de Convocatoria 2",
-            "fechaFin": "2024-02-01"
+        },{
+            "titulo": "Convocatoria 1",
+            "descripcion": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi iusto tempora ipsa deleniti quo sed dolore nostrum blanditiis aspernatur doloremque quos cupiditate omnis, unde beatae esse dolorem numquam odio quibusdam!",
+            "fechaFin": "1-02-2024"
+        },{
+            "titulo": "Convocatoria 1",
+            "descripcion": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi iusto tempora ipsa deleniti quo sed dolore nostrum blanditiis aspernatur doloremque quos cupiditate omnis, unde beatae esse dolorem numquam odio quibusdam!",
+            "fechaFin": "1-02-2024"
+        },{
+            "titulo": "Convocatoria 1",
+            "descripcion": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi iusto tempora ipsa deleniti quo sed dolore nostrum blanditiis aspernatur doloremque quos cupiditate omnis, unde beatae esse dolorem numquam odio quibusdam!",
+            "fechaFin": "1-02-2024"
+        },{
+            "titulo": "Convocatoria 1",
+            "descripcion": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi iusto tempora ipsa deleniti quo sed dolore nostrum blanditiis aspernatur doloremque quos cupiditate omnis, unde beatae esse dolorem numquam odio quibusdam!",
+            "fechaFin": "1-02-2024"
+        },{
+            "titulo": "Convocatoria 1",
+            "descripcion": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi iusto tempora ipsa deleniti quo sed dolore nostrum blanditiis aspernatur doloremque quos cupiditate omnis, unde beatae esse dolorem numquam odio quibusdam!",
+            "fechaFin": "1-02-2024"
+        },{
+            "titulo": "Convocatoria 1",
+            "descripcion": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi iusto tempora ipsa deleniti quo sed dolore nostrum blanditiis aspernatur doloremque quos cupiditate omnis, unde beatae esse dolorem numquam odio quibusdam!",
+            "fechaFin": "1-02-2024"
+        },{
+            "titulo": "Convocatoria 1",
+            "descripcion": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi iusto tempora ipsa deleniti quo sed dolore nostrum blanditiis aspernatur doloremque quos cupiditate omnis, unde beatae esse dolorem numquam odio quibusdam!",
+            "fechaFin": "1-02-2024"
         }
     ];
 
@@ -33,13 +56,14 @@ const Home = () => {
             ))
     ) : (
         <>
-            <h2>No hay convocatorias en curso</h2>
-            <ButtonConvocatoria 
-                className='btn-convocatoria'
-                nombre='Nueva Convocatoria'
-                iconoDelBoton={<i className="bi bi-plus"></i>} 
-            />
-        </>
+            <div className='sin-convocatoria'>
+                <h2>No hay convocatorias en curso</h2>
+                    <ButtonConvocatoria 
+                        className='btn-convocatoria'
+                        nombre='Nueva Convocatoria'
+                        iconoDelBoton={<i className="bi bi-plus"></i>} />
+            </div>
+        </>    
     );
 
     return (
@@ -53,8 +77,15 @@ const Home = () => {
 
                 {/* col home */}
                 <div className='col col-home'>
-                    <UserDropdown />
-                    {convocatorias}
+                    <div className='userDrop'>
+                        <UserDropdown />
+                    </div>
+
+                    <div className='convocatorias'>
+                        {convocatorias}
+                    </div>
+                    
+                    
                 </div>
             </div>
         </div>

@@ -1,5 +1,7 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
+import Button from '../button-convocatoria/Button'
+import './convocatoria.css'
 
 interface Props {
     titulo:string;
@@ -8,10 +10,10 @@ interface Props {
 }
 
 
-const Convocatoria: React.FC<Props> = ({titulo, descripcion, fechaFin}) => {
+const Convocatoria = ({titulo, descripcion, fechaFin}: Props): JSX.Element => {
     return (
-        <Card style={{ width: '18rem' }}>
-            <Card.Body>
+        <Card className='card-convocatoria'>
+            <Card.Body className='card-body'>
                 <Card.Title>{titulo}</Card.Title>
                 <Card.Text>
                     {descripcion}
@@ -19,7 +21,10 @@ const Convocatoria: React.FC<Props> = ({titulo, descripcion, fechaFin}) => {
                 <Card.Subtitle>
                     Inscripcion hasta: {fechaFin.toLocaleDateString()}
                 </Card.Subtitle>
-                <Card.Link href="#">Card Link</Card.Link>
+                <div className='btn-card-convocatoria'>
+                    <Button className='btn-inscribirse btn-prueba' nombre='Ver más' />
+                </div>
+                
             </Card.Body>
         </Card>
     )

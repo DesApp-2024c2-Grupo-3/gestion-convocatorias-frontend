@@ -8,7 +8,7 @@
     width: 90%;
     border: none;
     align-items: center;
-    box-shadow: 0px 0px 3px 1px rgb(0.1 0.1 0.1);
+    box-shadow:  0px 1px rgb(0.1 0.1 0.1);
     color: #ffff;
 }
 
@@ -18,5 +18,22 @@
 }
 
 .btn-convocatoria i {
-    margin: 0 1em;
+    margin: 0;
 }
+
+.btn-inscribirse {
+    display: flex;
+    width: 25%;
+    border-radius: 15px;
+    justify-content: center;
+    margin-top: 1em;
+    background-color: #15b6df;
+    box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.421);
+}
+
+
+.btn-inscribirse:hover {
+    background-color: #1193b3 !important;
+    
+}
+
