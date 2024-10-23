@@ -1,6 +1,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Logo from './Logo';
+import { colors } from '@mui/material';
 
 const userContraStyle = {
   fontSize: '28px'
@@ -26,11 +27,12 @@ const columnStyle = {
   boxShadow: '0 8px 16px rgba(0, 0, 0, 0.2)',  
 };
 
+
 const Login = () => {
   return (
     <div className="container-fluid vh-100">
       <div className="row">
-        <div className="col-12">
+        <div className="col-12 mt-3">
            <Logo/>
         </div>
       </div>

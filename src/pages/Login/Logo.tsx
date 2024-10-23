@@ -7,7 +7,7 @@ const Logo = () => {
     <img 
       src={logoUnahur} 
       alt="Logo Universidad Nacional de Hurlingham" 
-      style={{ height: '150px', marginBottom: '20px' }}
+      style={{ height: '70px', marginBottom: '4em'}}
     />
   );
 };
