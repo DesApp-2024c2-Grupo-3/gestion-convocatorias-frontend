@@ -9,6 +9,7 @@ const UserDropdown = () => {
     const navigateLogin = () =>{
         navigate('/Login')
     }
+   
     return (
         <Dropdown className='user-dropdown'>
             <Dropdown.Toggle variant='succes' id='dropdown-basic'>
@@ -16,9 +17,7 @@ const UserDropdown = () => {
                 Usuario
             </Dropdown.Toggle>
             <Dropdown.Menu>
-                <Dropdown.Item onClick={navigateLogin}>Iniciar sesion</Dropdown.Item>
-                <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-                <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+                <Dropdown.Item  onClick={navigateLogin}>Cerrar Sesion</Dropdown.Item>
             </Dropdown.Menu>
         </Dropdown>
     ); 
