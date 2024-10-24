@@ -9,6 +9,7 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 //
 import Home from "./pages/Home/home";
 import Login from "./pages/Login/Login";
+import { ConvocatoriasRoutes } from "./routers/ConvocatoriasRoutes";
 
 
 
@@ -19,12 +20,7 @@ import Login from "./pages/Login/Login";
 export default function App() {
 
   return (
-      <Router>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/Login" element={<Login />} />
-        </Routes>
-      </Router>
+      <ConvocatoriasRoutes/>
   );
     
 }

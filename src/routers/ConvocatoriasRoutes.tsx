@@ -6,10 +6,12 @@ import Home from "../pages/Home/home";
 export const ConvocatoriasRoutes = () => {
     return (
       <>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/home" element={<Login />} />
-        </Routes>
+        <Router>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/Login" element={<Login />} />
+          </Routes>
+        </Router>
       </>
     );
 }
