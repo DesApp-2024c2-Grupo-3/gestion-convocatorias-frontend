@@ -13,12 +13,14 @@ const FormInformacionGeneral  = () => {
         console.log(data)
     }
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <InputForm name="titulo" control={control} label="Titulo" type="text" error={errors.titulo} />
+        <form onSubmit={handleSubmit(onSubmit)} className="form-conv">
+            <h2>Nueva Convocatoria</h2>
+            
+            <InputForm name="titulo"  control={control} label="Titulo" type="text" error={errors.titulo} />
             <InputForm name="descripcion" control={control} label="Descripcion" type="text" error={errors.descripcion} />
             <InputForm name="fechaInicio" control={control} label="fechaInicio" type="datetime-local" error={errors.fechaInicio} />
             <InputForm name="fechaFin" control={control} label="fechaFin" type="datetime-local" error={errors.fechaFin} />
-            <button type="submit">Siguiente</button>
+            <button type="submit" className="form-button">Siguiente</button>
         </form>
     )
 }

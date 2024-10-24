@@ -11,7 +11,7 @@ interface Props {
 
 const InputForm = ({name, control, label, type, error}: Props) => {
     return (
-        <div className="form-group">
+        <div className="form-group-conv">
             <label htmlFor={name}>{label}</label>
             <Controller
                 name={name}

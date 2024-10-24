@@ -1,5 +1,5 @@
 
-.container-fluid {
+.container-form {
     display: flex;
     justify-content: start;
     width: 100%;
@@ -9,30 +9,32 @@
 }
 
 
-.row-principal {
+.row-form {
     display: flex;
-    justify-content: start;
+    justify-content: center;
     flex-direction: row;
-    max-width: 100%;
+    width: 100%;
     height: 100vh;
     margin: 0;
     padding: 0;
+    
 }
 
-.col-sidebar {
+.col-sidebar-form {
     display: flex;
     min-height: 100vh;
     max-width: 20% !important;
     margin: 0;
     padding: 0;
     position: relative;
+  
     
 }
 
 
-.col-home {
+.col-home-form {
     display: flex;
-    justify-content: center;
+    align-items: center;
     flex-direction: column;
     width: 100%;
     margin: 0;
@@ -50,11 +52,10 @@ h2 {
 }
 
 
-
 .userDrop {
     display: flex;
     justify-content: end;
-    height: 70px;
+    height: 80px;
     padding: 0;
     margin: 0;
     border-bottom: 2px solid #56A42C;
@@ -62,23 +63,63 @@ h2 {
     
 }   
 
-.convocatorias {
+
+
+.col-form{
     display: flex;
     justify-content: center;
-    flex-direction: row;
-    margin-top: 1em;
-    align-items: center;
-    width: 100%;
-    gap: 50px;
-    flex-wrap: wrap;
-
+    padding: 20px;
+    border-radius: 10px;
+    width: 60%;
+    height: 70%;
+ 
+    margin: 0;
+    padding: 0;
+    margin-top: 5em;
+    background-color: #56A42C;
 }
 
 
-.sin-convocatoria {
+.form-conv {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background-color: #FFFF;
+    padding: 30px;
+    border-radius: 5px ;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
     width: 100%;
+    margin: 0;
+    padding: 0;
+    margin-top: 1em;
+}
+
+.form-group-conv{
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    font-size: 1rem;
+    color: #4d4040;
+    width: 60%;
+    margin: 1em;
+}
+
+.form-button{
+    display: block;
+    width: 50%;
+    padding: 10px;
+    background-color: #06A3C9;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 1em;
+}
+
+.form-button:hover{
+    background-color: #007BDD;
 }

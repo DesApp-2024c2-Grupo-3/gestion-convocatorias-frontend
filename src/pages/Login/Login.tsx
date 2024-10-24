@@ -30,14 +30,14 @@ const Login = () => {
           </div>
           {/* Columna derecha (form) */}
           <div className="col login-col-derecha">
-            <form onSubmit={ingresarLogin}> {/* manejar el evento de envío */}
+            <form className="form-login" onSubmit={ingresarLogin}> {/* manejar el evento de envío */}
               <div className="mb-3">
                 <label htmlFor="usuario" className="form-label">Usuario</label>
-                <input type="text" className="form-control" id="usuario"/>
+                <input type="text" className="form-control-login" id="usuario"/>
               </div>
               <div className="mb-3">
                 <label htmlFor="contrasena" className="form-label" >Contraseña</label>
-                <input type="password" className="form-control" id="contrasena"/>
+                <input type="password" className="form-control-login" id="contrasena"/>
               </div>
               <div className="mb-5">
                 <a href="#" className="text-primary">¿Olvidaste tu contraseña? Click aquí</a>

@@ -7,21 +7,21 @@ import FormInformacionGeneral from "./FormPages/FormInformacionGeneral";
 const FormNuevaConvocatoria = () => {
 
     return (
-        <div className='container-fluid d-flex'>
+        <div className='container-form'>
             {/* row principal */}
-            <div className='row row-principal'>
+            <div className='row row-form'>
                 {/* col sidebar */}
-                <div className='col col-sidebar'>
+                <div className='col col-sidebar-form'>
                     <Sidebar />
                 </div>
 
                 {/* col home */}
-                <div className='col col-home'>
+                <div className='col col-home-form'>
                     <div className='userDrop'>
                         <UserDropdown />
                     </div>
 
-                    <div >
+                    <div className="col-form">
                         <>
                             <FormInformacionGeneral />
                         </>
