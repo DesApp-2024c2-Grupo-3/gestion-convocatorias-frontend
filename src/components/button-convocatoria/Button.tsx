@@ -1,16 +1,18 @@
-import React from "react"
+import React, { MouseEventHandler } from "react"
 import { Button } from "react-bootstrap"
 import './buttons.css'
 
 interface Props {
     nombre: string;
     className: string;
+    navegarHacia: MouseEventHandler
     iconoDelBoton?: React.ReactNode;
 }
 
 
-const ButtonConvocatoria: React.FC<Props> = ({nombre, className, iconoDelBoton}) => {
-    return <Button variant="primary" className={className}>{nombre} {iconoDelBoton}</Button>
+const ButtonConvocatoria = ({nombre, className, iconoDelBoton, navegarHacia}: Props) => {
+
+    return <Button variant="primary" className={className} onClick={navegarHacia}>{nombre} {iconoDelBoton}</Button>
 }
 
 export default ButtonConvocatoria
