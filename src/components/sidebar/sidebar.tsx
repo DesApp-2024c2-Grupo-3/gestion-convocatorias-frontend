@@ -5,16 +5,17 @@ import Nav from 'react-bootstrap/Nav';
 
 
 // imports css
-import './sidebar.css'
+import Styles from'./sidebar.module.css'
 import ButtonConvocatoria from "../button-convocatoria/Button";
+import styles from "@emotion/styled";
 
 
 const Sidebar = () => {
 
     return  (
-        <Nav defaultActiveKey="/home" className="flex-column sidebar" >
-            <img src="https://i.postimg.cc/X7Qgdnc4/Unahur-logo2.png" alt="" className="img-sidebar" />
-            <Nav.Link className='nav-link' eventKey="link-1"><i className="bi bi-broadcast"></i> Convocatorias</Nav.Link>
+        <Nav defaultActiveKey="/home" className={`${Styles.sidebar}`}>
+            <img src="https://i.postimg.cc/X7Qgdnc4/Unahur-logo2.png" alt="" className={Styles["img-sidebar"]} />
+            <Nav.Link className={Styles['nav-link']} eventKey="link-1"><i className={Styles["bi bi-broadcast"]}></i> Convocatorias</Nav.Link>
 
            <ButtonConvocatoria 
                 className='btn-convocatoria'
