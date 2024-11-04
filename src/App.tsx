@@ -10,6 +10,8 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Home from "./pages/Home/home";
 import Login from "./pages/Login/Login";
 import { ConvocatoriasRoutes } from "./routers/ConvocatoriasRoutes";
+import { Provider } from "react-redux";
+import { store } from "./store/store";
 
 
 
@@ -20,7 +22,9 @@ import { ConvocatoriasRoutes } from "./routers/ConvocatoriasRoutes";
 export default function App() {
 
   return (
-      <ConvocatoriasRoutes/>
+      <Provider store={store}>
+        <ConvocatoriasRoutes/>
+      </Provider>
   );
     
 }

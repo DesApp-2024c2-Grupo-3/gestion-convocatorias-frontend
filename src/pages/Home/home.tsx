@@ -4,8 +4,14 @@ import ButtonConvocatoria from '../../components/button-convocatoria/Button';
 import Convocatoria from '../../components/convocatoria/Convocatoria'
 import UserDropdown from '../../components/UserDropdropdown/UserDropdown';
 import styles from './home.module.css';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
+
+    const navigate = useNavigate();
+    const navigateFormNuevaConvocatoria = () => {
+        navigate('/Form')
+    };
 
     const listConvocatorias = [
         {
@@ -59,6 +65,7 @@ const Home = () => {
                     <ButtonConvocatoria 
                         className='btn-sin-convocatoria'
                         nombre='Nueva Convocatoria'
+                        accion={navigateFormNuevaConvocatoria}
                         iconoDelBoton={<i className="bi bi-plus"></i>} />
             </div>
         </>    

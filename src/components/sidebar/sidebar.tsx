@@ -8,9 +8,15 @@ import Nav from 'react-bootstrap/Nav';
 import Styles from'./sidebar.module.css'
 import ButtonConvocatoria from "../button-convocatoria/Button";
 import styles from "@emotion/styled";
+import { useNavigate } from "react-router-dom";
 
 
 const Sidebar = () => {
+
+    const navigate = useNavigate();
+    const navigateFormNuevaConvocatoria = () => {
+        navigate('/Form')
+    };
 
     return  (
         <Nav defaultActiveKey="/home" className={`${Styles.sidebar}`}>
@@ -21,6 +27,7 @@ const Sidebar = () => {
                 className='btn-convocatoria'
                 nombre='Nueva Convocatoria'
                 iconoDelBoton={<i className="bi bi-plus"></i>}
+                accion={navigateFormNuevaConvocatoria}
             />
 
         </Nav>
