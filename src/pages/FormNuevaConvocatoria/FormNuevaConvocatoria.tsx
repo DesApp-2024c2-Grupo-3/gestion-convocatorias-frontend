@@ -7,6 +7,7 @@ import styles from '../Home/home.module.css'
 import { store } from "../../store/store";
 import { selectStep } from "../../features/formularioNuevaConvocatoria/formularioSlice";
 import { useSelector } from "react-redux";
+import FormFormato from "./FormPages/FormFormato";
 
 const FormNuevaConvocatoria = () => {
 
@@ -29,7 +30,7 @@ const FormNuevaConvocatoria = () => {
 
                     <div className={styles['convocatorias']}>
                         {step === 1 && <FormInformacionGeneral />}
-                        {step === 2  &&  <h1>Step 2</h1>}
+                        {step === 2  &&  <FormFormato />}
                     </div>
 
 
