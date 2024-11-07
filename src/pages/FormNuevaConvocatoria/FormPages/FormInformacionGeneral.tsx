@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import FormInput from "../components/FormInput";
 import Button from "../../../components/button-convocatoria/Button";
 import { useDispatch } from "react-redux";
-import { siguiente } from "../../../features/formularioNuevaConvocatoria/formularioSlice";
+import { informacionGeneral, siguiente } from "../../../features/formularioNuevaConvocatoria/formularioSlice";
 
 
 const FormInformacionGeneral = () => {
@@ -25,7 +25,8 @@ const FormInformacionGeneral = () => {
 
     const onSubmit: SubmitHandler<InformacionGeneralValues> = data => {
         console.log(data);
-        dispatch(siguiente({...data, fechaInicio: data.fechaInicio.toISOString(), fechaFin: data.fechaFin.toISOString() } ))
+        dispatch(siguiente())
+        dispatch(informacionGeneral({...data, fechaInicio: data.fechaInicio.toISOString(), fechaFin: data.fechaFin.toISOString() } ))
     };
     
     return (

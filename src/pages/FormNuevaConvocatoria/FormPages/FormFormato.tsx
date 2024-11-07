@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import Button from "../../../components/button-convocatoria/Button";
 import "./FormFormato.css"; // Importamos el archivo CSS para los estilos
+import { useDispatch } from "react-redux";
+import { formato, siguiente, atras } from "../../../features/formularioNuevaConvocatoria/formularioSlice";
 
-type CamposValues = {
+export type CamposValues = {
     campos: (
         | {
               nombre: string;
@@ -78,8 +80,17 @@ const FormFormato = () => {
         setValue(`campos.${index}.opciones`, opciones);
     };
 
+    const volver = () => {
+        dispatch(atras())
+    }
+
+    const dispatch = useDispatch()
+
     const onSubmit: SubmitHandler<CamposValues> = (data) => {
         console.log(data);
+        dispatch(formato(data))
+        dispatch(siguiente())
+
     };
 
     return (
@@ -157,6 +168,11 @@ const FormFormato = () => {
                     nombre="Siguiente"
                     className="submit-button"
                     type="submit" />
+                <Button
+                    nombre="atras"
+                    className="submit-button"
+                    accion={volver}
+                    type="button" />
             </form>
         </div>
     );

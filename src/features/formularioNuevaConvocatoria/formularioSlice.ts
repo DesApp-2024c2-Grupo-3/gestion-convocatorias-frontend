@@ -1,11 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { InformacionGeneralValues } from "../../pages/FormNuevaConvocatoria/schemas/informacionGeneralSchema";
 import { RootState } from "../../store/store";
+import { CamposValues } from "../../pages/FormNuevaConvocatoria/FormPages/FormFormato";
+import { string, number } from "zod";
 
 export interface FormularioState {
     step: number;
     informacionGeneral: InformacionGeneralValues;
-    formato: any[];
+    formato: CamposValues;
 }
 
 const initialState: FormularioState = {
@@ -16,7 +18,9 @@ const initialState: FormularioState = {
         fechaInicio: new Date(),
         fechaFin: new Date(),
     },
-    formato: []
+    formato: {
+        campos: []
+    }
 }
 
 export const formularioSlice = createSlice({
@@ -24,25 +28,32 @@ export const formularioSlice = createSlice({
     initialState,
     reducers: {
 
-        siguiente: (state, data) => {
+        siguiente: (state) => {
             state.step += 1
+        },
+
+        atras: state => {
+            state.step -= 1
+        },
+        
+        informacionGeneral: (state, data) => {
             state.informacionGeneral = {
                 ...state.informacionGeneral,
                 titulo: data.payload.titulo,
                 descripcion: data.payload.descripcion,
                 fechaInicio: data.payload.fechaInicio,
-                fechaFin: data.payload.fechaFin
+                fechaFin: data.payload.fechaFin,
             }
         },
-
-        atras: state => {
-            state.step -= 1
+        
+        formato: (state, data) => {
+            state.formato = {...state.formato, ...data}
         }
     }
 })
 
 export const selectStep = (state: RootState) => state.formulario.step
 
-export const { siguiente, atras } = formularioSlice.actions;
+export const { siguiente, atras, informacionGeneral, formato } = formularioSlice.actions;
 
 export default formularioSlice.reducer;
