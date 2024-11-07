@@ -17,9 +17,10 @@ const ButtonConvocatoria = ({nombre, className, type, accion, iconoDelBoton}: Pr
             variant="primary"
             className={className}
             type={type}
-            onClick={accion} >
+            onClick={accion}>
             {nombre} {iconoDelBoton}
         </Button>
     )
+}
 
-export default ButtonConvocatoria
+export default ButtonConvocatoria;

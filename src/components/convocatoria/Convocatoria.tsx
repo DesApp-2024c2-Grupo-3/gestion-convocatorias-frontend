@@ -51,7 +51,7 @@ const Convocatoria = ({
         </Card.Subtitle>
         <div className="btn-card-convocatoria">
           <Button
-            onClick={handleShowModal}
+            accion={handleShowModal}
             className="btn-inscribirse btn-prueba"
             nombre="Ver más"
           />
