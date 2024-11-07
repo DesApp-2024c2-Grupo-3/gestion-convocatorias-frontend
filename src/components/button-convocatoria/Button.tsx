@@ -4,15 +4,23 @@ import './buttons.css'
 
 interface Props {
     nombre: string;
-    className: string;
-    navegarHacia: MouseEventHandler
+    className?: string;
+    type?: 'button' | 'submit' | 'reset';
+    accion?: MouseEventHandler;
     iconoDelBoton?: React.ReactNode;
+    onClick?: () => void;
 }
 
-
-const ButtonConvocatoria = ({nombre, className, iconoDelBoton, navegarHacia}: Props) => {
-
-    return <Button variant="primary" className={className} onClick={navegarHacia}>{nombre} {iconoDelBoton}</Button>
+const ButtonConvocatoria = ({nombre, className, type, accion, iconoDelBoton}: Props) => {
+    return (
+        <Button
+            variant="primary"
+            className={className}
+            type={type}
+            onClick={accion}>
+            {nombre} {iconoDelBoton}
+        </Button>
+    )
 }
 
-export default ButtonConvocatoria
+export default ButtonConvocatoria;

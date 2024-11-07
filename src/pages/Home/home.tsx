@@ -3,15 +3,19 @@ import Sidebar from '../../components/sidebar/sidebar';
 import ButtonConvocatoria from '../../components/button-convocatoria/Button';
 import Convocatoria from '../../components/convocatoria/Convocatoria'
 import UserDropdown from '../../components/UserDropdropdown/UserDropdown';
-import './home.css'
+import styles from './home.module.css';
 import { useNavigate } from 'react-router-dom';
-
 
 const Home = () => {
     const navigate = useNavigate();
     const navigateForm = () => {
         navigate('/FormNuevaConvocatoria')
     }
+
+    const navigate = useNavigate();
+    const navigateFormNuevaConvocatoria = () => {
+        navigate('/Form')
+    };
 
     const listConvocatorias = [
         {
@@ -60,33 +64,33 @@ const Home = () => {
             ))
     ) : (
         <>
-            <div className='sin-convocatoria'>
+            <div className={styles['sin-convocatoria']}>
                 <h2>No hay convocatorias en curso</h2>
                     <ButtonConvocatoria 
-                        className='btn-convocatoria'
+                        className='btn-sin-convocatoria'
                         nombre='Nueva Convocatoria'
-                        navegarHacia={navigateForm}
+                        accion={navigateFormNuevaConvocatoria}
                         iconoDelBoton={<i className="bi bi-plus"></i>} />
             </div>
         </>    
     );
 
     return (
-        <div className='container-fluid d-flex'>
+        <div className={styles['container-fluid']}>
             {/* row principal */}
-            <div className='row row-principal'>
+            <div className={styles['row-principal']}>
                 {/* col sidebar */}
-                <div className='col col-sidebar'>
+                <div className={styles['col-sidebar']}>
                     <Sidebar />
                 </div>
 
                 {/* col home */}
-                <div className='col col-home'>
-                    <div className='userDrop'>
+                <div className={styles['col-home']}>
+                    <div className={styles['userDrop']}>
                         <UserDropdown />
                     </div>
 
-                    <div className='convocatorias'>
+                    <div className={styles['convocatorias']}>
                         {convocatorias}
                     </div>
                     

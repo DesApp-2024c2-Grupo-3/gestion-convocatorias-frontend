@@ -11,7 +11,7 @@ export const ConvocatoriasRoutes = () => {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/Login" element={<Login />} />
-            <Route path="/FormNuevaConvocatoria" element={<FormNuevaConvocatoria />} />
+            <Route path="/Form" element={<FormNuevaConvocatoria />} />
           </Routes>
         </Router>
       </>
