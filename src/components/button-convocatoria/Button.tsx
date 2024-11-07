@@ -4,12 +4,12 @@ import './buttons.css'
 
 interface Props {
     nombre: string;
-    className: string;
+    className?: string;
     type?: 'button' | 'submit' | 'reset';
     accion?: MouseEventHandler;
     iconoDelBoton?: React.ReactNode;
+    onClick?: () => void;
 }
-
 
 const ButtonConvocatoria = ({nombre, className, type, accion, iconoDelBoton}: Props) => {
     return (
@@ -21,6 +21,5 @@ const ButtonConvocatoria = ({nombre, className, type, accion, iconoDelBoton}: Pr
             {nombre} {iconoDelBoton}
         </Button>
     )
-}
 
 export default ButtonConvocatoria
