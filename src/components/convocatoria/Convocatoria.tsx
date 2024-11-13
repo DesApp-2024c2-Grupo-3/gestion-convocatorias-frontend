@@ -7,7 +7,7 @@ import "/src/components/convocatoria/convocatoria.css";
 interface Props {
   titulo: string;
   descripcion: string;
-  fechaInicio: Date;
+  fechaInicio?: Date;
   fechaFin: Date;
 }
 

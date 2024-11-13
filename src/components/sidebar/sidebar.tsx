@@ -12,10 +12,6 @@ import { useNavigate } from "react-router-dom";
 
 
 const Sidebar = () => {
-    const navigate = useNavigate();
-    const navigateForm = () => {
-        navigate('/FormNuevaConvocatoria')
-    }
 
     const navigate = useNavigate();
     const navigateFormNuevaConvocatoria = () => {
@@ -30,7 +26,6 @@ const Sidebar = () => {
            <ButtonConvocatoria 
                 className='btn-convocatoria'
                 nombre='Nueva Convocatoria'
-                navegarHacia={navigateForm}
                 iconoDelBoton={<i className="bi bi-plus"></i>}
                 accion={navigateFormNuevaConvocatoria}
             />

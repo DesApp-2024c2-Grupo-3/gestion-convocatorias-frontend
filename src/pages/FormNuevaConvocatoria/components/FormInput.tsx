@@ -17,7 +17,7 @@ const FormInput = ({ nombre, label, type, control, error }: Props) => {
             <Controller
                 name={nombre}
                 control={control}
-                render={({ field }) => <input id={nombre} type={type} {...field} className={`form-control ${error ? "is-invalid": ""}`} />
+                render={({ field }) => <input id={nombre} type={type} {...field} className={`form-control ${error ? "is-invalid": ""}`}/>
                 }
             />
             {error && <p className="error">{error.message}</p>}

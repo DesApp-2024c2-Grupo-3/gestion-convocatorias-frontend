@@ -1,8 +1,7 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { InformacionGeneralValues } from "../../pages/FormNuevaConvocatoria/schemas/informacionGeneralSchema";
-import { RootState } from "../../store/store";
 import { CamposValues } from "../../pages/FormNuevaConvocatoria/FormPages/FormFormato";
-import { string, number } from "zod";
+import { RootState } from "../../store/store";
 
 export interface FormularioState {
     step: number;
@@ -41,19 +40,25 @@ export const formularioSlice = createSlice({
                 ...state.informacionGeneral,
                 titulo: data.payload.titulo,
                 descripcion: data.payload.descripcion,
-                fechaInicio: data.payload.fechaInicio,
-                fechaFin: data.payload.fechaFin,
-            }
+                fechaInicio: data.payload.fechaInicio instanceof Date 
+                    ? data.payload.fechaInicio.toISOString() 
+                    : data.payload.fechaInicio, // Si ya es string, se almacena directamente
+                fechaFin: data.payload.fechaFin instanceof Date 
+                    ? data.payload.fechaFin.toISOString() 
+                    : data.payload.fechaFin
+            };
         },
         
-        formato: (state, data) => {
-            state.formato = {...state.formato, ...data}
-        }
-    }
-})
+        formato: (state, action) => {
+            state.formato = {...state.formato, ...action.payload}
+        },
+
+        reset: () => initialState
+    },
+},)
 
 export const selectStep = (state: RootState) => state.formulario.step
 
-export const { siguiente, atras, informacionGeneral, formato } = formularioSlice.actions;
+export const { siguiente, atras, informacionGeneral, formato, reset } = formularioSlice.actions;
 
 export default formularioSlice.reducer;

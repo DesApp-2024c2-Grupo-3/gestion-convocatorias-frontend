@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import Button from "../../../components/button-convocatoria/Button";
-import "./FormFormato.css"; // Importamos el archivo CSS para los estilos
-import { useDispatch } from "react-redux";
-import { formato, siguiente, atras } from "../../../features/formularioNuevaConvocatoria/formularioSlice";
+import "./FormFormato.css";
+import { useDispatch, useSelector } from "react-redux";
+import { formato, atras, reset, informacionGeneral } from "../../../features/formularioNuevaConvocatoria/formularioSlice";
+import { RootState } from "../../../store/store";
+import { Navigate, useNavigate } from "react-router-dom";
+import { postConvocatoria } from "../../../api/api";
 
 export type CamposValues = {
     campos: (
@@ -21,14 +24,15 @@ export type CamposValues = {
 };
 
 const FormFormato = () => {
+
     const { register, control, handleSubmit, setValue, formState: { errors } } = useForm<CamposValues>({
         defaultValues: {
             campos: [
                 { nombre: '', tipo: 'Texto', maxNumeroDeCaracteres: 0 },
-                { nombre: '', tipo: "Desplegable", opciones: [] }
             ]
         }
     });
+
     const { fields, prepend, append, remove } = useFieldArray({
         name: 'campos',
         control,
@@ -79,18 +83,27 @@ const FormFormato = () => {
         const opciones = e.target.value.split(";").map(opcion => opcion.trim()).filter(opcion => opcion);
         setValue(`campos.${index}.opciones`, opciones);
     };
-
+   
+    const dispatch = useDispatch()
+    const informacionGeneralData = useSelector((state: RootState) => state.formulario.informacionGeneral)
+    const formatoData = useSelector((state: RootState) => state.formulario.formato)
+    
     const volver = () => {
         dispatch(atras())
     }
-
-    const dispatch = useDispatch()
+    const navigate = useNavigate();
 
     const onSubmit: SubmitHandler<CamposValues> = (data) => {
         console.log(data);
         dispatch(formato(data))
-        dispatch(siguiente())
 
+        postConvocatoria({
+            informacionGeneral: informacionGeneralData,
+            formato: formatoData
+        })
+
+        dispatch(reset())
+        navigate('/')
     };
 
     return (
@@ -153,6 +166,7 @@ const FormFormato = () => {
                                     placeholder="Ejemplo: Opción 1;Opción 2"
                                     onBlur={(e) => onOptionsBlur(e, index)}
                                     className="form-input"
+                                    required
                                 />
                             </label>
                         )}
@@ -165,7 +179,7 @@ const FormFormato = () => {
                 ))}
                 <p className="error-message">{errors.campos?.root?.message}</p>
                 <Button
-                    nombre="Siguiente"
+                    nombre="Guardar"
                     className="submit-button"
                     type="submit" />
                 <Button

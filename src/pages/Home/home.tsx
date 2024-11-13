@@ -8,11 +8,6 @@ import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
     const navigate = useNavigate();
-    const navigateForm = () => {
-        navigate('/FormNuevaConvocatoria')
-    }
-
-    const navigate = useNavigate();
     const navigateFormNuevaConvocatoria = () => {
         navigate('/Form')
     };
@@ -55,7 +50,7 @@ const Home = () => {
 
     const convocatorias = listConvocatorias.length ? ( 
             listConvocatorias.map((convoc, index) => (
-                <Convocatoria 
+                <Convocatoria
                 key={index}
                 titulo={convoc.titulo}
                 descripcion={convoc.descripcion}
