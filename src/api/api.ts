@@ -9,11 +9,18 @@ export const postConvocatoria = (informacionGeneral: InformacionGeneralValues, f
         formato: formato.campos
     } 
     
-    axios.post('http://localhost:3000/convocatorias', data)
+    axios.post('http://localhost:3000/convocatoria', data)
     .then(function(response) {
         console.log(response)
     })
     .catch(function(error) {
         console.error(error)
     })
+}
+
+
+export const getConvocatorias = async () => {
+    
+    const response = await axios.get('http://localhost:3000/convocatoria');
+    return response.data
 }
