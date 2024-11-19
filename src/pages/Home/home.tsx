@@ -1,60 +1,51 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Sidebar from '../../components/sidebar/sidebar';
 import ButtonConvocatoria from '../../components/button-convocatoria/Button';
 import Convocatoria from '../../components/convocatoria/Convocatoria'
 import UserDropdown from '../../components/UserDropdropdown/UserDropdown';
 import styles from './home.module.css';
 import { useNavigate } from 'react-router-dom';
+import { getConvocatorias } from "../../api/api";
+
+interface Convocatoria {
+    _id:string
+    informacionGeneral:{
+        titulo:string,
+        descripcion:string,
+        fechaInicio?: Date,
+        fechaFin: Date
+    },
+    formato:string[]
+}
 
 const Home = () => {
+
+    const [listConvocatorias, setListConvocatorias] = useState<Convocatoria[]>([])
     const navigate = useNavigate();
+
     const navigateFormNuevaConvocatoria = () => {
         navigate('/Form')
     };
 
-    const listConvocatorias = [
-        {
-            "titulo": "Convocatoria 1",
-            "descripcion": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi iusto tempora ipsa deleniti quo sed dolore nostrum blanditiis aspernatur doloremque quos cupiditate omnis, unde beatae esse dolorem numquam odio quibusdam!",
-            "fechaFin": "1-02-2024"
-        },{
-            "titulo": "Convocatoria 1",
-            "descripcion": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi iusto tempora ipsa deleniti quo sed dolore nostrum blanditiis aspernatur doloremque quos cupiditate omnis, unde beatae esse dolorem numquam odio quibusdam!",
-            "fechaFin": "1-02-2024"
-        },{
-            "titulo": "Convocatoria 1",
-            "descripcion": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi iusto tempora ipsa deleniti quo sed dolore nostrum blanditiis aspernatur doloremque quos cupiditate omnis, unde beatae esse dolorem numquam odio quibusdam!",
-            "fechaFin": "1-02-2024"
-        },{
-            "titulo": "Convocatoria 1",
-            "descripcion": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi iusto tempora ipsa deleniti quo sed dolore nostrum blanditiis aspernatur doloremque quos cupiditate omnis, unde beatae esse dolorem numquam odio quibusdam!",
-            "fechaFin": "1-02-2024"
-        },{
-            "titulo": "Convocatoria 1",
-            "descripcion": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi iusto tempora ipsa deleniti quo sed dolore nostrum blanditiis aspernatur doloremque quos cupiditate omnis, unde beatae esse dolorem numquam odio quibusdam!",
-            "fechaFin": "1-02-2024"
-        },{
-            "titulo": "Convocatoria 1",
-            "descripcion": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi iusto tempora ipsa deleniti quo sed dolore nostrum blanditiis aspernatur doloremque quos cupiditate omnis, unde beatae esse dolorem numquam odio quibusdam!",
-            "fechaFin": "1-02-2024"
-        },{
-            "titulo": "Convocatoria 1",
-            "descripcion": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi iusto tempora ipsa deleniti quo sed dolore nostrum blanditiis aspernatur doloremque quos cupiditate omnis, unde beatae esse dolorem numquam odio quibusdam!",
-            "fechaFin": "1-02-2024"
-        },{
-            "titulo": "Convocatoria 1",
-            "descripcion": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi iusto tempora ipsa deleniti quo sed dolore nostrum blanditiis aspernatur doloremque quos cupiditate omnis, unde beatae esse dolorem numquam odio quibusdam!",
-            "fechaFin": "1-02-2024"
-        }
-    ];
+    useEffect( () => {
+        const getConvocatoria = async () => {
+
+            const data = await getConvocatorias();
+            if (Array.isArray(data)) {
+                setListConvocatorias(data);
+            }
+        } ;
+        getConvocatoria()
+    }, [])
+
 
     const convocatorias = listConvocatorias.length ? ( 
             listConvocatorias.map((convoc, index) => (
                 <Convocatoria
                 key={index}
-                titulo={convoc.titulo}
-                descripcion={convoc.descripcion}
-                fechaFin={new Date(convoc.fechaFin)}
+                titulo={convoc.informacionGeneral.titulo}
+                descripcion={convoc.informacionGeneral.descripcion}
+                fechaFin={new Date(convoc.informacionGeneral.fechaFin)}
                 /> 
             ))
     ) : (

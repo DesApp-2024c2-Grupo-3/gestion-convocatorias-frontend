@@ -5,7 +5,7 @@ import "./FormFormato.css";
 import { useDispatch, useSelector } from "react-redux";
 import { formato, atras, reset, informacionGeneral } from "../../../features/formularioNuevaConvocatoria/formularioSlice";
 import { RootState } from "../../../store/store";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { postConvocatoria } from "../../../api/api";
 
 export type CamposValues = {
@@ -93,15 +93,15 @@ const FormFormato = () => {
     }
     const navigate = useNavigate();
 
-    const onSubmit: SubmitHandler<CamposValues> = (data) => {
-        console.log(data);
-        dispatch(formato(data))
-
-        postConvocatoria({
-            informacionGeneral: informacionGeneralData,
-            formato: formatoData
-        })
-
+    const onSubmit: SubmitHandler<CamposValues> = (formatoData) => {
+        console.log(formatoData);
+        
+        postConvocatoria(
+            informacionGeneralData,
+            formatoData
+        )
+        
+        dispatch(formato(formatoData))
         dispatch(reset())
         navigate('/')
     };
