@@ -46,7 +46,7 @@ const Home = () => {
                 key={index}
                 titulo={convoc.informacionGeneral.titulo}
                 descripcion={convoc.informacionGeneral.descripcion}
-                fechaInicio={convoc.informacionGeneral.fechaInicio}
+                fechaInicio={new Date(convoc.informacionGeneral.fechaInicio)}
                 fechaFin={new Date(convoc.informacionGeneral.fechaFin)}
                 /> 
             ))

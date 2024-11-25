@@ -16,6 +16,7 @@ export const postConvocatoria = (informacionGeneral: InformacionGeneralValues, f
     .catch(function(error) {
         console.error(error)
     })
+    
 }
 
 
@@ -35,3 +36,18 @@ export const putFechaConvocatoria = (id: string, fechaFin: Date) => {
         console.error(error)
     })
 }
+
+export const registrarUsuario = async (nombre: string, email: string, password: string): Promise<any> => {
+
+    await axios.post('http://localhost:3000/usuario/registro', {
+        nombre,
+        email,
+        password,
+    })
+    .then(function(response) {
+        console.log(response)
+    })
+    .catch(function(error) {
+        console.error(error)
+    })
+};

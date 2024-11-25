@@ -18,4 +18,9 @@ module.exports = {
       { allowConstantExport: true },
     ],
   },
+  "prettier/prettier":[
+      "error",{
+        "endOfLine": "auto"
+      }
+  ]
 }

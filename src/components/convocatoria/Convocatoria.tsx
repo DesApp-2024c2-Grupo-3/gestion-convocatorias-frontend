@@ -92,7 +92,6 @@ const Convocatoria = ({
           <div className="convocatoria-fechas">
             <p>
               Fecha inicio de la convocatoria:{fechaInicio.toLocaleString()}
-              {fechaInicio?.toLocaleDateString()}
             </p>
             <form onSubmit={handleSubmit}>
             <p>
