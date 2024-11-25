@@ -12,7 +12,7 @@ interface Convocatoria {
     informacionGeneral:{
         titulo:string,
         descripcion:string,
-        fechaInicio?: Date,
+        fechaInicio: Date,
         fechaFin: Date
     },
     formato:string[]
@@ -42,9 +42,11 @@ const Home = () => {
     const convocatorias = listConvocatorias.length ? ( 
             listConvocatorias.map((convoc, index) => (
                 <Convocatoria
+                idConvocatoria={convoc._id}
                 key={index}
                 titulo={convoc.informacionGeneral.titulo}
                 descripcion={convoc.informacionGeneral.descripcion}
+                fechaInicio={convoc.informacionGeneral.fechaInicio}
                 fechaFin={new Date(convoc.informacionGeneral.fechaFin)}
                 /> 
             ))

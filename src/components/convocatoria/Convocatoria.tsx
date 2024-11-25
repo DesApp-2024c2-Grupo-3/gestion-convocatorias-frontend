@@ -3,11 +3,14 @@ import Card from "react-bootstrap/Card";
 import Modal from "react-bootstrap/Modal";
 import Button from "../button-convocatoria/Button";
 import "/src/components/convocatoria/convocatoria.css";
+import ButtonConvocatoria  from "../button-convocatoria/Button";
+import { putFechaConvocatoria } from "../../api/api";
 
 interface Props {
+  idConvocatoria: string;
   titulo: string;
   descripcion: string;
-  fechaInicio?: Date;
+  fechaInicio: Date;
   fechaFin: Date;
 }
 
@@ -17,6 +20,7 @@ interface Usuario {
 }
 
 const Convocatoria = ({
+  idConvocatoria,
   titulo,
   descripcion,
   fechaInicio,
@@ -41,13 +45,27 @@ const Convocatoria = ({
     setEditableFechaFin(new Date(event.target.value));
   };
 
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault(); // Evita el comportamiento por defecto del formulario
+
+    try {
+      // Llama a la función del frontend para actualizar la fecha
+      const response = await putFechaConvocatoria(idConvocatoria, editableFechaFin);
+      console.log('Fecha actualizada correctamente:', response);
+      alert('Fecha actualizada con éxito');
+    } catch (error) {
+      console.error('Error al actualizar la fecha:', error);
+      alert('Hubo un error al actualizar la fecha');
+    }
+  };
+
   return (
     <Card className="card-convocatoria">
       <Card.Body className="card-body">
         <Card.Title>{titulo}</Card.Title>
         <Card.Text>{descripcion}</Card.Text>
         <Card.Subtitle>
-          Inscripción hasta: {fechaFin.toLocaleDateString()}
+          Inscripción hasta: {editableFechaFin.toLocaleDateString()}
         </Card.Subtitle>
         <div className="btn-card-convocatoria">
           <Button
@@ -73,18 +91,25 @@ const Convocatoria = ({
 
           <div className="convocatoria-fechas">
             <p>
-              Fecha inicio de la convocatoria:{" TBD"}
+              Fecha inicio de la convocatoria:{fechaInicio.toLocaleString()}
               {fechaInicio?.toLocaleDateString()}
             </p>
+            <form onSubmit={handleSubmit}>
             <p>
               Fecha fin de la convocatoria:{" "}
               <input
-                type="date"
-                value={editableFechaFin.toISOString().split("T")[0]}
+                type="datetime-local"
+                value={editableFechaFin.toISOString().slice(0,16)}
                 onChange={handleFechaChange}
                 className="fecha-fin-input"
+                min={fechaInicio.toISOString().slice(0,16)}
               />
             </p>
+            <ButtonConvocatoria
+              nombre="Editar"
+              type="submit"
+            />
+            </form>
           </div>
 
           <h5>Cantidad de Postulaciones: {postulados.length}</h5>
