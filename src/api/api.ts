@@ -39,15 +39,31 @@ export const putFechaConvocatoria = (id: string, fechaFin: Date) => {
 
 export const registrarUsuario = async (nombre: string, email: string, password: string): Promise<any> => {
 
-    await axios.post('http://localhost:3000/usuario/registro', {
+    const response = await axios.post('http://localhost:3000/usuario', {
         nombre,
         email,
         password,
-    })
-    .then(function(response) {
-        console.log(response)
-    })
-    .catch(function(error) {
-        console.error(error)
-    })
+    });
+
+    const {token} = response.data;
+    if (token) {
+        localStorage.setItem('authToken', token);
+    }
+
+    return response.data;
+    
+};
+
+export const loginUsuario = async (email: string, password: string) => {
+    try {
+        const response = await axios.post('http://localhost:3000/usuario/login', {
+            email,
+            password,
+        });
+        console.log('Respuesta del servidor:', response.data);
+        return response.data; // Devuelve los datos de la respuesta
+    } catch (error) {
+        console.error('Error al realizar login:', error);
+        return null; // Retorna null si hay un error
+    }
 };

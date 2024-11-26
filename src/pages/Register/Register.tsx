@@ -42,7 +42,7 @@ const Register: React.FC = () => {
           <input
             type="email"
             id="email"
-            placeholder="Ingresa tu correo"
+            placeholder="Ingresá tu correo"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
