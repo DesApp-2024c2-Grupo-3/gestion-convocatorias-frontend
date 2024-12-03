@@ -37,6 +37,16 @@ export const putFechaConvocatoria = (id: string, fechaFin: Date) => {
     })
 }
 
+export const deleteConvocatoria = async (id: string): Promise<void> => {
+    try{
+        await axios.delete(`http://localhost:3000/convocatoria/${id}`);
+        console.log("Convocatoria eliminada correctamente");
+    }catch(error){
+        console.error("Error al eliminar la convocatoria", error);
+        throw error;
+    }
+};
+
 export const registrarUsuario = async (nombre: string, email: string, password: string): Promise<any> => {
 
     const response = await axios.post('http://localhost:3000/usuario', {

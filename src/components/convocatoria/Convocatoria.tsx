@@ -3,8 +3,9 @@ import Card from "react-bootstrap/Card";
 import Modal from "react-bootstrap/Modal";
 import Button from "../button-convocatoria/Button";
 import "/src/components/convocatoria/convocatoria.css";
-import ButtonConvocatoria  from "../button-convocatoria/Button";
-import { putFechaConvocatoria } from "../../api/api";
+import ButtonConvocatoria from "../button-convocatoria/Button";
+import { deleteConvocatoria, putFechaConvocatoria } from "../../api/api";
+import toast from "react-hot-toast";
 
 interface Props {
   idConvocatoria: string;
@@ -26,38 +27,45 @@ const Convocatoria = ({
   fechaInicio,
   fechaFin,
 }: Props): JSX.Element => {
-    //Definicion de estados locales para la gestion del estado del modal y la fecha fin modificable
-  const [showModal, setShowModal] = useState(false); //Muestra/oculta el modal.
-  const [editableFechaFin, setEditableFechaFin] = useState(fechaFin); //Almacena la fecha fin.
-  //Almacena un listado de usuarios de prueba.
-  const [postulados, setPostulados] = useState<Usuario[]>([
+  const [showModal, setShowModal] = useState(false); // Muestra/oculta el modal
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false); // Modal de confirmación de eliminación
+  const [editableFechaFin, setEditableFechaFin] = useState(fechaFin); //Permite modificar la fechaFin
+  const [postulados, setPostulados] = useState<Usuario[]>([ //Parte de postulantes mockeado
     { id: 1, titulo: "Ej-Proyecto 1" },
     { id: 2, titulo: "Ej-Proyecto 2" },
     { id: 3, titulo: "Ej-Proyecto 3" },
   ]);
+  const [selectedFechaFin, setSelectedFechaFin] = useState<Date | null>(null);
+  const [showConfirmationUpdate, setShowConfirmationUpdate] = useState(false);
 
-  //Abren o cierran el modal.
   const handleShowModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
 
-  //Funcion que maneja el cambio en el campo de fecha fin.
-  const handleFechaChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setEditableFechaFin(new Date(event.target.value));
-  };
+  const handleShowDeleteConfirmation = () => setShowDeleteConfirmation(true);
+  const handleCloseDeleteConfirmation = () => setShowDeleteConfirmation(false);
 
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault(); // Evita el comportamiento por defecto del formulario
-
+  const handleDelete = async () => {
     try {
-      // Llama a la función del frontend para actualizar la fecha
-      const response = await putFechaConvocatoria(idConvocatoria, editableFechaFin);
-      console.log('Fecha actualizada correctamente:', response);
-      alert('Fecha actualizada con éxito');
+      await deleteConvocatoria(idConvocatoria); 
+      toast.success("Convocatoria eliminada correctamente.");
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
     } catch (error) {
-      console.error('Error al actualizar la fecha:', error);
-      alert('Hubo un error al actualizar la fecha');
+      toast.error("Error al eliminar la convocatoria. Intenta nuevamente.");
+    } finally {
+      setShowDeleteConfirmation(false); 
+      setShowModal(false); 
     }
   };
+
+  const handleFechaChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const nuevaFecha = new Date(event.target.value);
+    setSelectedFechaFin(nuevaFecha);
+    setShowConfirmationUpdate(true);
+  };
+
+ 
 
   return (
     <Card className="card-convocatoria">
@@ -91,24 +99,59 @@ const Convocatoria = ({
 
           <div className="convocatoria-fechas">
             <p>
-              Fecha inicio de la convocatoria:{fechaInicio.toLocaleString()}
+              Fecha inicio de la convocatoria: {fechaInicio.toLocaleString()}
             </p>
-            <form onSubmit={handleSubmit}>
-            <p>
-              Fecha fin de la convocatoria:{" "}
-              <input
-                type="datetime-local"
-                value={editableFechaFin.toISOString().slice(0,16)}
-                onChange={handleFechaChange}
-                className="fecha-fin-input"
-                min={fechaInicio.toISOString().slice(0,16)}
-              />
-            </p>
-            <ButtonConvocatoria
-              nombre="Editar"
-              type="submit"
-            />
+            <form>
+              <p>
+                Fecha fin de la convocatoria:{" "}
+                <input
+                  type="datetime-local"
+                  value={editableFechaFin.toISOString().slice(0, 16)}
+                  onChange={(event) => {
+                    handleFechaChange(event);
+                    event.target.blur();
+                  }}
+                  className="fecha-fin-input"
+                  min={fechaInicio.toISOString().slice(0, 16)}
+                />
+              </p>
             </form>
+            {showConfirmationUpdate && (
+              <div className="confirmation-modal">
+                <p>
+                  ¿Desea cambiar la fecha de finalización a{" "}
+                  <strong>{selectedFechaFin?.toLocaleString()}</strong>?
+                </p>
+                <div className="confirmation-buttons">
+                  <button
+                    onClick={async () => {
+                      if (selectedFechaFin) {
+                        try {
+                          await putFechaConvocatoria(
+                            idConvocatoria,
+                            selectedFechaFin
+                          );
+                          setEditableFechaFin(selectedFechaFin);
+                          toast.success("Fecha actualizada con éxito");
+                        } catch (error) {
+                          toast.error("Error al actualizar la fecha");
+                        }
+                      }
+                      setShowConfirmationUpdate(false);
+                    }}
+                    className="btn-aceptar"
+                  >
+                    Aceptar
+                  </button>
+                  <button
+                    onClick={() => setShowConfirmationUpdate(false)}
+                    className="btn-no-cambiar"
+                  >
+                    No cambiar
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
 
           <h5>Cantidad de Postulaciones: {postulados.length}</h5>
@@ -120,7 +163,6 @@ const Convocatoria = ({
               </tr>
             </thead>
             <tbody>
-            
               {postulados.map((usuario) => (
                 <tr key={usuario.id}>
                   <td>{usuario.id.toString().slice(-6)}</td>
@@ -128,12 +170,39 @@ const Convocatoria = ({
                 </tr>
               ))}
             </tbody>
-            
           </table>
         </Modal.Body>
         <Modal.Footer>
-          <button onClick={handleCloseModal} className="btn-cerrar">
+          <button onClick={handleShowDeleteConfirmation} className="btn-cerrar">
+            Eliminar
+          </button>
+          <button onClick={() => setShowModal(false)} className="btn-cerrar">
             Cerrar
+          </button>
+        </Modal.Footer>
+      </Modal>
+
+      {/* Modal de confirmación de eliminación */}
+      <Modal
+        show={showDeleteConfirmation}
+        onHide={handleCloseDeleteConfirmation}
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Confirmación</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>¿Está seguro de que desea eliminar esta convocatoria?</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <button
+            className="btn-cerrar"
+            onClick={handleCloseDeleteConfirmation}
+          >
+            No borrar
+          </button>
+          <button className="btn-eliminar" onClick={handleDelete}>
+            Aceptar
           </button>
         </Modal.Footer>
       </Modal>
