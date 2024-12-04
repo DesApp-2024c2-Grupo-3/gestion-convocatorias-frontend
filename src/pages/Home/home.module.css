@@ -35,8 +35,6 @@
     flex-direction: column;
     height: 100%;
     width: 100%;
-    
-    
 }
 
 
@@ -70,7 +68,8 @@ h2 {
     width: 100%;
     gap: 50px;
     flex-wrap: wrap;
-
+    margin: 1em;
+    padding: 1em;
 } 
 
 

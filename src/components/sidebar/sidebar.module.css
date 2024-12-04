@@ -31,13 +31,11 @@
 
 
 .img-sidebar {
-    height: 120px;
+    height: auto;
+    max-height: 200px;
     width: 100%;
-    margin:0;
     padding:5px;
-    width: 100%;
     background-color: #ffff;
-    
 }
 
 .bi {

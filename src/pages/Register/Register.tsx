@@ -1,9 +1,10 @@
 // src/pages/Register/Register.tsx
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import "./register.css";
+import styles from "./register.module.css";
 import { registrarUsuario } from "../../api/api";
 import toast from "react-hot-toast";
+import Logo from "../Login/Logo";
 
 const Register: React.FC = () => {
   const [nombre, setNombre] = useState('');
@@ -29,50 +30,80 @@ const Register: React.FC = () => {
     }
   };
 
+  const IniciarSesion = () => {
+    navigate("/login");
+  };
+
   return (
-    <div className="register-container">
-      <h2>Registro de Usuario</h2>
-      <form className="register-form" onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="nombre">Nombre de Usuario</label>
-          <input
-            type="text"
-            id="nombre"
-            placeholder="Ingresa tu nombre"
-            value={nombre}
-            onChange={(e) => setNombre(e.target.value)}
-          />
+    <div className={styles["container-login"]}>
+      <div className={styles["login-row-img"]}>
+        <div className={styles["login-col-img"]}>
+          <Logo />
         </div>
-        <div className="form-group">
-          <label htmlFor="email">Correo Electrónico</label>
-          <input
-            type="email"
-            id="email"
-            placeholder="Ingresá tu correo"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+      </div>
+  
+      <div className={styles["login-row"]}>
+        <div className={styles["login-col-izquierda"]}>
+          <p>
+            <i className="bi-person-circle"></i>
+          </p>
+          <h3>Registro de Usuario</h3>
+          <p>¿Ya tienes una cuenta?</p>
+          <a onClick={IniciarSesion} className={styles["redirect"]}>
+            Inicia sesión
+          </a>
         </div>
-        <div className="form-group">
-          <label htmlFor="password">Contraseña</label>
-          <input
-            type="password"
-            id="password"
-            placeholder="Ingresa tu contraseña"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+        <div className={styles["login-col-derecha"]}>
+          <form className={styles["form-login"]} onSubmit={handleSubmit}>
+            <div className={styles["form-inputs"]}>
+              <label htmlFor="nombre" className={styles["form-label"]}>
+                Nombre de Usuario
+              </label>
+              <input
+                type="text"
+                className={styles["form-control-login"]} 
+                id="nombre"
+                placeholder="Ingresa tu nombre"
+                value={nombre}
+                onChange={(e) => setNombre(e.target.value)}
+              />
+            </div>
+            <div className={styles["form-inputs"]}>
+              <label htmlFor="email" className={styles["form-label"]}>
+                Correo Electrónico
+              </label>
+              <input
+                type="email"
+                className={styles["form-control-login"]}
+                id="email"
+                placeholder="Ingresa tu correo"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+            <div className={styles["form-inputs"]}>
+              <label htmlFor="password" className={styles["form-label"]}>
+                Contraseña
+              </label>
+              <input
+                type="password"
+                className={styles["form-control-login"]}
+                id="password"
+                placeholder="Ingresa tu contraseña"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+            {error && <p className={styles["error-message"]}>{error}</p>}
+            <button type="submit" className={styles["btn-login"]}>
+              Registrarse
+            </button>
+          </form>
         </div>
-        <button type="submit" className="register-btn">
-          Registrarse
-        </button>
-      </form>
-      {error && <p className="error-message">{error}</p>}
-      <p>
-        ¿Ya tienes una cuenta? <Link to="/login">Inicia sesión</Link>
-      </p>
+      </div>
     </div>
   );
+  
 };
 
 export default Register;

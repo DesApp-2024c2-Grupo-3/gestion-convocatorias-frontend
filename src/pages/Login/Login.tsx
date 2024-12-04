@@ -64,19 +64,19 @@ const Login = () => {
           </p>
           <h3>Iniciar sesión</h3>
           <p>¿No tienes cuenta?</p>
-          <a onClick={Registrarse} className="">
+          <a onClick={Registrarse} className={styles["redirect"]}>
             Regístrate
           </a>
         </div>
         <div className={styles["login-col-derecha"]}>
           <form className={styles["form-login"]} onSubmit={ingresarLogin}>
-            <div className="mb-3">
+            <div className={styles["form-inputs"]}>
               <label htmlFor="email" className={styles["form-label"]}>
                 Email
               </label>
               <input
                 type="email"
-                className={styles["form-control"]}
+                className={styles["form-control-login"]}
                 id="email"
                 value={email}
                 onChange={(e) => {
@@ -85,13 +85,13 @@ const Login = () => {
                 }}
               />
             </div>
-            <div className="mb-3">
+            <div className={styles["form-inputs"]}>
               <label htmlFor="password" className={styles["form-label"]}>
                 Contraseña
               </label>
               <input
                 type="password"
-                className={styles["form-control"]}
+                className={styles["form-control-login"]}
                 id="password"
                 value={password}
                 onChange={(e) => {
@@ -102,7 +102,7 @@ const Login = () => {
             </div>
             {error && <p className={styles["error-message"]}>{error}</p>}
             <div className="mb-5">
-              <a href="#">¿Olvidaste tu contraseña? Haz clic aquí</a>
+              <a href="#" className={styles["redirect"]}>¿Olvidaste tu contraseña? Haz clic aquí</a>
             </div>
             <button type="submit" className={styles["btn-login"]}>
               Ingresar
