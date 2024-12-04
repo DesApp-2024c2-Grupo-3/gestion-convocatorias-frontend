@@ -7,13 +7,14 @@ import { formato, atras, reset, informacionGeneral } from "../../../features/for
 import { RootState } from "../../../store/store";
 import { useNavigate } from "react-router-dom";
 import { postConvocatoria } from "../../../api/api";
+import toast from "react-hot-toast";
 
 export type CamposValues = {
     campos: (
         | {
               nombre: string;
               tipo: "Texto";
-              maxNumeroDeCaracteres: number;
+              maxNumeroDeCaracteres: number | undefined;
           }
         | {
               nombre: string;
@@ -72,7 +73,7 @@ const FormFormato = () => {
 
         if (nuevoTipo === "Texto") {
             setValue(`campos.${index}.maxNumeroDeCaracteres`, 0);
-            setValue(`campos.${index}.opciones`, undefined);
+            setValue(`campos.${index}.opciones`, []);
         } else {
             setValue(`campos.${index}.opciones`, []);
             setValue(`campos.${index}.maxNumeroDeCaracteres`, undefined);
@@ -100,7 +101,7 @@ const FormFormato = () => {
             informacionGeneralData,
             formatoData
         )
-        
+        toast.success("Convocatoria creada correctamente");
         dispatch(formato(formatoData))
         dispatch(reset())
         navigate('/')
@@ -195,10 +196,11 @@ const FormFormato = () => {
                     accion={volver}
                     type="button" />
                 <Button
-                    nombre="Siguiente"
+                    nombre="Finalizar"
                     className="submit-button"
                     iconoDelBoton={<i className="bi bi-arrow-right"></i>}
-                    type="submit" />
+                    type="submit"
+                     />
             </form>
         </div>
     );
