@@ -108,6 +108,9 @@ const FormFormato = () => {
 
     return (
         <div className="form-container">
+            <h2>Nueva Convocatoria</h2>
+            <h4>Formato</h4>
+            <hr />
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="button-group">
                     <Button
@@ -127,16 +130,18 @@ const FormFormato = () => {
                         <label className="form-label">
                             <span>Nombre del Campo</span>
                             <input
-                                {...register(`campos.${index}.nombre`, { required: true })}
+                                {...register(`campos.${index}.nombre`, { required: 'El nombre del campo es requerido'  })}
                                 className="form-input"
+                                required
                             />
                         </label>
                         <label className="form-label">
                             <span>Tipo</span>
                             <select
-                                {...register(`campos.${index}.tipo`)}
+                                {...register(`campos.${index}.tipo`, { required: 'Debe seleccionar el Tipo del campo' })}
                                 onChange={(e) => onChangeTipo(e, index)}
                                 className="form-select"
+                                required
                             >
                                 <option></option>
                                 <option value="Texto">Texto</option>
@@ -150,10 +155,15 @@ const FormFormato = () => {
                                 <input
                                     type="number"
                                     {...register(`campos.${index}.maxNumeroDeCaracteres`, {
-                                        required: true,
-                                        min: 1
+                                        required: 'Debe indicar la cantidad maxima de caracteres del campo',
+                                        min: {
+                                            value: 1,
+                                            message: "Debe ser mayor a 0"
+                                        }
                                     })}
                                     className="form-input"
+                                    min={1}
+                                    required
                                 />
                             </label>
                         )}
@@ -179,14 +189,16 @@ const FormFormato = () => {
                 ))}
                 <p className="error-message">{errors.campos?.root?.message}</p>
                 <Button
-                    nombre="Guardar"
+                    nombre="Volver"
                     className="submit-button"
-                    type="submit" />
-                <Button
-                    nombre="atras"
-                    className="submit-button"
+                    iconoDelBoton={<i className="bi bi-arrow-left"></i>}
                     accion={volver}
                     type="button" />
+                <Button
+                    nombre="Siguiente"
+                    className="submit-button"
+                    iconoDelBoton={<i className="bi bi-arrow-right"></i>}
+                    type="submit" />
             </form>
         </div>
     );

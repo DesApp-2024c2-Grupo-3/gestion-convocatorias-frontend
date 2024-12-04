@@ -7,12 +7,13 @@ interface Props {
     type?: string;
     control: Control<any>
     error?: FieldError;
+    className?: string
 }
 
-const FormInput = ({ nombre, label, type, control, error }: Props) => {
+const FormInput = ({ nombre, label, type, control, error, className }: Props) => {
 
     return (
-        <div className="form-group-conv">
+        <div className={className}>
             <label htmlFor={nombre}>{label}</label>
             <Controller
                 name={nombre}

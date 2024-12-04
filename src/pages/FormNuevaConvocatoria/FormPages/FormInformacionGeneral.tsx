@@ -8,6 +8,7 @@ import Button from "../../../components/button-convocatoria/Button";
 import { useDispatch } from "react-redux";
 import { informacionGeneral, siguiente } from "../../../features/formularioNuevaConvocatoria/formularioSlice";
 import { store } from "../../../store/store";
+import "./formInformacionGeneral.css"
 
 
 const FormInformacionGeneral = () => {
@@ -29,14 +30,22 @@ const FormInformacionGeneral = () => {
     };
     
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)} className="form-container">
             <h2>Nueva Convocatoria</h2>
-
-            <FormInput nombre='titulo' label="Titulo" type="text" control={control} error={errors.titulo}/>
-            <FormInput nombre='descripcion' label="Descripcion" type='text' control={control} error={errors.descripcion}/>
-            <FormInput nombre='fechaInicio' label="Fecha Inicio" type="datetime-local" control={control} error={errors.fechaInicio}/>
-            <FormInput nombre='fechaFin' label="Fecha Fin" type="datetime-local" control={control} error={errors.fechaFin}/>
-            <Button nombre="Siguiente" className='' type="submit" />
+            <h4>Informacion general</h4>
+            <hr/>
+            <FormInput className='input-container' nombre='titulo' label="Titulo" type="text" control={control} error={errors.titulo}/>
+            <FormInput className='input-container' nombre='descripcion' label="Descripcion" type='text' control={control} error={errors.descripcion}/>
+            <div className="input-fecha-container">
+                <FormInput className='input-container fecha' nombre='fechaInicio' label="Fecha Inicio" type="datetime-local" control={control} error={errors.fechaInicio}/>
+                <FormInput className='input-container fecha' nombre='fechaFin' label="Fecha Fin" type="datetime-local" control={control} error={errors.fechaFin}/>
+            </div>
+            <Button 
+                nombre="Siguiente" 
+                className='btn-form-nav-siguiente' 
+                type="submit"
+                iconoDelBoton={<i className="bi bi-arrow-right"></i>} 
+                />
         </form>
     )
 }
