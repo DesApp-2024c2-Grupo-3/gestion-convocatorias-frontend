@@ -1,4 +1,4 @@
-import { updateContrasenia } from './api';
+
 import { InformacionGeneralValues } from "../pages/FormNuevaConvocatoria/schemas/informacionGeneralSchema";
 import { CamposValues } from "../pages/FormNuevaConvocatoria/FormPages/FormFormato";
 import axios from "axios";
@@ -99,7 +99,7 @@ export const deleteUsuario = async (email: string): Promise<void> => {
 };
 
 export const updateContrasenia = async (email: string): Promise<void> => {
-  
+  console.log('Algo hará')
 };
 
 

@@ -36,7 +36,7 @@ const Login = () => {
         }, 1500);
         
       } else {
-        toast.error("no se recibió un token válido.");
+        toast.error("Debe llenar los campos de inicio de sesión.");
         setError("email o contraseña incorrectos");
       }
     } catch (error) {

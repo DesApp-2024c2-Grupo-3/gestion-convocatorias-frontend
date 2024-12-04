@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { UserContext } from "../Login/userContext";
 import { useNavigate } from "react-router-dom";
-import { deleteUsuario } from "../../api/api";
+import { deleteUsuario, updateContrasenia } from "../../api/api";
 import styles from "./miperfil.module.css";
 import toast from "react-hot-toast";
 
@@ -32,7 +32,7 @@ const MiPerfil: React.FC = () => {
     }
   };
 
-  const handleUpdatePassword = async () => {
+  /* const handleUpdatePassword = async () => {
     if (nuevaContra !== confirmarContra) {
       toast.error("Las contraseñas no coinciden");
       return;
@@ -54,7 +54,7 @@ const MiPerfil: React.FC = () => {
       toast.error("Error al actualizar la contraseña");
       console.log(error);
     }
-  };
+  }; */
 
   return (
     <div className={styles["page"]}>
@@ -95,7 +95,7 @@ const MiPerfil: React.FC = () => {
             <button
               type="button"
               className={styles["button"]}
-              onClick={handleUpdatePassword}
+              /* onClick={handleUpdatePassword} */
             >
               Cambiar contraseña
             </button>
@@ -103,7 +103,7 @@ const MiPerfil: React.FC = () => {
             <button
               type="button"
               className={`${styles["button"]} ${styles["deleteButton"]}`}
-              onClick={() => setShowConfirmation(true)}
+              /* onClick={() => setShowConfirmation(true)} */
             >
               Eliminar cuenta
             </button>
