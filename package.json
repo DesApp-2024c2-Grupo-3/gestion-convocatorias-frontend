@@ -19,6 +19,7 @@
     "boostrap": "^2.0.0",
     "bootstrap": "^5.3.3",
     "lodash": "^4.17.21",
+    "lucide-react": "^0.464.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.10.5",
     "react-dom": "^18.2.0",

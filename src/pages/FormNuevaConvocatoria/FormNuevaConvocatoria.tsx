@@ -8,6 +8,7 @@ import { store } from "../../store/store";
 import { selectStep } from "../../features/formularioNuevaConvocatoria/formularioSlice";
 import { useSelector } from "react-redux";
 import FormFormato from "./FormPages/FormFormato";
+import BackButton from "./components/back-button/BackButton";
 
 const FormNuevaConvocatoria = () => {
 
@@ -20,6 +21,7 @@ const FormNuevaConvocatoria = () => {
                 {/* col sidebar */}
                 <div className={styles['col-sidebar']}>
                     <Sidebar />
+                    
                 </div>
 
                 {/* col home */}
@@ -27,13 +29,14 @@ const FormNuevaConvocatoria = () => {
                     <div className={styles['userDrop']}>
                         <UserDropdown />
                     </div>
-
+                    <div>
+                        <BackButton />
+                    </div>
                     <div className={styles['convocatorias']}>
+                        
                         {step === 1 && <FormInformacionGeneral />}
                         {step === 2  &&  <FormFormato />}
                     </div>
-
-
                 </div>
             </div>
         </div>
