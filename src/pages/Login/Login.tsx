@@ -1,31 +1,49 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Logo from './Logo';
-import styles from './login.module.css';
-import { loginUsuario } from '../../api/api';
+import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import Logo from "./Logo";
+import styles from "./login.module.css";
+import { loginUsuario } from "../../api/api";
+import { UserContext } from "./userContext";
+import toast from "react-hot-toast";
 
 const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const { iniciarSesion } = useContext(UserContext); // Accede al contexto
 
   const ingresarLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Iniciando sesión')
-    
-    const data = await loginUsuario(email, password);
-    console.log('Respuesta del loginUsuario:', data);
+    console.log("Iniciando sesión");
 
-    if (data && data.access_token) {
-        console.log('Token válido');
-        navigate('/');
-    } else {
-        console.log('no se recibió un token válido.');
+    try {
+      const data = await loginUsuario(email, password);
+
+      if (data && data.access_token) {
+        console.log("Token válido");
+
+        iniciarSesion({
+          nombre: data.usuario._doc.nombre,
+          email: data.usuario._doc.email,
+          password: data.usuario._doc.password,
+        });
+
+        localStorage.setItem("token", data.access_token);
+        toast.success('Sesion iniciada correctamente');
+        setTimeout(() => {
+          navigate("/");
+        }, 1500);
+        
+      } else {
+        toast.error("no se recibió un token válido.");
         setError("email o contraseña incorrectos");
+      }
+    } catch (error) {
+      toast.error("Error al iniciar sesión:");
+      setError("Error al iniciar sesión");
     }
-};
-
+  };
 
   const Registrarse = () => {
     navigate("/Register");
@@ -61,8 +79,10 @@ const Login = () => {
                 className={styles["form-control"]}
                 id="email"
                 value={email}
-                onChange={(e) => {setEmail(e.target.value); 
-                                  if (error) setError(null);}} 
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  if (error) setError(null);
+                }}
               />
             </div>
             <div className="mb-3">
@@ -76,8 +96,8 @@ const Login = () => {
                 value={password}
                 onChange={(e) => {
                   setPassword(e.target.value);
-                  if (error) setError(null);}
-                } 
+                  if (error) setError(null);
+                }}
               />
             </div>
             {error && <p className={styles["error-message"]}>{error}</p>}

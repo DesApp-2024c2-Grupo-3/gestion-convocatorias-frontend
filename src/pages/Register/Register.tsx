@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./register.css";
 import { registrarUsuario } from "../../api/api";
+import toast from "react-hot-toast";
 
 const Register: React.FC = () => {
   const [nombre, setNombre] = useState('');
@@ -16,10 +17,15 @@ const Register: React.FC = () => {
     try {
       const data = await registrarUsuario(nombre, email, password);
       if (data) {
-        navigate("/login");
+        toast.success('Cuenta creada exitosamente');
+         setTimeout(() => {
+           navigate("/login");
+         }, 1500);
+        
       }
     } catch (err) {
-      setError('Hubo un error al registrar el usuario. Intenta de nuevo.');
+      toast.error('Hubo un error al registrar el usuario. Intenta de nuevo.');
+      console.log(err);
     }
   };
 
