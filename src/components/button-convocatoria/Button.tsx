@@ -8,17 +8,18 @@ interface Props {
     type?: 'button' | 'submit' | 'reset';
     accion?: MouseEventHandler;
     iconoDelBoton?: React.ReactNode;
+    iconoDelBotonIzq?: React.ReactNode;
     onClick?: () => void;
 }
 
-const ButtonConvocatoria = ({nombre, className, type, accion, iconoDelBoton}: Props) => {
+const ButtonConvocatoria = ({nombre, className, type, accion, iconoDelBoton, iconoDelBotonIzq}: Props) => {
     return (
         <Button
             variant="primary"
             className={className}
             type={type}
             onClick={accion}>
-            {nombre} {iconoDelBoton}
+            {iconoDelBotonIzq} {nombre} {iconoDelBoton}
         </Button>
     )
 }

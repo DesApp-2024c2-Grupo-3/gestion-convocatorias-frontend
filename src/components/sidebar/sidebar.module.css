@@ -38,9 +38,8 @@
     background-color: #ffff;
 }
 
-.bi {
-    font-size: 25px !important;
-    margin-right: 1em !important;
+i {
+    padding-right: 1rem;
 }
 
 

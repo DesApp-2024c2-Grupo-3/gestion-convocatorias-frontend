@@ -18,10 +18,14 @@ const Sidebar = () => {
         navigate('/Form')
     };
 
+    const navigateHome = () => {
+        navigate(-1)
+    };
+
     return  (
         <Nav defaultActiveKey="/home" className={`${Styles.sidebar}`}>
             <img src="https://i.postimg.cc/X7Qgdnc4/Unahur-logo2.png" alt="" className={Styles["img-sidebar"]} />
-            <Nav.Link className={Styles['nav-link']} eventKey="link-1"><i className={Styles["bi bi-broadcast"]}></i> Convocatorias</Nav.Link>
+            <Nav.Link className={Styles['nav-link']} eventKey="link-1" onClick={navigateHome}><i className="bi bi-broadcast"></i> Convocatorias</Nav.Link>
 
            <ButtonConvocatoria 
                 className='btn-convocatoria'

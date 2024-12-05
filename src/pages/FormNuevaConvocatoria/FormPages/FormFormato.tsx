@@ -192,13 +192,12 @@ const FormFormato = () => {
                 <Button
                     nombre="Volver"
                     className="submit-button"
-                    iconoDelBoton={<i className="bi bi-arrow-left"></i>}
+                    iconoDelBotonIzq={<i className="bi bi-arrow-left"></i>}
                     accion={volver}
                     type="button" />
                 <Button
                     nombre="Finalizar"
                     className="submit-button"
-                    iconoDelBoton={<i className="bi bi-arrow-right"></i>}
                     type="submit"
                      />
             </form>

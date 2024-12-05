@@ -11,6 +11,7 @@
     align-items: center;
     box-shadow:  0px 1px rgb(0.1 0.1 0.1);
     color: #ffff;
+    padding: 1.5rem 0;
 }
 
 .btn-convocatoria:hover {
@@ -20,6 +21,7 @@
 
 .btn-convocatoria i {
     margin: 0;
+    padding-left: 1rem;
 }
 
 .btn-inscribirse {

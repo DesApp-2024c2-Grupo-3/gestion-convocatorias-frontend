@@ -42,7 +42,7 @@ const FormInformacionGeneral = () => {
             </div>
             <Button 
                 nombre="Siguiente" 
-                className='btn-form-nav-siguiente' 
+                className='btn-form-nav' 
                 type="submit"
                 iconoDelBoton={<i className="bi bi-arrow-right"></i>} 
                 />

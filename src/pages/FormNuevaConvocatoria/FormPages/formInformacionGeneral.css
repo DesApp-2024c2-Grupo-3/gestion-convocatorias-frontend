@@ -37,9 +37,9 @@ hr {
 
 .error {
     position: absolute;
-    min-height: 1.5rem; /* Reserva el espacio para el mensaje */
-    font-size: 0.9rem;  /* Tamaño de la fuente del mensaje */
-    color: red;         /* Color del mensaje de error */
+    min-height: 1.5rem;
+    font-size: 0.9rem;
+    color: red;
 }
 
 .fecha .error {
@@ -51,7 +51,7 @@ label {
 }
 
 
-.btn-form-nav-siguiente {
+.btn-form-nav {
     display: flex;
     justify-content: space-evenly;
     margin-top: 2rem;
@@ -60,12 +60,13 @@ label {
     background-color: #06A3C9;
     border: 0;
     font-weight: bold;
+    padding: 10px 15px;
 }
 
-.btn-form-nav-siguiente:hover {
+.btn-form-nav:hover {
     background-color: #15b6df !important;
 }
 
-.btn-convocatoria-siguiente i {
+.btn-form-nav i {
     margin: 0;
 }
