@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import Sidebar from "../../components/sidebar/sidebar";
 import UserDropdown from "../../components/UserDropdropdown/UserDropdown";
 import FormInformacionGeneral from "./FormPages/FormInformacionGeneral";
@@ -9,8 +9,15 @@ import { selectStep } from "../../features/formularioNuevaConvocatoria/formulari
 import { useSelector } from "react-redux";
 import FormFormato from "./FormPages/FormFormato";
 import BackButton from "./components/back-button/BackButton";
+import { Navigate } from "react-router-dom";
+import { UserContext } from "../Login/userContext";
 
 const FormNuevaConvocatoria = () => {
+    const { usuario } = useContext(UserContext)
+
+    if (!usuario) {
+        return <Navigate to="/login" />;
+    }
 
     const step = useSelector(selectStep)
 

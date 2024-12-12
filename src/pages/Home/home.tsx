@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Sidebar from '../../components/sidebar/sidebar';
 import ButtonConvocatoria from '../../components/button-convocatoria/Button';
 import Convocatoria from '../../components/convocatoria/Convocatoria'
 import UserDropdown from '../../components/UserDropdropdown/UserDropdown';
 import styles from './home.module.css';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { getConvocatorias } from "../../api/api";
+import { UserContext } from '../Login/userContext';
 
 interface Convocatoria {
     _id:string
@@ -19,6 +20,11 @@ interface Convocatoria {
 }
 
 const Home = () => {
+    const { usuario } = useContext(UserContext)
+
+    if (!usuario) {
+        return <Navigate to="/login" />;
+    }
 
     const [listConvocatorias, setListConvocatorias] = useState<Convocatoria[]>([])
     const navigate = useNavigate();
@@ -48,6 +54,7 @@ const Home = () => {
                 descripcion={convoc.informacionGeneral.descripcion}
                 fechaInicio={new Date(convoc.informacionGeneral.fechaInicio)}
                 fechaFin={new Date(convoc.informacionGeneral.fechaFin)}
+                formato={convoc.formato}
                 /> 
             ))
     ) : (

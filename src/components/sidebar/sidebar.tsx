@@ -19,7 +19,7 @@ const Sidebar = () => {
     };
 
     const navigateHome = () => {
-        navigate(-1)
+        navigate('/')
     };
 
     return  (

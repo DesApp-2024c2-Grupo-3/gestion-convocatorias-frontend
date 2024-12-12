@@ -13,6 +13,7 @@ interface Props {
   descripcion: string;
   fechaInicio: Date;
   fechaFin: Date;
+  formato: string[];
 }
 
 interface Usuario {
@@ -26,6 +27,7 @@ const Convocatoria = ({
   descripcion,
   fechaInicio,
   fechaFin,
+  formato,
 }: Props): JSX.Element => {
   const [showModal, setShowModal] = useState(false); // Muestra/oculta el modal
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false); // Modal de confirmación de eliminación
@@ -173,6 +175,15 @@ const Convocatoria = ({
           </table>
         </Modal.Body>
         <Modal.Footer>
+          <button className="btn-cerrar" onClick={() =>
+            alert(JSON.stringify(
+              {formato},
+              null,
+              2
+            ))
+          }>
+            Ver formato
+          </button>
           <button onClick={handleShowDeleteConfirmation} className="btn-cerrar">
             Eliminar
           </button>
