@@ -32,7 +32,7 @@ const Login = () => {
         localStorage.setItem("token", data.access_token);
         toast.success('Sesion iniciada correctamente');
         setTimeout(() => {
-          navigate("/");
+          navigate("/Convocatorias");
         }, 1500);
         
       } else {

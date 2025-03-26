@@ -26,7 +26,7 @@
     width: 20% ;
     margin: 0;
     padding: 0;
-    position: relative;    
+    position: sticky;    
 }
 
 
@@ -39,37 +39,20 @@
 
 
 
-h2 {
-    color: gray;
-}
 
 .col-home .btn-convocatoria {
     width: 30%;
 }
 
 
-
- .userDrop {
-    display: flex;
-    justify-content: end;
-    height: 70px;
-    padding: 0;
-    margin: 0;
-    border-bottom: 2px solid #56A42C;
-    width: 100%;
-}    
-
-.convocatorias {
+.main-container {
     display: flex;
     justify-content: center;
     flex-direction: row;
     margin-top: 1em;
     align-items: center;
-    width: 100%;
     gap: 50px;
     flex-wrap: wrap;
-    margin: 1em;
-    padding: 1em;
 } 
 
 

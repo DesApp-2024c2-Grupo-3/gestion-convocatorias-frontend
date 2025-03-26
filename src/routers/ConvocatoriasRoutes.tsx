@@ -5,15 +5,20 @@ import Home from "../pages/Home/home";
 import FormNuevaConvocatoria from "../pages/FormNuevaConvocatoria/FormNuevaConvocatoria";
 import Register from "../pages/Register/Register";
 import MiPerfil from "../pages/PerfilDeUsuario/MiPerfil";
+import ConvocatoriasPage from "../pages/ConvocatoriasPage/ConvocatoriasPage"
+import Formatos from "../pages/Formatos/Formatos";
 
 export const ConvocatoriasRoutes = () => {
     return (
       <>
         <Router>
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Home />} >
+                <Route path="/Convocatorias" element={<ConvocatoriasPage />} />
+                <Route path="/Formatos" element={<Formatos />} />
+                <Route path="/Form" element={<FormNuevaConvocatoria />} />
+            </ Route>
             <Route path="/Login" element={<Login />} />
-            <Route path="/Form" element={<FormNuevaConvocatoria />} />
             <Route path="/Register" element={<Register />} />
             <Route path="/mi-perfil" element={<MiPerfil />} />
           </Routes>

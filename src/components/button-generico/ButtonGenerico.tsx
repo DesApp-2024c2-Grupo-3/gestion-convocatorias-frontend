@@ -12,7 +12,7 @@ interface Props {
     onClick?: () => void;
 }
 
-const ButtonConvocatoria = ({nombre, className, type, accion, iconoDelBoton, iconoDelBotonIzq}: Props) => {
+const ButtonGenerico = ({nombre, className, type, accion, iconoDelBoton, iconoDelBotonIzq}: Props) => {
     return (
         <Button
             variant="primary"
@@ -24,4 +24,4 @@ const ButtonConvocatoria = ({nombre, className, type, accion, iconoDelBoton, ico
     )
 }
 
-export default ButtonConvocatoria;
+export default ButtonGenerico;
