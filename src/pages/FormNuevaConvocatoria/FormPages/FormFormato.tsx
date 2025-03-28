@@ -1,208 +1,72 @@
 import React, { useState } from "react";
-import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
-import Button from "../../../components/button-convocatoria/Button";
-import "./FormFormato.css";
-import { useDispatch, useSelector } from "react-redux";
-import { formato, atras, reset, informacionGeneral } from "../../../features/formularioNuevaConvocatoria/formularioSlice";
-import { RootState } from "../../../store/store";
-import { useNavigate } from "react-router-dom";
-import { postConvocatoria } from "../../../api/api";
-import toast from "react-hot-toast";
+import FormCrearFormato from "./FormCrearFormato";
+import { CustomButton } from "../../../components/CustomButton/CustomButtons";
 
-export type CamposValues = {
-    campos: (
-        | {
-              nombre: string;
-              tipo: "Texto";
-              maxNumeroDeCaracteres: number | undefined;
-          }
-        | {
-              nombre: string;
-              tipo: "Desplegable";
-              opciones: string[];
-          }
-    )[];
-};
+import styles from "../formConvocatorias.module.css"
+import { formatSelectorBtn, formNavAnteriorBtn, formNavSiguienteBtn } from "../../../components/CustomButton/buttonStyles";
+import { ArrowBack, ArrowForward } from "@mui/icons-material";
+import { IConvocatoria } from "../FormNuevaConvocatoria";
 
-const FormFormato = () => {
+interface FormFormatoProps {
+    setStep: (step: number) => void;
+    savedData: IConvocatoria
+    setData: (data: IConvocatoria) => void;
+}
 
-    const { register, control, handleSubmit, setValue, formState: { errors } } = useForm<CamposValues>({
-        defaultValues: {
-            campos: [
-                { nombre: '', tipo: 'Texto', maxNumeroDeCaracteres: 0 },
-            ]
-        }
-    });
-
-    const { fields, prepend, append, remove } = useFieldArray({
-        name: 'campos',
-        control,
-        rules: {
-            required: "Debe haber al menos un campo"
-        }
-    });
-
-    const [selectedType, setSelectedType] = useState<string[]>(fields.map(() => "Texto"));
-
-    const removerCampo = (index: number) => {
-        remove(index);
-        setSelectedType(selectedType.filter((_, i) => i !== index));
-    };
-
-    const agregarCampo = () => {
-        append({
-            nombre: 'Nuevo Campo',
-            tipo: "Texto",
-            maxNumeroDeCaracteres: 0
-        });
-        setSelectedType([...selectedType, "Texto"]);
-    };
-
-    const agregarCampoAlInicio = () => {
-        prepend({
-            nombre: 'Nuevo Campo',
-            tipo: "Texto",
-            maxNumeroDeCaracteres: 0
-        });
-        setSelectedType(["Texto", ...selectedType]);
-    };
-
-    const onChangeTipo = (e: React.ChangeEvent<HTMLSelectElement>, index: number) => {
-        const nuevoTipo = e.target.value as "Texto" | "Desplegable";
-        setSelectedType(selectedType.map((tipo, i) => (i === index ? nuevoTipo : tipo)));
-
-        if (nuevoTipo === "Texto") {
-            setValue(`campos.${index}.maxNumeroDeCaracteres`, 0);
-            setValue(`campos.${index}.opciones`, []);
-        } else {
-            setValue(`campos.${index}.opciones`, []);
-            setValue(`campos.${index}.maxNumeroDeCaracteres`, undefined);
-        }
-    };
-
-    const onOptionsBlur = (e: React.FocusEvent<HTMLInputElement>, index: number) => {
-        const opciones = e.target.value.split(";").map(opcion => opcion.trim()).filter(opcion => opcion);
-        setValue(`campos.${index}.opciones`, opciones);
-    };
-   
-    const dispatch = useDispatch()
-    const informacionGeneralData = useSelector((state: RootState) => state.formulario.informacionGeneral)
-    const formatoData = useSelector((state: RootState) => state.formulario.formato)
-    
-    const volver = () => {
-        dispatch(atras())
-    }
-    const navigate = useNavigate();
-
-    const onSubmit: SubmitHandler<CamposValues> = (formatoData) => {
-        console.log(formatoData);
-        
-        postConvocatoria(
-            informacionGeneralData,
-            formatoData
-        )
-        toast.success("Convocatoria creada correctamente");
-        dispatch(formato(formatoData))
-        dispatch(reset())
-        navigate('/')
-    };
+const FormFormato = ({ setStep, savedData, setData }: FormFormatoProps) => {
+    const [tipoFormulario, setTipoFormulario] = useState<JSX.Element | null>(null);
+    const [formato, setFormato] = useState<string | null>(null);
 
     return (
-        <div className="form-container">
-            <h2>Nueva Convocatoria</h2>
-            <h4>Formato</h4>
+        <>
+            <h2>Definir Formato</h2>
+            <div className={styles["btn-select-formato-group"]}>
+                <CustomButton
+                    nombre="Seleccionar Formato"
+                    accion={() => {setTipoFormulario(<SelectorFormato />)}}
+                    style={formatSelectorBtn}
+                />
+                <CustomButton
+                    nombre="Crear Formato"
+                    accion={() => {setTipoFormulario(<FormCrearFormato setFormato={setFormato} />)}}
+                    style={formatSelectorBtn}
+                />
+            </div>
             <hr />
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="button-group">
-                    <Button
-                        nombre="Agregar Campo al final"
-                        className="add-button"
-                        type="button"
-                        accion={agregarCampo} />
-                    <Button
-                        nombre="Agregar Campo al inicio"
-                        className="add-button"
-                        type="button"
-                        accion={agregarCampoAlInicio} />
-                </div>
 
-                {fields.map((field, index) => (
-                    <fieldset key={field.id} className="form-fieldset">
-                        <label className="form-label">
-                            <span>Nombre del Campo</span>
-                            <input
-                                {...register(`campos.${index}.nombre`, { required: 'El nombre del campo es requerido'  })}
-                                className="form-input"
-                                required
-                            />
-                        </label>
-                        <label className="form-label">
-                            <span>Tipo</span>
-                            <select
-                                {...register(`campos.${index}.tipo`, { required: 'Debe seleccionar el Tipo del campo' })}
-                                onChange={(e) => onChangeTipo(e, index)}
-                                className="form-select"
-                                required
-                            >
-                                <option></option>
-                                <option value="Texto">Texto</option>
-                                <option value="Desplegable">Desplegable</option>
-                            </select>
-                        </label>
+            {tipoFormulario}
 
-                        {selectedType[index] === "Texto" && (
-                            <label className="form-label">
-                                <span>Máximo Número de Caracteres</span>
-                                <input
-                                    type="number"
-                                    {...register(`campos.${index}.maxNumeroDeCaracteres`, {
-                                        required: 'Debe indicar la cantidad maxima de caracteres del campo',
-                                        min: {
-                                            value: 1,
-                                            message: "Debe ser mayor a 0"
-                                        }
-                                    })}
-                                    className="form-input"
-                                    min={1}
-                                    required
-                                />
-                            </label>
-                        )}
-
-                        {selectedType[index] === "Desplegable" && (
-                            <label className="form-label">
-                                <span>Opciones (separadas por ;)</span>
-                                <input
-                                    type="text"
-                                    placeholder="Ejemplo: Opción 1;Opción 2"
-                                    onBlur={(e) => onOptionsBlur(e, index)}
-                                    className="form-input"
-                                    required
-                                />
-                            </label>
-                        )}
-
-                        <Button
-                            nombre="Eliminar"
-                            className="remove-button"
-                            accion={() => removerCampo(index)} />
-                    </fieldset>
-                ))}
-                <p className="error-message">{errors.campos?.root?.message}</p>
-                <Button
-                    nombre="Volver"
-                    className="submit-button"
-                    iconoDelBotonIzq={<i className="bi bi-arrow-left"></i>}
-                    accion={volver}
-                    type="button" />
-                <Button
-                    nombre="Finalizar"
-                    className="submit-button"
-                    type="submit"
-                     />
-            </form>
-        </div>
+            <div className={styles["nav-btn-group"]}>
+                <CustomButton
+                        nombre="Anterior"
+                        iconoIzquierdo={<ArrowBack />}
+                        style={formNavAnteriorBtn}
+                        accion={() => setStep(1)}
+                />
+                <CustomButton
+                    nombre="Siguiente"
+                    iconoDerecho={<ArrowForward />}
+                    style={formNavSiguienteBtn}
+                    accion={() => {
+                        if (!formato) {
+                            alert("Por favor selecciona o crea un formato")
+                        } else {
+                            setStep(3)
+                            setData({ ...savedData, formato })
+                        }
+                    }}
+                />
+            </div>
+        </>
     );
 };
 
 export default FormFormato;
+
+const SelectorFormato = () => {
+    return (
+        <>
+            <h3>Seleccionar Formato</h3>
+        </>
+    );
+};

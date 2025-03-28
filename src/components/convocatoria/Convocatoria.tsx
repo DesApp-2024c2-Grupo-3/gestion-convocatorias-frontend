@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import Card from "react-bootstrap/Card";
 import Modal from "react-bootstrap/Modal";
-import Button from "../button-convocatoria/Button";
+import ButtonGenerico from "../button-generico/ButtonGenerico";
 import "/src/components/convocatoria/convocatoria.css";
-import ButtonConvocatoria from "../button-convocatoria/Button";
 import { deleteConvocatoria, putFechaConvocatoria } from "../../api/api";
 import toast from "react-hot-toast";
 
@@ -13,7 +12,7 @@ interface Props {
   descripcion: string;
   fechaInicio: Date;
   fechaFin: Date;
-  formato: string[];
+  formato: string;
 }
 
 interface Usuario {
@@ -78,7 +77,7 @@ const Convocatoria = ({
           Inscripción hasta: {editableFechaFin.toLocaleDateString()}
         </Card.Subtitle>
         <div className="btn-card-convocatoria">
-          <Button
+          <ButtonGenerico
             accion={handleShowModal}
             className="btn-inscribirse btn-prueba"
             nombre="Ver más"

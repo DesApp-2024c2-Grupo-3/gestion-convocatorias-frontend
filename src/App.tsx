@@ -1,20 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import Home from "./pages/Home/home";
-import Login from "./pages/Login/Login";
 import { ConvocatoriasRoutes } from "./routers/ConvocatoriasRoutes";
-import { Provider } from "react-redux";
-import { store } from "./store/store";
 import { Toaster } from "react-hot-toast";
 import { UserProvider } from "./pages/Login/userContext";
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import 'dayjs/locale/es'
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc"
+import timezone from "dayjs/plugin/timezone"
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 export default function App() {
   return (
-    <Provider store={store}>
-      <UserProvider>
-        <Toaster position="top-center" />
-        <ConvocatoriasRoutes />
-      </UserProvider>
-    </Provider>
+        <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es">
+            <UserProvider>
+                <Toaster position="top-center" />
+                    <ConvocatoriasRoutes />
+            </UserProvider>
+        </LocalizationProvider>
   );
 }

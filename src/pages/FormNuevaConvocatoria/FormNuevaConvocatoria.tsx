@@ -1,52 +1,41 @@
-import React, { useContext } from "react";
-import Sidebar from "../../components/sidebar/sidebar";
-import UserDropdown from "../../components/UserDropdropdown/UserDropdown";
-import FormInformacionGeneral from "./FormPages/FormInformacionGeneral";
+import React, { useState } from "react";
 
-import styles from '../Home/home.module.css'
-import { store } from "../../store/store";
-import { selectStep } from "../../features/formularioNuevaConvocatoria/formularioSlice";
-import { useSelector } from "react-redux";
+import InformacionGeneral from "./FormPages/InformacionGeneral";
 import FormFormato from "./FormPages/FormFormato";
-import BackButton from "./components/back-button/BackButton";
-import { Navigate } from "react-router-dom";
-import { UserContext } from "../Login/userContext";
+import FormArchivos from "./FormPages/FormArchivos";
+
+import styles from './formConvocatorias.module.css';
+import { string } from "zod";
+
+export interface IConvocatoria {
+    titulo: string;
+    descripcion: string;
+    fechaInicio: Date;
+    fechaFin: Date;
+    formato: string;
+}
 
 const FormNuevaConvocatoria = () => {
-    const { usuario } = useContext(UserContext)
-
-    if (!usuario) {
-        return <Navigate to="/login" />;
-    }
-
-    const step = useSelector(selectStep)
+    const [step, setStep] = useState(1);
+    const [data, setData] = useState<IConvocatoria>({
+        titulo: '',
+        descripcion: '',
+        fechaInicio: new Date(),
+        fechaFin: new Date(),
+        formato: ''
+    });
 
     return (
-        <div className={styles['container-fluid']}>
-            {/* row principal */}
-            <div className={styles['row-principal']}>
-                {/* col sidebar */}
-                <div className={styles['col-sidebar']}>
-                    <Sidebar />
-                    
-                </div>
+        <>
+            <div className={styles['form-container']}>
 
-                {/* col home */}
-                <div className={styles['col-home']}>
-                    <div className={styles['userDrop']}>
-                        <UserDropdown />
-                    </div>
-                    <div>
-                        <BackButton />
-                    </div>
-                    <div className={styles['convocatorias']}>
-                        
-                        {step === 1 && <FormInformacionGeneral />}
-                        {step === 2  &&  <FormFormato />}
-                    </div>
-                </div>
+                {step === 1 && <InformacionGeneral setStep={setStep} savedData={data} setData={setData} />}
+                {step === 2 && <FormFormato setStep={setStep} savedData={data} setData={setData} />}
+                {step === 3 && <FormArchivos savedData={data} />}
+                <button onClick={() => console.log(data)}>show data</button>
             </div>
-        </div>
+
+        </>
     )
 }
 
