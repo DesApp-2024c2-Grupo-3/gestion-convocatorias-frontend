@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { getFormatos } from '../../api/api';
 import FormatoCard from './components/FormatoCard';
 
-interface Formato {
+export interface FormatoProps {
     _id: string;
     nombreDelFormato: string;
     campos: any[]
 }
 
 const Formatos = () => {
-    const [listFormatos, setListFormatos] = useState<Formato[]>([])
+    const [listFormatos, setListFormatos] = useState<FormatoProps[]>([])
 
     useEffect(() => {
         const getFormatosList = async () => {
@@ -26,7 +26,7 @@ const Formatos = () => {
     const formatos = listFormatos.length ? (
         listFormatos.map((formato, index) => (
             <FormatoCard
-                idFormato={formato._id}
+                _id={formato._id}
                 key={index}
                 nombreDelFormato={formato.nombreDelFormato}
                 campos={formato.campos}
