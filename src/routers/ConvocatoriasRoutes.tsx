@@ -7,6 +7,7 @@ import Register from "../pages/Register/Register";
 import MiPerfil from "../pages/PerfilDeUsuario/MiPerfil";
 import ConvocatoriasPage from "../pages/ConvocatoriasPage/ConvocatoriasPage"
 import Formatos from "../pages/Formatos/Formatos";
+import FormInscripcionProyectos from "../pages/FormInscripcionProyecto/components/FormPages/schemas/FormInscripcionProyecto";
 
 export const ConvocatoriasRoutes = () => {
     return (
@@ -17,6 +18,7 @@ export const ConvocatoriasRoutes = () => {
                 <Route path="/Convocatorias" element={<ConvocatoriasPage />} />
                 <Route path="/Formatos" element={<Formatos />} />
                 <Route path="/Form" element={<FormNuevaConvocatoria />} />
+                <Route path="/Convocatorias/:id/inscripcion/:formato" element={<FormInscripcionProyectos />} />
             </ Route>
             <Route path="/Login" element={<Login />} />
             <Route path="/Register" element={<Register />} />
