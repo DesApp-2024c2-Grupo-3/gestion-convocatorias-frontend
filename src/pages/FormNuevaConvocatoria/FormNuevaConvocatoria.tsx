@@ -4,7 +4,7 @@ import InformacionGeneral from "./FormPages/InformacionGeneral";
 import FormFormato from "./FormPages/FormFormato";
 import FormArchivos from "./FormPages/FormArchivos";
 
-import styles from './formConvocatorias.module.css';
+import styles from '../Home/formularios.module.css'
 import { string } from "zod";
 
 export interface IConvocatoria {

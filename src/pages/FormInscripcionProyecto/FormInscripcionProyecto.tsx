@@ -1,8 +1,9 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 
-const FormInscripcionProyectos = () => {
+import styles from "../Home/formularios.module.css"
 
+const FormInscripcionProyectos = () => {
     const { id, formato } = useParams()
 
     return (

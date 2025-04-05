@@ -7,7 +7,7 @@ import Register from "../pages/Register/Register";
 import MiPerfil from "../pages/PerfilDeUsuario/MiPerfil";
 import ConvocatoriasPage from "../pages/ConvocatoriasPage/ConvocatoriasPage"
 import Formatos from "../pages/Formatos/Formatos";
-import FormInscripcionProyectos from "../pages/FormInscripcionProyecto/components/FormPages/schemas/FormInscripcionProyecto";
+import FormInscripcionProyectos from "../pages/FormInscripcionProyecto/FormInscripcionProyecto";
 
 export const ConvocatoriasRoutes = () => {
     return (

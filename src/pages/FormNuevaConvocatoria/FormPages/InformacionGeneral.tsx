@@ -11,7 +11,7 @@ import dayjs from "dayjs";
 import { FormHelperText, TextField } from "@mui/material";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 
-import styles from "../formConvocatorias.module.css";
+import styles from "../../Home/formularios.module.css";
 import { CustomButton } from "../../../components/CustomButton/CustomButtons";
 import { ArrowBack, ArrowForward } from "@mui/icons-material";
 import { formNavAnteriorBtn, formNavSiguienteBtn } from "../../../components/CustomButton/buttonStyles";
