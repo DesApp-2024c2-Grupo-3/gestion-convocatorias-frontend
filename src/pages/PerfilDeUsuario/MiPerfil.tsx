@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { deleteUsuario, updateContrasenia } from "../../api/api";
 import styles from "./miperfil.module.css";
 import toast from "react-hot-toast";
+import FileUploader from "../../components/FileUploader/FileUploader";
 
 const MiPerfil: React.FC = () => {
   const { usuario, cerrarSesion } = useContext(UserContext);
@@ -63,7 +64,7 @@ const MiPerfil: React.FC = () => {
           <button
             type="button"
             className={styles["backButton"]}
-            onClick={() => navigate("/")}
+            onClick={() => navigate(-1)}
           >
             ← Volver
           </button>
@@ -76,6 +77,8 @@ const MiPerfil: React.FC = () => {
             {usuario?.nombre}
             <label className={styles["label"]}>Email:</label>
             {usuario?.email}
+            <label className={styles["label"]}>Currículum Vitae</label>
+            <FileUploader />
             <label className={styles["label"]}>Nueva contraseña:</label>
             <input
               className={styles["input"]}
