@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { deleteUsuario, updateContrasenia } from "../../api/api";
 import styles from "./miperfil.module.css";
 import toast from "react-hot-toast";
-import FileUploader from "../../components/FileUploader/FileUploader";
+import CvUploader from "../../components/FileUploader/CvUploader";
 
 const MiPerfil: React.FC = () => {
   const { usuario, cerrarSesion } = useContext(UserContext);
@@ -78,7 +78,7 @@ const MiPerfil: React.FC = () => {
             <label className={styles["label"]}>Email:</label>
             {usuario?.email}
             <label className={styles["label"]}>Currículum Vitae</label>
-            <FileUploader />
+            <CvUploader />            
             <label className={styles["label"]}>Nueva contraseña:</label>
             <input
               className={styles["input"]}

@@ -1,10 +1,17 @@
-
 import React, { createContext, useState } from "react";
+import { Buffer } from "buffer";
+
+interface Cv {
+  nombre: string;
+  tipo: string;
+  contenido: string
+}
 
 interface Usuario {
   nombre: string;
   email: string;
   password: string;
+  cv: Cv | null
 }
 
 interface UserContextProps {
@@ -26,8 +33,19 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   });
 
   const iniciarSesion = (usuario: Usuario) => {
-    setUsuario(usuario);
-    localStorage.setItem("usuario", JSON.stringify(usuario));
+    // Clonamos y transformamos el contenido del CV a base64 si existe
+    const usuarioFormateado: Usuario = {
+      ...usuario,
+      cv: usuario.cv
+        ? {
+            ...usuario.cv,
+            contenido: Buffer.from(usuario.cv.contenido).toString('base64'),
+          }
+        : null,
+    };
+  
+    setUsuario(usuarioFormateado);
+    localStorage.setItem("usuario", JSON.stringify(usuarioFormateado));
   };
 
   const cerrarSesion = () => {
