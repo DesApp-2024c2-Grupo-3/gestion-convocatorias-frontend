@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import FormCrearFormato from "./FormCrearFormato";
 import { CustomButton } from "../../../components/CustomButton/CustomButtons";
 
-import styles from "../formConvocatorias.module.css"
+import styles from "../../Home/formularios.module.css";
 import { formatSelectorBtn, formNavAnteriorBtn, formNavSiguienteBtn } from "../../../components/CustomButton/buttonStyles";
 import { ArrowBack, ArrowForward } from "@mui/icons-material";
 import { IConvocatoria } from "../FormNuevaConvocatoria";

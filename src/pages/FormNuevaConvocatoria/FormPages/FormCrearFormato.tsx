@@ -11,7 +11,7 @@ import {
 } from "../schemas/nuevoFormatoSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TextField } from "@mui/material";
-import styles from "../formConvocatorias.module.css"
+import styles from "../../Home/formularios.module.css";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { CustomButton } from "../../../components/CustomButton/CustomButtons";
 import { btnRojo, formatSelectorBtn } from "../../../components/CustomButton/buttonStyles";

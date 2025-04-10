@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useState } from "react";
 import { postConvocatoria } from "../../../api/api";
 import { IConvocatoria } from "../FormNuevaConvocatoria";
+import styles from "../../Home/formularios.module.css";
 
 interface FormArchivosProps {
     savedData: IConvocatoria;

@@ -15,6 +15,11 @@ p {
     padding-bottom: 2em;
 }
 
+.input-field-dinamic {
+    display: flex;
+    justify-content: space-between;
+}
+
 .mensaje-error {
     position: absolute;
 }

@@ -1,4 +1,4 @@
-import { Dialog, DialogActions, DialogContent, DialogTitle, IconButton } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from "@mui/icons-material/Delete";
 import SaveAsIcon from '@mui/icons-material/SaveAs';
@@ -7,6 +7,7 @@ import { ConvocatoriaCardProps } from "./ConvocatoriaCard";
 import { DateTimePicker } from "@mui/x-date-pickers";
 import dayjs, { Dayjs } from "dayjs";
 import { CustomButton } from "../../../components/CustomButton/CustomButtons";
+import { Link } from "react-router-dom";
 import { btnRojo, btnVerdeUnahur } from "../../../components/CustomButton/buttonStyles";
 import { getFormatoById, getFormatoByNombre, patchFechaConvocatoria } from "../../../api/api";
 import toast from "react-hot-toast";
@@ -145,6 +146,13 @@ const ConvocatoriaDialog = ({ convocatoriaData, showDialogState, fechaFinState }
                     iconoIzquierdo={<DeleteIcon />}
                     style={btnRojo}
                 />
+                
+                <Button
+                    variant="contained"
+                    component={Link}
+                    to={`/Convocatorias/${convocatoriaData.idConvocatoria}/inscripcion/${convocatoriaData.formato}`}
+                    sx={{ backgroundColor: "#56A42C" }}
+                >Inscribirse</Button>
             </DialogActions>
 
         </Dialog>
