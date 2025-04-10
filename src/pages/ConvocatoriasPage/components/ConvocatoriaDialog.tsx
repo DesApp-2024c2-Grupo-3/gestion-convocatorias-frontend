@@ -8,8 +8,9 @@ import { DateTimePicker } from "@mui/x-date-pickers";
 import dayjs, { Dayjs } from "dayjs";
 import { CustomButton } from "../../../components/CustomButton/CustomButtons";
 import { btnRojo, btnVerdeUnahur } from "../../../components/CustomButton/buttonStyles";
-import { patchFechaConvocatoria } from "../../../api/api";
+import { getFormatoById, getFormatoByNombre, patchFechaConvocatoria } from "../../../api/api";
 import toast from "react-hot-toast";
+import FormatoDialog from "../../../components/FormatoDialog/FormatoDialog";
 
 interface ConvocatoriaDialogProps {
     convocatoriaData: ConvocatoriaCardProps
@@ -31,6 +32,12 @@ const ConvocatoriaDialog = ({ convocatoriaData, showDialogState, fechaFinState }
 
     const [fechaFinPicker, setFechaFinPicker] = useState<Dayjs | null>(dayjs(fechaFinState.editableFechaFin).tz("America/Argentina/Buenos_Aires"))
     const [showSubmitButton, setShowSubmitButton] = useState(false)
+    const [formatoData, setFormatoData] = useState({
+        _id: '',
+        nombreDelFormato: '',
+        campos: []
+    })
+    const [showFormatoDialog, setShowFormatoDialog] = useState(false)
 
     const handleClose = () => {
         //set fecha porque si se sale del dialog antes de guardar
@@ -65,6 +72,7 @@ const ConvocatoriaDialog = ({ convocatoriaData, showDialogState, fechaFinState }
     }
 
     return (
+        <>
         <Dialog
             open={showDialogState.showDialog}
             onClose={handleClose}
@@ -125,6 +133,11 @@ const ConvocatoriaDialog = ({ convocatoriaData, showDialogState, fechaFinState }
             <DialogActions>
                 <CustomButton
                     nombre="Ver Formato"
+                    accion={async () => {
+                        const formato = await getFormatoById(convocatoriaData.formato)
+                        setFormatoData(formato)
+                        setShowFormatoDialog(true)
+                    }}
                 />
 
                 <CustomButton
@@ -135,6 +148,12 @@ const ConvocatoriaDialog = ({ convocatoriaData, showDialogState, fechaFinState }
             </DialogActions>
 
         </Dialog>
+        
+            <FormatoDialog 
+                formatoData={formatoData}
+                showDialogState={{showFormatoDialog, setShowFormatoDialog}}
+            />
+        </>
     )
 
 }

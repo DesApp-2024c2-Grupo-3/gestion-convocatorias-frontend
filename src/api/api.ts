@@ -17,6 +17,11 @@ export const getFormatos = async () => {
     return response.data
 }
 
+export const getFormatoById = async (id: string) => {
+    const response = await axios.get(`http://localhost:3000/formato/${id}`)
+    return response.data
+}
+
 export const getFormatoByNombre = async (nombre: string) => {
     const response = await axios.get(`http://localhost:3000/formato/nombre/${nombre}`);
     return response.data;
