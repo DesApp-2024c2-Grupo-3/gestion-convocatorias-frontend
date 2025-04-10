@@ -1,11 +1,11 @@
 import { Card, CardActionArea, CardContent } from "@mui/material";
 import React, { useState } from "react";
 import { FormatoProps } from "../Formatos";
-import FormatoDialog from "./FormatoDialog";
+import FormatoDialog from "../../../components/FormatoDialog/FormatoDialog";
 
 const FormatoCard = ({ _id, nombreDelFormato, campos }: FormatoProps) => {
 
-    const [showDialog, setShowDialog] = useState(false)
+    const [showFormatoDialog, setShowFormatoDialog] = useState(false)
 
 
     return (
@@ -17,7 +17,7 @@ const FormatoCard = ({ _id, nombreDelFormato, campos }: FormatoProps) => {
                     width: '20rem'
                 }}>
                 <CardActionArea
-                    onClick={() => setShowDialog(true)}
+                    onClick={() => setShowFormatoDialog(true)}
                 >
                     <CardContent>
                         <h5>{nombreDelFormato}</h5>
@@ -27,7 +27,7 @@ const FormatoCard = ({ _id, nombreDelFormato, campos }: FormatoProps) => {
 
             <FormatoDialog
                 formatoData={{_id, nombreDelFormato, campos}}
-                showDialogState={{showDialog, setShowDialog}}
+                showDialogState={{showFormatoDialog, setShowFormatoDialog}}
             />
         </>
     )

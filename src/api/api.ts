@@ -17,6 +17,11 @@ export const getFormatos = async () => {
     return response.data
 }
 
+export const getFormatoById = async (id: string) => {
+    const response = await axios.get(`http://localhost:3000/formato/${id}`)
+    return response.data
+}
+
 export const getFormatoByNombre = async (nombre: string) => {
     const response = await axios.get(`http://localhost:3000/formato/nombre/${nombre}`);
     return response.data;
@@ -112,4 +117,20 @@ export const updateContrasenia = async (email: string): Promise<void> => {
     console.log('Algo hará')
 };
 
-
+export const updateCv = async (email:string, archivo: FormData) => {
+    console.log(archivo)
+    archivo.append("email", email)
+    try {
+        const response = await axios.put(
+            'http://localhost:3000/usuario/cv', archivo,
+            {headers: { "Content-Type": "multipart/form-data" }}
+        );
+        if (response.status === 200) {
+            console.log("funciono!!!!!!!!!");
+        } else {
+            console.log("no funciono :(");
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}

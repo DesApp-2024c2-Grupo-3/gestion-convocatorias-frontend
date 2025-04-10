@@ -27,6 +27,7 @@ const Login = () => {
           nombre: data.usuario._doc.nombre,
           email: data.usuario._doc.email,
           password: data.usuario._doc.password,
+          cv: data.usuario._doc.cv
         });
 
         localStorage.setItem("token", data.access_token);

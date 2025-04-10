@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { FormatoProps } from "../Formatos";
+import { FormatoProps } from "../../pages/Formatos/Formatos";
 import { Dialog, DialogContent, DialogTitle, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close"
-import InputCampo from "./InputCampo";
+import InputCampo from "../../pages/Formatos/components/InputCampo";
 
 interface FormatoDialogProps {
     formatoData: FormatoProps;
@@ -10,14 +10,14 @@ interface FormatoDialogProps {
 }
 
 interface ShowDialogStateProps {
-    showDialog: boolean;
-    setShowDialog: React.Dispatch<React.SetStateAction<boolean>>;
+    showFormatoDialog: boolean;
+    setShowFormatoDialog: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const FormatoDialog = ({ formatoData, showDialogState }: FormatoDialogProps) => {
 
     const handleClose = () => {
-        showDialogState.setShowDialog(false)
+        showDialogState.setShowFormatoDialog(false)
     }
 
     const listCampos = formatoData.campos.map((campo, index) => (
@@ -29,7 +29,7 @@ const FormatoDialog = ({ formatoData, showDialogState }: FormatoDialogProps) => 
 
     return (
         <Dialog
-            open={showDialogState.showDialog}
+            open={showDialogState.showFormatoDialog}
             onClose={handleClose}
             fullWidth
             maxWidth="sm"

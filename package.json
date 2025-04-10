@@ -21,6 +21,7 @@
     "axios": "^1.6.7",
     "boostrap": "^2.0.0",
     "bootstrap": "^5.3.3",
+    "buffer": "^6.0.3",
     "dayjs": "^1.11.13",
     "lodash": "^4.17.21",
     "lucide-react": "^0.464.0",
