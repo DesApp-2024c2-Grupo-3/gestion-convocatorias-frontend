@@ -3,13 +3,17 @@ import { useParams } from "react-router-dom";
 
 import styles from "../Home/formularios.module.css";
 import EquipoDeTrabajo from "./FormPages/EquipoDeTrabajo";
+import DatosDelProyecto from "./FormPages/DatosDelProyecto/DatosDelProyecto";
 import { Button } from "@mui/material";
 import { UserContext } from "../Login/userContext";
 import { postProyecto } from "../../api/proyectos.api";
 
 export interface IFormularioInscripcion {
-    autor: string | undefined
-    invitados: string[]
+    autor: string | undefined;
+    invitados: string[];
+    titulo?: string;
+    categoria?: string;
+    objetivos?: string;
 }
 
 const FormInscripcionProyectos = () => {
@@ -29,7 +33,12 @@ const FormInscripcionProyectos = () => {
                     irSiguiente={setStep}
                     datosDelFormulario={datosDelFormulario}
                     setDatosDelFormulario={setDatosDelFormulario} /> }
-                {step === 2 && <h2>parte 2</h2>}
+                {step === 2 && <DatosDelProyecto
+                    irSiguiente={setStep}
+                    irAtras={setStep}
+                    datosDelFormulario={datosDelFormulario}
+                    setDatosDelFormulario={setDatosDelFormulario}
+                /> }
             </div>
 
             {/*TEST*/}
