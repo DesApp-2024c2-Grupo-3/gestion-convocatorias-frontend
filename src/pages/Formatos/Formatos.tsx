@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getFormatos } from '../../api/api';
+import { getFormatos } from '../../api/formatos.api';
 import FormatoCard from './components/FormatoCard';
 
 export interface FormatoProps {

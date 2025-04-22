@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./register.module.css";
-import { registrarUsuario } from "../../api/api";
+import { registrarUsuario } from "../../api/usuarios.api";
 import toast from "react-hot-toast";
 import Logo from "../Login/Logo";
 

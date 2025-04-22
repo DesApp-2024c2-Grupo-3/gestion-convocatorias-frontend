@@ -9,7 +9,8 @@ import dayjs, { Dayjs } from "dayjs";
 import { CustomButton } from "../../../components/CustomButton/CustomButtons";
 import { Link } from "react-router-dom";
 import { btnRojo, btnVerdeUnahur } from "../../../components/CustomButton/buttonStyles";
-import { getFormatoById, getFormatoByNombre, patchFechaConvocatoria } from "../../../api/api";
+import { getFormatoById } from "../../../api/formatos.api";
+import { patchFechaConvocatoria } from "../../../api/convocatorias.api";
 import toast from "react-hot-toast";
 import FormatoDialog from "../../../components/FormatoDialog/FormatoDialog";
 
