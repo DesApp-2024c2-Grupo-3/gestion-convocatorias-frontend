@@ -10,7 +10,7 @@ import { CustomButton } from "../../../components/CustomButton/CustomButtons";
 import { Link } from "react-router-dom";
 import { btnRojo, btnVerdeUnahur } from "../../../components/CustomButton/buttonStyles";
 import { getFormatoById } from "../../../api/formatos.api";
-import { patchFechaConvocatoria } from "../../../api/convocatorias.api";
+import { putConvocatoria } from "../../../api/convocatorias.api";
 import toast from "react-hot-toast";
 import FormatoDialog from "../../../components/FormatoDialog/FormatoDialog";
 
@@ -54,15 +54,17 @@ const ConvocatoriaDialog = ({ convocatoriaData, showDialogState, fechaFinState }
     const submitNewFechaFin = async () => {
         try {
             let fecha
+            const formData = new FormData()
             if (fechaFinPicker) {
                 fecha = fechaFinPicker.toDate()
+                formData.append("fechaFin", fecha.toISOString())
             } else {
                 throw new Error("Fecha Fin es null")
             }
 
-            await patchFechaConvocatoria(
+            await putConvocatoria(
                 convocatoriaData.idConvocatoria,
-                fecha
+                formData
             )
 
             fechaFinState.setEditableFechaFin(fechaFinPicker.toDate())
