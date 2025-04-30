@@ -30,7 +30,7 @@ const Login = () => {
           cv: data.usuario._doc.cv
         });
 
-        localStorage.setItem("token", data.access_token);
+        sessionStorage.setItem("token", data.access_token);
         toast.success('Sesion iniciada correctamente');
         setTimeout(() => {
           navigate("/Convocatorias");

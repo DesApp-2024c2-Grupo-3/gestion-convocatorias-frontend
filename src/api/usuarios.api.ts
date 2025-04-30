@@ -13,7 +13,7 @@ export const registrarUsuario = async (
 
     const { token } = response.data;
     if (token) {
-        localStorage.setItem("authToken", token);
+        sessionStorage.setItem("authToken", token);
     }
 
     return response.data;
