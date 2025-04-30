@@ -49,8 +49,11 @@ export const deleteUsuario = async (email: string): Promise<void> => {
     }
 };
 
-export const updateContrasenia = async (email: string): Promise<void> => {
-    console.log('Algo hará')
+export const updateContrasenia = async (email: string, nuevaContrasenia: string) => {
+    await axios.patch(`http://localhost:3000/usuario/${email}`, {password : nuevaContrasenia})
+        .then(function(response) {
+            console.log(response)
+        })
 };
 
 export const updateCv = async (email:string, archivo: FormData) => {

@@ -33,16 +33,16 @@ const MiPerfil: React.FC = () => {
     }
   };
 
-  /* const handleUpdatePassword = async () => {
+  const handleUpdatePassword = async () => {
     if (nuevaContra !== confirmarContra) {
       toast.error("Las contraseñas no coinciden");
       return;
     }
 
-    if (nuevaContra.length < 6) {
+    /* if (nuevaContra.length < 6) {
       toast.error("La contraseña debe tener al menos 6 carácteres");
       return;
-    }
+    } */
 
     try {
       if (usuario && usuario.email) {
@@ -55,7 +55,7 @@ const MiPerfil: React.FC = () => {
       toast.error("Error al actualizar la contraseña");
       console.log(error);
     }
-  }; */
+  };
 
   return (
     <div className={styles["page"]}>
@@ -98,7 +98,7 @@ const MiPerfil: React.FC = () => {
             <button
               type="button"
               className={styles["button"]}
-              /* onClick={handleUpdatePassword} */
+              onClick={handleUpdatePassword}
             >
               Cambiar contraseña
             </button>
