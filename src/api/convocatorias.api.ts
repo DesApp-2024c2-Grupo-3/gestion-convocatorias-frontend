@@ -23,16 +23,14 @@ export const getConvocatorias = async () => {
     return response.data;
 };
 
-export const patchFechaConvocatoria = async (id: string, fechaFin: Date) => {
-    console.log({ fechaFin })
-    await axios
-        .patch(`http://localhost:3000/convocatoria/${id}/fecha-fin`, { fechaFin }, {
-            headers: { Authorization: `Bearer ${sessionStorage.getItem("token")}` }
+export const putConvocatoria = async (id: string, edicionDeConvocatoria: FormData) => {
+    const response = await axios
+        .put(`http://localhost:3000/convocatoria/${id}`, edicionDeConvocatoria, 
+            getHeaders({"Content-Type": "multipart/form-data"}))
+        .then(function(response){
+            console.log(response)
         })
-        .then(function (response) {
-            console.log(response);
-        })
-};
+}
 
 export const deleteConvocatoria = async (id: string): Promise<void> => {
     try {
