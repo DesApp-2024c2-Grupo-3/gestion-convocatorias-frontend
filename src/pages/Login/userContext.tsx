@@ -28,7 +28,7 @@ export const UserContext = createContext<UserContextProps>({
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [usuario, setUsuario] = useState<Usuario | null>(() => {
-    const usuarioGuardado = localStorage.getItem("usuario");
+    const usuarioGuardado = sessionStorage.getItem("usuario");
     return usuarioGuardado ? JSON.parse(usuarioGuardado) : null;
   });
 
@@ -45,13 +45,13 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     };
   
     setUsuario(usuarioFormateado);
-    localStorage.setItem("usuario", JSON.stringify(usuarioFormateado));
+    sessionStorage.setItem("usuario", JSON.stringify(usuarioFormateado));
   };
 
   const cerrarSesion = () => {
     setUsuario(null);
-    localStorage.removeItem("usuario");
-    localStorage.removeItem("token")
+    sessionStorage.removeItem("usuario");
+    sessionStorage.removeItem("token")
   };
 
   return (

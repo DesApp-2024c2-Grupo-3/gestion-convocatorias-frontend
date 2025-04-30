@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { UserContext } from "../Login/userContext";
 import { useNavigate } from "react-router-dom";
-import { deleteUsuario, updateContrasenia } from "../../api/api";
+import { deleteUsuario, updateContrasenia } from "../../api/usuarios.api";
 import styles from "./miperfil.module.css";
 import toast from "react-hot-toast";
 import CvUploader from "../../components/FileUploader/CvUploader";

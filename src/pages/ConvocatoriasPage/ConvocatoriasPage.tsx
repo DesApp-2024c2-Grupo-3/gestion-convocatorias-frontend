@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getConvocatorias } from "../../api/api";
+import { getConvocatorias } from "../../api/convocatorias.api";
 import Convocatoria from "../../components/convocatoria/Convocatoria";
 import ConvocatoriaCard from "./components/ConvocatoriaCard";
 

@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useContext, useState } from "react";
 import axios from "axios"
-import { updateCv } from "../../api/api";
+import { updateCv } from "../../api/usuarios.api";
 import { useRef } from "react";
 import { UserContext } from "../../pages/Login/userContext";
 import stylesButton from "./CvUploader.module.css"

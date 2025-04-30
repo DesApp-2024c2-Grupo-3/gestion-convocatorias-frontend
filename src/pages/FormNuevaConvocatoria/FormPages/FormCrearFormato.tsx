@@ -15,7 +15,7 @@ import styles from "../../Home/formularios.module.css";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { CustomButton } from "../../../components/CustomButton/CustomButtons";
 import { btnRojo, formatSelectorBtn } from "../../../components/CustomButton/buttonStyles";
-import { getFormatoByNombre, postFormato } from "../../../api/api";
+import { getFormatoByNombre, postFormato } from "../../../api/formatos.api";
 
 interface CrearFormatoProps {
     setFormato: (data: string) => void;

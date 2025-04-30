@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Logo from "./Logo";
 import styles from "./login.module.css";
-import { loginUsuario } from "../../api/api";
+import { loginUsuario } from "../../api/usuarios.api";
 import { UserContext } from "./userContext";
 import toast from "react-hot-toast";
 
@@ -30,7 +30,7 @@ const Login = () => {
           cv: data.usuario._doc.cv
         });
 
-        localStorage.setItem("token", data.access_token);
+        sessionStorage.setItem("token", data.access_token);
         toast.success('Sesion iniciada correctamente');
         setTimeout(() => {
           navigate("/Convocatorias");

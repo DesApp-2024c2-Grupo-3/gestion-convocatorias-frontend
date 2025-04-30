@@ -3,7 +3,7 @@ import Card from "react-bootstrap/Card";
 import Modal from "react-bootstrap/Modal";
 import ButtonGenerico from "../button-generico/ButtonGenerico";
 import "/src/components/convocatoria/convocatoria.css";
-import { deleteConvocatoria, putFechaConvocatoria } from "../../api/api";
+import { deleteConvocatoria, putFechaConvocatoria } from "../../api/usuarios.api";
 import toast from "react-hot-toast";
 
 interface Props {

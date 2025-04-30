@@ -2,7 +2,7 @@ import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { fileSchema, FileValues } from "../schemas/fileSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useState } from "react";
-import { postConvocatoria } from "../../../api/api";
+import { postConvocatoria } from "../../../api/convocatorias.api";
 import { IConvocatoria } from "../FormNuevaConvocatoria";
 import styles from "../../Home/formularios.module.css";
 
