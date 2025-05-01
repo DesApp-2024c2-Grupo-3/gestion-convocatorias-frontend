@@ -10,9 +10,10 @@ import { CustomButton } from "../../../components/CustomButton/CustomButtons";
 import { Link } from "react-router-dom";
 import { btnRojo, btnVerdeUnahur } from "../../../components/CustomButton/buttonStyles";
 import { getFormatoById } from "../../../api/formatos.api";
-import { putConvocatoria } from "../../../api/convocatorias.api";
+import { getArchivoDeConvocatoria, putConvocatoria } from "../../../api/convocatorias.api";
 import toast from "react-hot-toast";
 import FormatoDialog from "../../../components/FormatoDialog/FormatoDialog";
+import { PictureAsPdf } from "@mui/icons-material";
 
 interface ConvocatoriaDialogProps {
     convocatoriaData: ConvocatoriaCardProps
@@ -135,6 +136,12 @@ const ConvocatoriaDialog = ({ convocatoriaData, showDialogState, fechaFinState }
                 </div>
             </DialogContent>
             <DialogActions>
+                <CustomButton
+                    nombre="bases y condiciones"
+                    accion={() => getArchivoDeConvocatoria(convocatoriaData.idConvocatoria)}
+                    iconoIzquierdo={<PictureAsPdf />}
+                    style={{...btnVerdeUnahur, margin: 0 }}
+                />
                 <CustomButton
                     nombre="Ver Formato"
                     accion={async () => {
