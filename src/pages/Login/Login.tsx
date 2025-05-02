@@ -24,10 +24,10 @@ const Login = () => {
         console.log("Token válido");
 
         iniciarSesion({
-          nombre: data.usuario._doc.nombre,
-          email: data.usuario._doc.email,
-          password: data.usuario._doc.password,
-          cv: data.usuario._doc.cv
+          nombre: data.usuario.nombre,
+          email: data.usuario.email,
+          password: data.usuario.password,
+          cv: data.usuario.cv
         });
 
         sessionStorage.setItem("token", data.access_token);
@@ -43,6 +43,7 @@ const Login = () => {
     } catch (error) {
       toast.error("Error al iniciar sesión:");
       setError("Error al iniciar sesión");
+      console.error(error);
     }
   };
 
