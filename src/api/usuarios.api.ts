@@ -26,7 +26,6 @@ export const loginUsuario = async (email: string, password: string) => {
             email,
             password,
         });
-        console.log("Respuesta del servidor:", response.data);
         return response.data; // Devuelve los datos de la respuesta
     } catch (error) {
         console.error("Error al realizar login:", error);
