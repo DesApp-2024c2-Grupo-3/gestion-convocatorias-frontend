@@ -48,14 +48,21 @@ const FormCrearFormato = ({ setFormato }: CrearFormatoProps) => {
         console.log("FORMATO",data);
         // Deberia Guardar el Formato en el Backend
 
-        await postFormato(data)
-        const formato = await getFormatoByNombre(data.nombreDelFormato)
+        try {
+            const response = await postFormato(data);
+            const formatoId = response;
+            console.log("Formato guardado con ID:", formatoId);
+            setFormato(formatoId);
+        } catch (error) {
+            console.error("Error al guardar el formato:", error);
+        }
+        /* const formato = await getFormatoByNombre(data.nombreDelFormato)
         if (!formato) {
             console.log('error')
-        }
+            } 
         console.log("GEEEEEEET",formato)
+        */
 
-        setFormato(formato._id);
         
     };
 
