@@ -22,6 +22,7 @@ const SideBarList = () => {
                         key={index}
                         ItemIcon={item.ItemIcon} 
                         ItemText={item.ItemText}
+                        rolesPermitidos={item.rolesPermitidos}
                         ItemIndex={index}
                         selectedIndex={selectedIndex}
                         setSelectedIndex={setSelectedIndex}

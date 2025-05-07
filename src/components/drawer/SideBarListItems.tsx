@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { ListItem, ListItemButton, ListItemIcon, ListItemText} from "@mui/material";
 import PodcastIcon from "@mui/icons-material/Podcasts";
 import ContentPasteIcon from '@mui/icons-material/ContentPaste';
 import HomeIcon from '@mui/icons-material/Home';
 import { Link, NavLink } from "react-router-dom";
 import { FormatListNumbered } from "@mui/icons-material";
+import { ControlDeAcceso, FunctionControlDeAcceso } from "../ControlDeAcceso/ControlDeAcceso";
+import { UserContext } from "../../pages/Login/userContext";
 
 interface SideBarListProps {
     ItemIcon: React.ReactNode;
@@ -13,15 +15,20 @@ interface SideBarListProps {
     selectedIndex: number | null;
     setSelectedIndex: React.Dispatch<React.SetStateAction<number | null>>;
     navigateTo: string
+    rolesPermitidos: string[];
 }
 
-export const SideBarItem = ({ ItemIcon, ItemText, ItemIndex, selectedIndex, setSelectedIndex, navigateTo }: SideBarListProps) => {
+export const SideBarItem = ({ ItemIcon, ItemText, ItemIndex, rolesPermitidos, selectedIndex, setSelectedIndex, navigateTo }: SideBarListProps) => {
 
     const handleListItemClick = () => {
         setSelectedIndex(ItemIndex);
     };
+    const { usuario } = useContext(UserContext)
+    
+
 
     return (
+        <ControlDeAcceso rolesPermitidos={rolesPermitidos}>
         <ListItem disablePadding sx={{
             ":hover": {
                 backgroundColor: '#06A3C9',
@@ -49,6 +56,7 @@ export const SideBarItem = ({ ItemIcon, ItemText, ItemIndex, selectedIndex, setS
                 <ListItemText primary={ItemText} />
             </ListItemButton>
         </ListItem>
+        </ControlDeAcceso>
     )
 };
 
@@ -56,11 +64,13 @@ export const Items = [
     {
         ItemIcon: <PodcastIcon />,
         ItemText: 'Convocatorias',
-        navigateTo: '/Convocatorias'
+        navigateTo: '/Convocatorias',
+        rolesPermitidos: ['admin', 'supe_admin', 'investigador']
     },
     {
         ItemIcon: <FormatListNumbered />,
         ItemText: 'Formatos',
-        navigateTo: '/Formatos'
+        navigateTo: '/Formatos',
+        rolesPermitidos: ['admin', 'supe_admin']
     }
 ];
