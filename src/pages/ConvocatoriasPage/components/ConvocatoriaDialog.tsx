@@ -2,7 +2,7 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton }
 import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from "@mui/icons-material/Delete";
 import SaveAsIcon from '@mui/icons-material/SaveAs';
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useContext, useState } from "react";
 import { ConvocatoriaCardProps } from "./ConvocatoriaCard";
 import { DateTimePicker } from "@mui/x-date-pickers";
 import dayjs, { Dayjs } from "dayjs";
@@ -13,6 +13,8 @@ import { getFormatoById } from "../../../api/formatos.api";
 import { putConvocatoria } from "../../../api/convocatorias.api";
 import toast from "react-hot-toast";
 import FormatoDialog from "../../../components/FormatoDialog/FormatoDialog";
+import { ControlDeAcceso, FunctionControlDeAcceso } from "../../../components/ControlDeAcceso/ControlDeAcceso";
+import { UserContext } from "../../Login/userContext";
 
 interface ConvocatoriaDialogProps {
     convocatoriaData: ConvocatoriaCardProps
@@ -40,6 +42,7 @@ const ConvocatoriaDialog = ({ convocatoriaData, showDialogState, fechaFinState }
         campos: []
     })
     const [showFormatoDialog, setShowFormatoDialog] = useState(false)
+    const { usuario } = useContext(UserContext)
 
     const handleClose = () => {
         //set fecha porque si se sale del dialog antes de guardar
@@ -107,30 +110,36 @@ const ConvocatoriaDialog = ({ convocatoriaData, showDialogState, fechaFinState }
                     <p>
                         Fecha inicio de la convocatoria: {convocatoriaData.fechaInicio.toLocaleString()}
                     </p>
+                    <div className="convocatoria-fecha-editable">
                     <p>
-                        Fecha fin de la convocatoria:{" "}
+                        Fecha fin de la convocatoria:
                     </p>
-                    <DateTimePicker
-                        value={fechaFinPicker}
-                        onChange={(newValue) => {
-                            setFechaFinPicker(newValue)
-                            setShowSubmitButton(true)
-                        }}
-                    />
-                    {showSubmitButton &&
-                        <IconButton
-                            sx={{
-                                backgroundColor: "#56A42C",
-                                borderRadius: "20%",
-                                ":hover": {
-                                    backgroundColor: "#417c21"
-                                }
+                    { FunctionControlDeAcceso(["admin", "super_admin"], usuario?.roles?? []) ?
+                        <>
+                        <DateTimePicker
+                            value={fechaFinPicker}
+                            onChange={(newValue) => {
+                                setFechaFinPicker(newValue)
+                                setShowSubmitButton(true)
                             }}
-                            onClick={submitNewFechaFin}
-                        >
-                            <SaveAsIcon sx={{ color: 'white' }} />
-                        </IconButton>
+                        />
+                        {showSubmitButton &&
+                            <IconButton
+                                sx={{
+                                    backgroundColor: "#56A42C",
+                                    borderRadius: "20%",
+                                    ":hover": {
+                                        backgroundColor: "#417c21"
+                                    }
+                                }}
+                                onClick={submitNewFechaFin}
+                            >
+                                <SaveAsIcon sx={{ color: 'white' }} />
+                            </IconButton>
+                        }
+                        </> : convocatoriaData.fechaFin.toLocaleString()
                     }
+                    </div>
 
                 </div>
             </DialogContent>
@@ -144,11 +153,13 @@ const ConvocatoriaDialog = ({ convocatoriaData, showDialogState, fechaFinState }
                     }}
                 />
 
+                <ControlDeAcceso rolesPermitidos={["admin", "super_admin"]}>
                 <CustomButton
                     nombre="Borrar"
                     iconoIzquierdo={<DeleteIcon />}
                     style={btnRojo}
                 />
+                </ControlDeAcceso>
                 
                 <Button
                     variant="contained"

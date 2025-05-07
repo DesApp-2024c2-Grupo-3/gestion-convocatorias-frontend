@@ -27,8 +27,11 @@ const Login = () => {
           nombre: data.usuario.nombre,
           email: data.usuario.email,
           password: data.usuario.password,
+          roles: data.usuario.roles,
           cv: data.usuario.cv
         });
+
+        console.log("roles", data.usuario.roles);
 
         sessionStorage.setItem("token", data.access_token);
         toast.success('Sesion iniciada correctamente');

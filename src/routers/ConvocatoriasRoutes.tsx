@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Navigate, Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Login from "../pages/Login/Login";
 import Home from "../pages/Home/home";
@@ -8,6 +8,7 @@ import MiPerfil from "../pages/PerfilDeUsuario/MiPerfil";
 import ConvocatoriasPage from "../pages/ConvocatoriasPage/ConvocatoriasPage"
 import Formatos from "../pages/Formatos/Formatos";
 import FormInscripcionProyectos from "../pages/FormInscripcionProyecto/FormInscripcionProyecto";
+import PrivateRoute from "../components/ControlDeAcceso/PrivateRoute";
 
 export const ConvocatoriasRoutes = () => {
     return (
@@ -16,8 +17,16 @@ export const ConvocatoriasRoutes = () => {
           <Routes>
             <Route path="/" element={<Home />} >
                 <Route path="/Convocatorias" element={<ConvocatoriasPage />} />
-                <Route path="/Formatos" element={<Formatos />} />
-                <Route path="/Form" element={<FormNuevaConvocatoria />} />
+                <Route
+                    element={
+                        <PrivateRoute
+                            rolesPermitidos={["admin", "super_admin"]}
+                        />
+                    }
+                >
+                    <Route path="/Formatos" element={<Formatos />} />
+                    <Route path="/Form" element={<FormNuevaConvocatoria />} />
+                </Route>
                 <Route path="/Convocatorias/:id/inscripcion/:formato" element={<FormInscripcionProyectos />} />
             </ Route>
             <Route path="/Login" element={<Login />} />
