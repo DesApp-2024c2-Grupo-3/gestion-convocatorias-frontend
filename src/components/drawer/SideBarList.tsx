@@ -4,6 +4,7 @@ import React from "react";
 import { Items, SideBarItem } from "./SideBarListItems";
 import { NavButton } from "../CustomButton/CustomButtons";
 import { btnAzulUnahur } from "../CustomButton/buttonStyles";
+import { ControlDeAcceso } from "../ControlDeAcceso/ControlDeAcceso";
 
 const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
     color: theme.palette.getContrastText("#06A3C9"),
@@ -31,6 +32,7 @@ const SideBarList = () => {
                 ))}
                 <Divider />
 
+                <ControlDeAcceso rolesPermitidos={["admin", 'superadmin']}>
                 <NavButton 
                     nombre="Nueva Convocatoria"
                     iconoDerecho={<AddIcon />}
@@ -38,6 +40,7 @@ const SideBarList = () => {
                     style={btnAzulUnahur} 
                     navigateTo={"/Form"}                
                 />
+                </ControlDeAcceso>
             </List>
         </>
     )
