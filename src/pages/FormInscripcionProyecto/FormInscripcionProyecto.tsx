@@ -7,6 +7,7 @@ import DatosDelProyecto from "./FormPages/DatosDelProyecto/DatosDelProyecto";
 import { Button } from "@mui/material";
 import { UserContext } from "../Login/userContext";
 import { postProyecto } from "../../api/proyectos.api";
+import Presupuesto from "./FormPages/Presupuesto";
 
 export interface IFormularioInscripcion {
     autor: string | undefined;
@@ -39,6 +40,12 @@ const FormInscripcionProyectos = () => {
                     datosDelFormulario={datosDelFormulario}
                     setDatosDelFormulario={setDatosDelFormulario}
                 /> }
+                {step === 3 && <Presupuesto
+                    irSiguiente={setStep}
+                    irAtras={setStep}
+                    datosDelFormulario={datosDelFormulario}
+                    setDatosDelFormulario={setDatosDelFormulario}
+                    ></Presupuesto>}
             </div>
 
             {/*TEST*/}
