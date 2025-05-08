@@ -2,15 +2,9 @@ import axios from "axios";
 import { NuevoFormatoValues } from "../pages/FormNuevaConvocatoria/schemas/nuevoFormatoSchema";
 import { getHeaders } from "./convocatorias.api";
 
-export const postFormato = (formato: NuevoFormatoValues) => {
-    axios
-        .post("http://localhost:3000/formato", formato, getHeaders())
-        .then(function (response) {
-            console.log(response);
-        })
-        .catch(function (error) {
-            console.error(error);
-        });
+export const postFormato = async (formato: NuevoFormatoValues) => {
+    const response = await axios.post("http://localhost:3000/formato", formato, getHeaders())
+    return response.data
 }
 
 export const getFormatos = async () => {
