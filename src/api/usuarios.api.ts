@@ -74,3 +74,8 @@ export const updateCv = async (email:string, archivo: FormData) => {
         console.log(error)
     }
 }
+
+export const getUsuarios = async () => {
+    const response = await axios.get("http://localhost:3000/usuario", getHeaders());
+    return response.data;
+};
