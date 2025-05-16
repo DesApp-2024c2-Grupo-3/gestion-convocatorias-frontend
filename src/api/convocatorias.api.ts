@@ -23,6 +23,12 @@ export const getConvocatorias = async () => {
     return response.data;
 };
 
+export const getConvocatoriaById = async (id: string) => {
+    const response = await axios.get(`http://localhost:3000/convocatoria/${id}`, getHeaders());
+    return response.data;
+};
+
+
 export const putConvocatoria = async (id: string, edicionDeConvocatoria: FormData) => {
     const response = await axios
         .put(`http://localhost:3000/convocatoria/${id}`, edicionDeConvocatoria, 
