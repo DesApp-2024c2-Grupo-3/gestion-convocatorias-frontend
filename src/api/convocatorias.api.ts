@@ -1,4 +1,5 @@
 import axios from "axios";
+
 export const getHeaders = (extraHeaders = {}) => ({
     headers: {
         Authorization: `Bearer ${sessionStorage.getItem('token')}`,
