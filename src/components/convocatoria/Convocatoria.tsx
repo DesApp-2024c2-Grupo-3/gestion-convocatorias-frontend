@@ -2,9 +2,13 @@ import React, { useState } from "react";
 import Card from "react-bootstrap/Card";
 import Modal from "react-bootstrap/Modal";
 import ButtonGenerico from "../button-generico/ButtonGenerico";
+import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import "/src/components/convocatoria/convocatoria.css";
 import { deleteConvocatoria, putFechaConvocatoria } from "../../api/usuarios.api";
 import toast from "react-hot-toast";
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
+
 
 interface Props {
   idConvocatoria: string;
@@ -19,6 +23,13 @@ interface Usuario {
   id: number;
   titulo: string;
 }
+
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
+const location = useLocation();
+const [showSuccess, setShowSuccess] = useState(false);
 
 const Convocatoria = ({
   idConvocatoria,
@@ -59,6 +70,7 @@ const Convocatoria = ({
       setShowModal(false); 
     }
   };
+
 
   const handleFechaChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const nuevaFecha = new Date(event.target.value);

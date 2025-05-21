@@ -26,65 +26,67 @@ const DatosDelProyecto = ({
     }: Props) => {
     const handleChange = (clave: string, valor: string) => {
         setDatosDelFormulario(prev => ({
-        ...prev,
-        [clave]: valor,
+            ...prev,
+            camposExtra: {
+                ...(prev.camposExtra || {}),
+                [clave]: valor
+            }
         }));
     };
 
     return (
         <form className={styles["form-card"]}>
-        <h2 className={styles["form-title"]}>Datos del Proyecto</h2>
-        <hr />
-        <div className={styles["form-fields"]}>
-            {campos.map((campo, index) => (
-            <div key={index} className={styles["form-group"]} style={{ marginBottom: '1.5rem' }}>
-                {campo.tipo === "texto" && (
-                <TextField
-                    label={campo.label}
-                    value={(datosDelFormulario as any)[campo.clave] || ""}
-                    onChange={(e) => handleChange(campo.clave, e.target.value)}
-                    fullWidth
-                    variant="outlined"
-                    size="small"
-                />
-                )}
+            <h2 className={styles["form-title"]}>Datos del Proyecto</h2>
+            <hr />
+            <div className={styles["form-fields"]}>
+                {campos.map((campo, index) => (
+                    <div key={index} className={styles["form-group"]} style={{ marginBottom: '1.5rem' }}>
+                        {campo.tipo === "texto" && (
+                            <TextField
+                                label={campo.label}
+                                value={datosDelFormulario.camposExtra?.[campo.clave] || ""}
+                                onChange={(e) => handleChange(campo.clave, e.target.value)}
+                                fullWidth
+                                variant="outlined"
+                                size="small"
+                            />
+                        )}
 
-                {campo.tipo === "selector" && (
-                <FormControl fullWidth size="small">
-                    <InputLabel>{campo.label}</InputLabel>
-                    <Select
-                    label={campo.label}
-                    value={(datosDelFormulario as any)[campo.clave] || ""}
-                    onChange={(e) => handleChange(campo.clave, e.target.value)}
-                    >
-                    {campo.opciones?.map((opcion, i) => (
-                        <MenuItem key={i} value={opcion}>{opcion}</MenuItem>
-                    ))}
-                    </Select>
-                </FormControl>
-                )}
+                        {campo.tipo === "selector" && (
+                            <FormControl fullWidth size="small">
+                                <InputLabel>{campo.label}</InputLabel>
+                                <Select
+                                    label={campo.label}
+                                    value={datosDelFormulario.camposExtra?.[campo.clave] || ""}
+                                    onChange={(e) => handleChange(campo.clave, e.target.value)}
+                                >
+                                    {campo.opciones?.map((opcion, i) => (
+                                        <MenuItem key={i} value={opcion}>{opcion}</MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                        )}
+                    </div>
+                ))}
             </div>
-            ))}
-        </div>
 
-        <div className={styles["nav-btn-group"]}>
-            <Button
-            sx={formNavAnteriorBtn}
-            onClick={() => irAtras(1)}
-            startIcon={<ArrowBack />}
-            >
-            Anterior
-            </Button>
+            <div className={styles["nav-btn-group"]}>
+                <Button
+                    sx={formNavAnteriorBtn}
+                    onClick={() => irAtras(1)}
+                    startIcon={<ArrowBack />}
+                >
+                    Anterior
+                </Button>
 
-            <CustomButton
-            nombre="Siguiente"
-            accion={() => irSiguiente(3)}
-            iconoDerecho={<ArrowForward />}
-            style={formNavSiguienteBtn}
-            />
-        </div>
+                <CustomButton
+                    nombre="Siguiente"
+                    accion={() => irSiguiente(3)}
+                    iconoDerecho={<ArrowForward />}
+                    style={formNavSiguienteBtn}
+                />
+            </div>
         </form>
     );
 };
-
 export default DatosDelProyecto

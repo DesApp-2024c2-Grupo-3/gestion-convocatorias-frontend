@@ -27,7 +27,7 @@ interface Gasto {
 export interface IFormularioInscripcion {
   autor: string | undefined;
   invitados: string[];
-  [key: string]: any; // Para que pueda aceptar cualquier clave dinámica
+  camposExtra?: Record<string, string>;
   presupuesto?: {
     gastosCapital: Gasto[];
     gastosCorrientes: Gasto[];
@@ -43,6 +43,11 @@ const FormInscripcionProyectos = () => {
   const [datosDelFormulario, setDatosDelFormulario] = useState<IFormularioInscripcion>({
     autor: usuario?.email,
     invitados: [],
+    camposExtra: {},
+    presupuesto: {
+      gastosCapital: [{ rubro: "", descripcion: "", coste: 0 }],
+      gastosCorrientes: [{ rubro: "", descripcion: "", coste: 0 }],
+    },
   });
 
   const [convocatoria, setConvocatoria] = useState<any>(null);
@@ -78,35 +83,6 @@ const FormInscripcionProyectos = () => {
     fetchFormatoFromConvocatoria();
   }, [id]);
 
-  // Mapeo de claves amigables a claves que espera el backend
-  const keyMap: { [key: string]: string } = {
-    "Titulo del proyecto": "titulo",
-    "Categorías": "categoria",
-    "Objetivo general": "objetivos",
-    "Objetivo especifico": "objetivosEspecificos",
-    "Problemática Detectada (Diagnostico": "problematicas",
-    // Agrega las claves que necesites aquí
-  };
-
-  // Función que transforma el objeto para backend
-  const transformarDatos = (formData: IFormularioInscripcion) => {
-    const resultado: any = {
-      autor: formData.autor,
-      invitados: formData.invitados,
-      presupuesto: formData.presupuesto,
-    };
-
-    if (formData && typeof formData === 'object') {
-        Object.keys(formData).forEach((key) => {
-            const value = formData[key];
-            if (keyMap[key]) {
-            resultado[keyMap[key]] = value;
-            }
-    });
-}
-
-    return resultado;
-  };
 
   return (
     <>
@@ -138,19 +114,7 @@ const FormInscripcionProyectos = () => {
           />
         )}
       </div>
-
-      <Button
-        variant="contained"
-        onClick={() => {
-          if (id) {
-            const datosParaEnviar = transformarDatos(datosDelFormulario);
-            postProyecto(id, datosParaEnviar);
-          }
-        }}
-      >
-        Enviar
-      </Button>
-
+      
       <Button
         variant="outlined"
         onClick={() => console.log(datosDelFormulario)}
