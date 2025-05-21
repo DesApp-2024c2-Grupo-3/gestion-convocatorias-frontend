@@ -26,12 +26,19 @@ export const loginUsuario = async (email: string, password: string) => {
             email,
             password,
         });
-        return response.data; // Devuelve los datos de la respuesta
+
+        const { access_token } = response.data;
+        if (access_token) {
+            sessionStorage.setItem("authToken", access_token);
+            console.log("Token guardado en sessionStorage:", access_token);
+        }
+
+        return response.data;
     } catch (error) {
         console.error("Error al realizar login:", error);
-        return null; // Retorna null si hay un error
+        return null;
     }
-};
+};;
 
 export const deleteUsuario = async (email: string): Promise<void> => {
     try {

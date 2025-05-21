@@ -27,7 +27,7 @@ const EquipoDeTrabajo = ({ irSiguiente, datosDelFormulario, setDatosDelFormulari
 
     const {
         control,
-        register,
+        register,   
         handleSubmit,
         formState: { errors },
     } = useForm<EquipoDeTrabajoValues>({

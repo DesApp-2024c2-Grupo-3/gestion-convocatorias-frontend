@@ -1,4 +1,5 @@
 import axios from "axios";
+
 export const getHeaders = (extraHeaders = {}) => ({
     headers: {
         Authorization: `Bearer ${sessionStorage.getItem('token')}`,
@@ -22,6 +23,12 @@ export const getConvocatorias = async () => {
     const response = await axios.get("http://localhost:3000/convocatoria", getHeaders());
     return response.data;
 };
+
+export const getConvocatoriaById = async (id: string) => {
+    const response = await axios.get(`http://localhost:3000/convocatoria/${id}`, getHeaders());
+    return response.data;
+};
+
 
 export const putConvocatoria = async (id: string, edicionDeConvocatoria: FormData) => {
     const response = await axios
