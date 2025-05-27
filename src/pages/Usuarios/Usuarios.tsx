@@ -1,7 +1,9 @@
-import { Card, CardActionArea, CardContent } from "@mui/material";
+import { Button, Card, CardActionArea, CardContent } from "@mui/material";
 import React, { useEffect, useState } from 'react';
 import { getUsuarios } from '../../api/usuarios.api';
 import UsuarioDialog from "./components/UsuarioDialog";
+import { CustomButton } from "../../components/CustomButton/CustomButtons";
+import styles from "./usuarios.module.css"
 
 export interface UsuarioProps {
     _id: string;
@@ -10,7 +12,7 @@ export interface UsuarioProps {
     roles: Array<string>
 }
 
-export interface UsuarioCardProps extends UsuarioProps{
+export interface UsuarioCardProps extends UsuarioProps {
     onRefresh: () => void
 }
 
@@ -64,14 +66,17 @@ const Usuarios = () => {
         getUsuariosList()
     }, [refreshKey])
 
-    const usuarios = listUsuarios.length ? (
-        listUsuarios.map((usuario, index) => (
+    const getUsuariosPorRol = (rol: string) => { 
+        const usersFiltrados = listUsuarios.filter(usuario => usuario.roles.includes(rol))
+
+        return usersFiltrados.length ? (
+        usersFiltrados.map((users, index) => (
             <UsuarioCard
-                _id={usuario._id}
+                _id={users._id}
                 key={index}
-                nombre={usuario.nombre}
-                email={usuario.email}
-                roles={usuario.roles}
+                nombre={users.nombre}
+                email={users.email}
+                roles={users.roles}
                 onRefresh={handleRefresh}
             />
         ))
@@ -81,13 +86,40 @@ const Usuarios = () => {
                 <h2>No hay usuarios</h2>
             </div>
         </>
-    );
+    );}
 
     return (
         <>
-            {usuarios}
+            <div className={styles["listado-usuarios"]}>
+                <div className={styles["container-listado"]}>
+                    <h2>Investigadores</h2>
+                    <div className={styles["listado"]}>
+                        {getUsuariosPorRol("investigador")}
+                    </div>
+                </div>
+
+                <div className={styles["container-listado"]}>
+                    <h2>Admins</h2>
+                    <div className={styles["listado"]}>
+                        {getUsuariosPorRol("admin")}
+                    </div>
+                </div>
+
+                <div className={styles["container-listado"]}>
+                    <h2>Superadmins</h2>
+                    <div className={styles["listado"]}>
+                        {getUsuariosPorRol("super_admin")}
+                    </div>
+                </div>
+            </div>
+            {/*<CustomButton
+                nombre="prueba" 
+                accion={() => investigadores(listUsuarios)}
+            />*/}
         </>
     )
 }
+
+
 
 export default Usuarios;

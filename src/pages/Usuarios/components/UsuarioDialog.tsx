@@ -83,7 +83,7 @@ const UsuarioDialog = ({ usuarioData, showDialogState, onRefresh }: UsuarioDialo
                 <p className="usuario-email">{usuarioData.email}</p>
                 <div className="roles">
 
-                    <p>{usuarioData.roles}</p>
+                    <p>{usuarioData.roles.join(", ")}</p>
 
                 </div>
                 <div className="roles-checkbox">
