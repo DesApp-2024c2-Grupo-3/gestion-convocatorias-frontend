@@ -10,7 +10,11 @@ export interface UsuarioProps {
     roles: Array<string>
 }
 
-const UsuarioCard = ({ _id, nombre, email, roles }: UsuarioProps) => {
+export interface UsuarioCardProps extends UsuarioProps{
+    onRefresh: () => void
+}
+
+const UsuarioCard = ({ _id, nombre, email, roles, onRefresh }: UsuarioCardProps) => {
 
     const [showUsuarioDialog, setShowUsuarioDialog] = useState(false)
 
@@ -26,7 +30,7 @@ const UsuarioCard = ({ _id, nombre, email, roles }: UsuarioProps) => {
                 >
                     <CardContent>
                         <h5>{nombre}</h5>
-                        <p>{roles}</p>
+                        <p>{roles.join(", ")}</p>
                     </CardContent>
                 </CardActionArea>
             </Card>
@@ -34,6 +38,7 @@ const UsuarioCard = ({ _id, nombre, email, roles }: UsuarioProps) => {
             <UsuarioDialog
                 usuarioData={{ _id, nombre, email, roles }}
                 showDialogState={{ showUsuarioDialog, setShowUsuarioDialog }}
+                onRefresh={onRefresh}
             />
         </>
     )
@@ -41,6 +46,12 @@ const UsuarioCard = ({ _id, nombre, email, roles }: UsuarioProps) => {
 
 const Usuarios = () => {
     const [listUsuarios, setListUsuarios] = useState<UsuarioProps[]>([])
+
+    const [refreshKey, setRefreshKey] = useState(0);
+
+    const handleRefresh = () => {
+        setRefreshKey(prev => prev + 1);
+    };
 
     useEffect(() => {
         const getUsuariosList = async () => {
@@ -51,8 +62,7 @@ const Usuarios = () => {
             }
         };
         getUsuariosList()
-    }, [])
-
+    }, [refreshKey])
 
     const usuarios = listUsuarios.length ? (
         listUsuarios.map((usuario, index) => (
@@ -62,6 +72,7 @@ const Usuarios = () => {
                 nombre={usuario.nombre}
                 email={usuario.email}
                 roles={usuario.roles}
+                onRefresh={handleRefresh}
             />
         ))
     ) : (

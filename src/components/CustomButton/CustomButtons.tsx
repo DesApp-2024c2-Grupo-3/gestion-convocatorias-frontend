@@ -9,9 +9,10 @@ interface CustomButtonProps {
     accion?: MouseEventHandler;
     iconoDerecho?: React.ReactNode;
     iconoIzquierdo?: React.ReactNode;
+    disabled?: boolean
 }
 
-export const CustomButton = ({ nombre, style, type, accion, iconoDerecho, iconoIzquierdo }: CustomButtonProps) => {
+export const CustomButton = ({ nombre, style, type, accion, iconoDerecho, iconoIzquierdo, disabled }: CustomButtonProps) => {
     return (
         <Button 
             variant="contained"
@@ -20,6 +21,7 @@ export const CustomButton = ({ nombre, style, type, accion, iconoDerecho, iconoI
             sx={style}
             onClick={accion}
             type={type}
+            disabled={disabled}
         >
             {nombre} 
         </Button >
