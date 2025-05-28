@@ -9,6 +9,8 @@ import ConvocatoriasPage from "../pages/ConvocatoriasPage/ConvocatoriasPage"
 import Formatos from "../pages/Formatos/Formatos";
 import FormInscripcionProyectos from "../pages/FormInscripcionProyecto/FormInscripcionProyecto";
 import PrivateRoute from "../components/ControlDeAcceso/PrivateRoute";
+import PostulacionesPage from "../pages/PostulacionesPage/PostulacionesPage";
+
 
 export const ConvocatoriasRoutes = () => {
     return (
@@ -23,11 +25,12 @@ export const ConvocatoriasRoutes = () => {
                             rolesPermitidos={["admin", "super_admin"]}
                         />
                     }
-                >
-                    <Route path="/Formatos" element={<Formatos />} />
-                    <Route path="/Form" element={<FormNuevaConvocatoria />} />
+                > 
+                    <Route path="convocatorias/:idConvocatoria/postulaciones" element={<PostulacionesPage/>} />
+                    <Route path="Formatos" element={<Formatos />} />
+                    <Route path="Form" element={<FormNuevaConvocatoria />} />
                 </Route>
-                <Route path="/Convocatorias/:id/inscripcion/:formato" element={<FormInscripcionProyectos />} />
+                <Route path="Convocatorias/:id/inscripcion/:formato" element={<FormInscripcionProyectos />} />
             </ Route>
             <Route path="/Login" element={<Login />} />
             <Route path="/Register" element={<Register />} />

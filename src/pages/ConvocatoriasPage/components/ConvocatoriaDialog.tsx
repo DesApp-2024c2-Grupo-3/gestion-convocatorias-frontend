@@ -14,7 +14,9 @@ import { putConvocatoria } from "../../../api/convocatorias.api";
 import toast from "react-hot-toast";
 import FormatoDialog from "../../../components/FormatoDialog/FormatoDialog";
 import { ControlDeAcceso, FunctionControlDeAcceso } from "../../../components/ControlDeAcceso/ControlDeAcceso";
+import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../Login/userContext";
+
 
 interface ConvocatoriaDialogProps {
     convocatoriaData: ConvocatoriaCardProps
@@ -33,7 +35,7 @@ interface showDialogStateProps {
 }
 
 const ConvocatoriaDialog = ({ convocatoriaData, showDialogState, fechaFinState }: ConvocatoriaDialogProps) => {
-
+    const navigate = useNavigate();
     const [fechaFinPicker, setFechaFinPicker] = useState<Dayjs | null>(dayjs(fechaFinState.editableFechaFin).tz("America/Argentina/Buenos_Aires"))
     const [showSubmitButton, setShowSubmitButton] = useState(false)
     const [formatoData, setFormatoData] = useState({
@@ -167,6 +169,16 @@ const ConvocatoriaDialog = ({ convocatoriaData, showDialogState, fechaFinState }
                     to={`/Convocatorias/${convocatoriaData.idConvocatoria}/inscripcion/${convocatoriaData.formato}`}
                     sx={{ backgroundColor: "#56A42C" }}
                 >Inscribirse</Button>
+
+                <ControlDeAcceso rolesPermitidos={["admin", "super_admin"]}>
+                    <Button
+                        variant="outlined"
+                        sx={{ ml: 2 }}
+                        onClick={() => navigate(`/convocatorias/${convocatoriaData.idConvocatoria}/postulaciones`)}
+                    >
+                        Ver Postulaciones
+                    </Button>
+                </ControlDeAcceso>
             </DialogActions>
 
         </Dialog>
@@ -175,6 +187,7 @@ const ConvocatoriaDialog = ({ convocatoriaData, showDialogState, fechaFinState }
                 formatoData={formatoData}
                 showDialogState={{showFormatoDialog, setShowFormatoDialog}}
             />
+            
         </>
     )
 

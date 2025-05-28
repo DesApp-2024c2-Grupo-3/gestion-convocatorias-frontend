@@ -6,9 +6,9 @@ export const postProyecto = async (idConvocatoria: string, formularioInscripcion
     try {
         console.log('Datos que envío:', formularioInscripcionData);
         const response = await axios.post(
-        `http://localhost:3000/proyecto/${idConvocatoria}`,
-        formularioInscripcionData,
-        getHeaders({ "Content-Type": "application/json" })
+            `http://localhost:3000/proyecto/${idConvocatoria}`,
+            formularioInscripcionData,
+            getHeaders({ "Content-Type": "application/json" })
         );
         console.log('Respuesta backend:', response.data);
         return response.data;
@@ -16,4 +16,12 @@ export const postProyecto = async (idConvocatoria: string, formularioInscripcion
         console.error('Error en postProyecto:', error);
         throw error;
     }
+};
+
+export const getProyectosPorConvocatoria = async (idConvocatoria: string) => {
+    const response = await axios.get(
+        `http://localhost:3000/proyecto/convocatoria/${idConvocatoria}`, getHeaders()
+    );
+    console.log("Respuesta backend:", response.data); // 🔍 AGREGADO
+    return response.data.proyectos ?? response.data;
 };
