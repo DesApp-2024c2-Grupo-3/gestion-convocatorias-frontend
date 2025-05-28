@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getProyectosPorConvocatoria } from "../../api/proyectos.api";
+import { getConvocatoriaById } from "../../api/convocatorias.api";
 import {
-    Card,
-    CardContent,
     Typography,
     Grid,
-    Box,
     Container,
 } from "@mui/material";
 import PostulacionesCard from "./PostulacionesCard";
@@ -22,16 +20,22 @@ const PostulacionesPage = () => {
     const { idConvocatoria } = useParams();
     const [proyectos, setProyectos] = useState<Proyecto[]>([]);
     const [error, setError] = useState<string | null>(null);
+    const [tituloConvocatoria, setTituloConvocatoria] = useState<string | null>(null);
 
     useEffect(() => {
-        const getProyectos = async () => {
+        const fetchData = async () => {
             if (idConvocatoria) {
                 try {
-                    const data = await getProyectosPorConvocatoria(idConvocatoria);
+                    const [data, convocatoria] = await Promise.all([
+                        getProyectosPorConvocatoria(idConvocatoria),
+                        getConvocatoriaById(idConvocatoria)
+                    ]);
+
+                    // Procesar proyectos
                     if (Array.isArray(data)) {
                         const proyectosTransformados = data.map((proyecto: any) => {
                             const titulo = proyecto.camposExtra?.["Titulo del proyecto"] || "Sin título";
-                            const descripcion = proyecto.camposExtra?.["Problemática Detectada (Diagnostico)"] || "Sin descripción";
+                            const descripcion = proyecto.camposExtra?.["Objetivo general"] || "Sin descripción";
                             const autor = proyecto.autor || "Autor desconocido";
                             const invitados = Array.isArray(proyecto.invitados)
                                 ? proyecto.invitados.map((i: any) => i.nombre || i)
@@ -49,14 +53,16 @@ const PostulacionesPage = () => {
                     } else {
                         setProyectos([]);
                     }
+
+                    setTituloConvocatoria(convocatoria.titulo || "Convocatoria sin título");
                 } catch (error: any) {
-                    console.error("Error al obtener los proyectos:", error);
-                    setError("Hubo un error al cargar los proyectos.");
+                    console.error("Error al obtener los datos:", error);
+                    setError("Hubo un error al cargar los datos.");
                 }
             }
         };
 
-        getProyectos();
+        fetchData();
     }, [idConvocatoria]);
 
     if (error) return <Typography color="error">{error}</Typography>;
@@ -64,24 +70,23 @@ const PostulacionesPage = () => {
 
     return (
         <Container>
-        <Typography variant="h4" align="center" gutterBottom>
-            Postulaciones para la convocatoria
-        </Typography>
+            <Typography variant="h4" align="center" gutterBottom>
+                Postulaciones para: {tituloConvocatoria || "Cargando..."}
+            </Typography>
 
-        <Grid container spacing={3} justifyContent="center">
-            {proyectos.map((proyecto) => (
-            <Grid item xs={12} md={6} key={proyecto._id}>
-                <PostulacionesCard
-                titulo={proyecto.titulo}
-                descripcion={proyecto.descripcion}
-                equipo={proyecto.equipo}
-                />
+            <Grid container spacing={3} justifyContent="center">
+                {proyectos.map((proyecto) => (
+                    <Grid item xs={12} md={6} key={proyecto._id}>
+                        <PostulacionesCard
+                            titulo={proyecto.titulo}
+                            descripcion={proyecto.descripcion}
+                            equipo={proyecto.equipo}
+                        />
+                    </Grid>
+                ))}
             </Grid>
-            ))}
-        </Grid>
         </Container>
-        )
-    
+    );
 };
 
 export default PostulacionesPage;

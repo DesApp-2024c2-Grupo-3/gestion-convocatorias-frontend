@@ -3,12 +3,15 @@ import { Card, CardContent, Typography, Divider, Stack, Paper, Grid } from "@mui
 import { CustomButton } from "../../components/CustomButton/CustomButtons";
 
 
-interface Miembro {
-    nombre: string;
-    apellido: string;
-    email: string;
+interface Props {
+    titulo: string
+    descripcion: string
+    equipo: string[]
+    fechaCreacion?: string
+    estado?: "pendiente" | "aprobado" | "rechazado"
+    categoria?: string
+    onVerDetalles?: () => void
 }
-
 interface Props {
     titulo: string;
     descripcion: string;
@@ -25,32 +28,32 @@ const PostulacionesCard = ({ titulo, descripcion, equipo,  }: Props) => {
             flexDirection: "column",
             borderTop: 5,
             borderTopColor: "#56A42C",
-            height: 300, // mayor altura
-            padding: 2, // más espacio interno
+            height: 300, 
+            padding: 2, 
         }}
         >
         <CardContent sx={{ flex: 1 }}>
             <Typography variant="h5" gutterBottom>
-            {titulo}
+                {titulo}
             </Typography>
 
             <Typography variant="body2" paragraph>
-            {descripcion}
+                {descripcion}
             </Typography>
 
             <Typography variant="body2" fontWeight="bold" gutterBottom>
-            Equipo:
+                Equipo:
             </Typography>
 
             <Grid container spacing={1}>
             {equipo.map((email, index) => (
                 <Grid item xs={6} key={index}>
-                <Paper sx={{ 
-                    padding: 1,
-                    borderLeft: 3,
-                    borderLeftColor: "#56A42C", }}>
-                    <Typography variant="body2">{email}</Typography>
-                </Paper>
+                    <Paper sx={{ 
+                        padding: 1,
+                        borderLeft: 3,
+                        borderLeftColor: "#56A42C", }}>
+                        <Typography variant="body2">{email}</Typography>
+                    </Paper>
                 </Grid>
             ))}
             </Grid>
