@@ -81,3 +81,18 @@ export const updateCv = async (email:string, archivo: FormData) => {
         console.log(error)
     }
 }
+
+export const getUsuarios = async () => {
+    const response = await axios.get("http://localhost:3000/usuario", getHeaders());
+    return response.data;
+};
+
+export const updateRoles = async (email:string, roles: string[]) => {
+    const response = await axios.patch(`http://localhost:3000/usuario/roles/${email}`, {roles}, getHeaders())
+    .then(response => {
+  console.log('Rol actualizado:', response.data);
+})
+.catch(error => {
+  console.error('Error al actualizar roles:', error.response?.data || error.message);
+});
+}

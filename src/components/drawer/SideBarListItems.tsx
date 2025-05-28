@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { ListItem, ListItemButton, ListItemIcon, ListItemText} from "@mui/material";
 import PodcastIcon from "@mui/icons-material/Podcasts";
+import GroupsIcon from '@mui/icons-material/Groups';
 import ContentPasteIcon from '@mui/icons-material/ContentPaste';
 import HomeIcon from '@mui/icons-material/Home';
 import { Link, NavLink } from "react-router-dom";
@@ -65,12 +66,18 @@ export const Items = [
         ItemIcon: <PodcastIcon />,
         ItemText: 'Convocatorias',
         navigateTo: '/Convocatorias',
-        rolesPermitidos: ['admin', 'supe_admin', 'investigador']
+        rolesPermitidos: ['admin', 'super_admin', 'investigador']
     },
     {
         ItemIcon: <FormatListNumbered />,
         ItemText: 'Formatos',
         navigateTo: '/Formatos',
-        rolesPermitidos: ['admin', 'supe_admin']
-    }
+        rolesPermitidos: ['admin', 'super_admin']
+    },
+    {
+        ItemIcon: <GroupsIcon />,
+        ItemText: 'Usuarios',
+        navigateTo: '/Usuarios',
+        rolesPermitidos: ['super_admin']
+    },
 ];

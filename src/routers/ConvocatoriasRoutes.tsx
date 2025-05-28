@@ -8,6 +8,7 @@ import MiPerfil from "../pages/PerfilDeUsuario/MiPerfil";
 import ConvocatoriasPage from "../pages/ConvocatoriasPage/ConvocatoriasPage"
 import Formatos from "../pages/Formatos/Formatos";
 import FormInscripcionProyectos from "../pages/FormInscripcionProyecto/FormInscripcionProyecto";
+import Usuarios from "../pages/Usuarios/Usuarios"
 import PrivateRoute from "../components/ControlDeAcceso/PrivateRoute";
 import PostulacionesPage from "../pages/PostulacionesPage/PostulacionesPage";
 
@@ -28,7 +29,11 @@ export const ConvocatoriasRoutes = () => {
                 > 
                     <Route path="convocatorias/:idConvocatoria/postulaciones" element={<PostulacionesPage/>} />
                     <Route path="Formatos" element={<Formatos />} />
-                    <Route path="Form" element={<FormNuevaConvocatoria />} />
+                    <Route path="Form" element={<FormNuevaConvocatoria />} /> 
+                    <Route path="/Formatos" element={<Formatos />} />
+                    <Route path="/Form" element={<FormNuevaConvocatoria />} />
+                    <Route path="/usuarios" element={<Usuarios />} />
+
                 </Route>
                 <Route path="Convocatorias/:id/inscripcion/:formato" element={<FormInscripcionProyectos />} />
             </ Route>
