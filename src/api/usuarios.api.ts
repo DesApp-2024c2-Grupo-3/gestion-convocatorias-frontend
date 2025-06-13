@@ -6,7 +6,7 @@ export const registrarUsuario = async (
     email: string,
     password: string
 ): Promise<any> => {
-    const response = await axios.post("http://localhost:3000/usuario", {
+    const response = await axios.post("http://localhost:3000/auth/register", {
         nombre,
         email,
         password,
