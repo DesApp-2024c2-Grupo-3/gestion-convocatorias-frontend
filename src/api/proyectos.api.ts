@@ -25,3 +25,13 @@ export const getProyectosPorConvocatoria = async (idConvocatoria: string) => {
     console.log("Respuesta backend:", response.data); // 🔍 AGREGADO
     return response.data.proyectos ?? response.data;
 };
+
+export const getProyectoPorId = async (idProyecto: string ) => {
+    const response = await axios.get(
+        `http://localhost:3000/proyecto/${idProyecto}`,
+        getHeaders()
+    );
+    console.log("Respuesta backend:", response.data);
+    return response.data
+    
+}

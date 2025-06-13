@@ -19,8 +19,7 @@ const FormArchivos = ({ savedData }: FormArchivosProps) => {
         resolver: zodResolver(fileSchema),
     });
 
-    const onSubmit: SubmitHandler<FileValues> = (data) => {
-        console.log(data);
+    const onSubmit: SubmitHandler<FileValues> = async (data) => {
         const newData = {...savedData, archivo: data.file}
 
         const formData = new FormData();
@@ -31,7 +30,8 @@ const FormArchivos = ({ savedData }: FormArchivosProps) => {
         formData.append('formato', newData.formato)
         formData.append('archivo', newData.archivo)
         
-        postConvocatoria(formData)
+        const response = await postConvocatoria(formData)
+        console.log(response);
     };
 
     return (

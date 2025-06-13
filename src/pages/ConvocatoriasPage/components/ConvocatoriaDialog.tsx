@@ -34,10 +34,12 @@ interface showDialogStateProps {
     setShowDialog: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+
 const ConvocatoriaDialog = ({ convocatoriaData, showDialogState, fechaFinState }: ConvocatoriaDialogProps) => {
     const navigate = useNavigate();
     const [fechaFinPicker, setFechaFinPicker] = useState<Dayjs | null>(dayjs(fechaFinState.editableFechaFin).tz("America/Argentina/Buenos_Aires"))
     const [showSubmitButton, setShowSubmitButton] = useState(false)
+    const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
     const [formatoData, setFormatoData] = useState({
         _id: '',
         nombreDelFormato: '',
@@ -55,6 +57,11 @@ const ConvocatoriaDialog = ({ convocatoriaData, showDialogState, fechaFinState }
         setShowSubmitButton(false)
         showDialogState.setShowDialog(false)
     }
+
+    const handleOpenDeleteConfirmation = () => {
+        setShowDeleteConfirmation(true);
+    };
+
 
     const submitNewFechaFin = async () => {
         try {
@@ -156,12 +163,13 @@ const ConvocatoriaDialog = ({ convocatoriaData, showDialogState, fechaFinState }
                 />
 
                 <ControlDeAcceso rolesPermitidos={["admin", "super_admin"]}>
-                <CustomButton
-                    nombre="Borrar"
-                    iconoIzquierdo={<DeleteIcon />}
-                    style={btnRojo}
-                />
-                </ControlDeAcceso>
+                    <CustomButton
+                        nombre="Borrar"
+                        iconoIzquierdo={<DeleteIcon />}
+                        style={btnRojo}
+                        accion={handleOpenDeleteConfirmation}
+                    />
+                </ControlDeAcceso>  
                 
                 <Button
                     variant="contained"
