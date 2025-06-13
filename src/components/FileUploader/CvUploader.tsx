@@ -1,24 +1,36 @@
 import React, { ChangeEvent, useContext, useState } from "react";
 import axios from "axios"
-import { updateCv } from "../../api/usuarios.api";
+import { downloadCv, updateCv } from "../../api/usuarios.api";
 import { useRef } from "react";
 import { UserContext } from "../../pages/Login/userContext";
 import stylesButton from "./CvUploader.module.css"
+import toast from "react-hot-toast";
+import {jwtDecode} from "jwt-decode";
+import { CustomButton } from "../CustomButton/CustomButtons";
+import { Button } from "react-bootstrap";
 
 type UploadStatus = "idle" | "uploading" | "success" | "error"
+
+type TokenPayload = {
+    cvId: string,
+    cvNombre: string,
+    cvTipo: string,
+}
 
 function CvUploader() {
     const { usuario } = useContext(UserContext)
     const [file, setFile] = useState<File | null>(null)
     const [status, setStatus] = useState<UploadStatus>("idle")
 
-    //const inputRef = useRef<HTMLInputElement | null>(null);
+    const token = sessionStorage.getItem("token")
+    const decoded = jwtDecode<TokenPayload>(token as string)
+
+    const [fileName, setFileName] = useState<string>(decoded.cvNombre || usuario?.cv?.nombre || "")
 
     function handleFileChange(e: ChangeEvent<HTMLInputElement>) {
         if (e.target.files) {
             setFile(e.target.files[0])
         }
-        console.log(usuario)
     }
 
     async function handleFileUpload(e: React.MouseEvent<HTMLButtonElement>) {
@@ -28,12 +40,33 @@ function CvUploader() {
         formData.append("archivo", file)
 
         try {
+            await updateCv(usuario.email, formData)
             setStatus("success");
-            updateCv(usuario.email, formData)
+            toast.success("Currículum subido correctamente")
+            const token = sessionStorage.getItem("token")
+            const decoded = jwtDecode<TokenPayload>(token as string)
+            setFileName(decoded.cvNombre)
+            
         } catch (e) {
             setStatus("error");
+            toast.error("Hubo un error al cargar el currículum")
         };
     }
+
+    const descargarCV = async (userId: number) => {
+        try {
+            const blob = await downloadCv(userId);
+            const url = window.URL.createObjectURL(new Blob([blob]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', fileName);
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+        } catch (error) {
+            console.error('Error al descargar el CV:', error);
+        }
+    };
 
     /*
     async function handlefileRemoval(e: React.MouseEvent<HTMLButtonElement>) {
@@ -72,15 +105,17 @@ function CvUploader() {
         <div>
             {usuario?.cv?.nombre &&
                 <div style={{marginBottom: "15px"}}>
-                    {usuario.cv.nombre}
-                    <a href={`data:${usuario.cv.tipo};base64,${usuario.cv.contenido}`}
-                        download={usuario.cv.nombre}>
-                        <svg style={{width: "20px", marginLeft: "10px"}} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+                    {fileName}
+                    <div onClick={() => descargarCV(usuario._id)} style={{ cursor: 'pointer', display: 'inline-block' }}>
+                        <svg style={{ width: "20px", marginLeft: "10px" }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
                             <g data-name="35-Arrow Down">
                                 <path d="M25 14h-5v2h5a5 5 0 0 1 5 5v4a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5v-4a5 5 0 0 1 5-5h5v-2H7a7 7 0 0 0-7 7v4a7 7 0 0 0 7 7h18a7 7 0 0 0 7-7v-4a7 7 0 0 0-7-7z" />
                                 <path d="m8.29 18.71 7 7a1 1 0 0 0 1.41 0l7-7-1.41-1.41L17 22.59V1h-2v21.59l-5.29-5.3z" />
                             </g>
-                        </svg></a>
+                        </svg>
+                    </div>
+
+
                 </div>}
             <input type="file" accept=".pdf,.docx" onChange={handleFileChange} />
             {file && (
@@ -89,14 +124,10 @@ function CvUploader() {
                 </div>
             )}
             {file && status !== "uploading" &&
-                <button type="button" onClick={(handleFileUpload)}>Subir</button>
+                <CustomButton 
+                    nombre="Subir"
+                    accion={(handleFileUpload)}/>
             }
-            {status === 'success' && (
-                <p>Archivo subido correctamente</p>
-            )}
-            {status === 'error' && (
-                <p>Ocurrió un error al subir el archivo, por favor intentalo más tarde</p>
-            )}
 
         </div>)
 }

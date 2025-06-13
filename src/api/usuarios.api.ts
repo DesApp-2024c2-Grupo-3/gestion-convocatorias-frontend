@@ -65,17 +65,18 @@ export const updateContrasenia = async (email: string, nuevaContrasenia: string)
 };
 
 export const updateCv = async (email:string, archivo: FormData) => {
-    console.log(archivo)
     archivo.append("email", email)
     try {
         const response = await axios.put(
             'http://localhost:3000/usuario/cv', archivo,
-            getHeaders({"Content-Type": "multipart/form-data"})
+            getHeaders()
         );
         if (response.status === 200) {
-            console.log("funciono!!!!!!!!!");
+            console.log("CV actualizado correctamente");
+            sessionStorage.setItem("token", response.data.access_token)
+            console.log(sessionStorage.getItem("token"))
         } else {
-            console.log("no funciono :(");
+            console.log("Ocurrio un error al subir el CV");
         }
     } catch (error) {
         console.log(error)
@@ -96,3 +97,8 @@ export const updateRoles = async (email:string, roles: string[]) => {
   console.error('Error al actualizar roles:', error.response?.data || error.message);
 });
 }
+
+export const downloadCv = async (id: number) => {
+    const response = await axios.get(`http://localhost:3000/usuario/cv/download/${id}`, getHeaders());
+    return response.data;
+};

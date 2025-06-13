@@ -11,7 +11,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
-  const { iniciarSesion } = useContext(UserContext); // Accede al contexto
+  const { iniciarSesion } = useContext(UserContext);
 
   const ingresarLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,6 +24,7 @@ const Login = () => {
         console.log("Token válido");
 
         iniciarSesion({
+          _id: data.usuario._id,
           nombre: data.usuario.nombre,
           email: data.usuario.email,
           password: data.usuario.password,

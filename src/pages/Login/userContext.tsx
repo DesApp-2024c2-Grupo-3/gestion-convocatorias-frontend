@@ -8,6 +8,7 @@ interface Cv {
 }
 
 interface Usuario {
+  _id: number,
   nombre: string;
   email: string;
   password: string;
@@ -34,7 +35,6 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   });
 
   const iniciarSesion = (usuario: Usuario) => {
-    // Clonamos y transformamos el contenido del CV a base64 si existe
     const usuarioFormateado: Usuario = {
       ...usuario,
       cv: usuario.cv
