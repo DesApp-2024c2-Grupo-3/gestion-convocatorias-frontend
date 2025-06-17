@@ -10,18 +10,22 @@ import {
     NuevoFormatoValues,
 } from "../schemas/nuevoFormatoSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { TextField } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 import styles from "../../Home/formularios.module.css";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { CustomButton } from "../../../components/CustomButton/CustomButtons";
-import { btnRojo, formatSelectorBtn } from "../../../components/CustomButton/buttonStyles";
+import { btnRojo, btnVerdeUnahur, formatSelectorBtn } from "../../../components/CustomButton/buttonStyles";
 import { getFormatoByNombre, postFormato } from "../../../api/formatos.api";
+import toast from "react-hot-toast";
+import SaveAsIcon from '@mui/icons-material/SaveAs';
 
 interface CrearFormatoProps {
     setFormato: (data: string) => void;
+    setTipoFormulario: React.Dispatch<React.SetStateAction<JSX.Element | null>>
+    setNombreFormato: (nombre: string) => void
 }
 
-const FormCrearFormato = ({ setFormato }: CrearFormatoProps) => {
+const FormCrearFormato = ({ setFormato, setTipoFormulario, setNombreFormato }: CrearFormatoProps) => {
     const {
         control,
         setValue,
@@ -36,7 +40,7 @@ const FormCrearFormato = ({ setFormato }: CrearFormatoProps) => {
 
     const { fields, append, remove } = useFieldArray({
         name: "campos",
-        control,
+        control
     });
 
     const onOptionsBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>, index: number) => {
@@ -46,24 +50,20 @@ const FormCrearFormato = ({ setFormato }: CrearFormatoProps) => {
 
     const onSubmit: SubmitHandler<NuevoFormatoValues> = async (data) => {
         console.log("FORMATO",data);
-        // Deberia Guardar el Formato en el Backend
 
         try {
             const response = await postFormato(data);
             const formatoId = response;
             console.log("Formato guardado con ID:", formatoId);
             setFormato(formatoId);
+            toast.success(`Formato creado correctamente. Se seleccionó el formato "${data.nombreDelFormato}" como formato actual`, {duration: 4000})
+            setTipoFormulario(null)
+            setNombreFormato(data.nombreDelFormato)
+            console.log(errors)
         } catch (error) {
             console.error("Error al guardar el formato:", error);
+            toast.error("Ocurrió un error al crear el formato")
         }
-        /* const formato = await getFormatoByNombre(data.nombreDelFormato)
-        if (!formato) {
-            console.log('error')
-            } 
-        console.log("GEEEEEEET",formato)
-        */
-
-        
     };
 
     return (
@@ -87,6 +87,8 @@ const FormCrearFormato = ({ setFormato }: CrearFormatoProps) => {
                             )}
                     />
                 </div>
+
+                <p style={{color:'red'}}>{errors.campos?.message}</p>
 
                 <div className={styles["btn-select-formato-group"]}>
                     <CustomButton
@@ -148,8 +150,8 @@ const FormCrearFormato = ({ setFormato }: CrearFormatoProps) => {
                                                     variant="outlined"
                                                     type="number"
                                                     onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
-                                                    error={!!errors.campos?.[index]?.maxNumeroDeCaracteres}
-                                                    helperText={errors.campos?.[index]?.maxNumeroDeCaracteres?.message}
+                                                    //error={!!errors.campos?.[index]?.maxNumeroDeCaracteres}
+                                                    //helperText={errors.campos?.[index]?.maxNumeroDeCaracteres?.message}
                                                     fullWidth
                                                 />
                                             )}
@@ -168,8 +170,8 @@ const FormCrearFormato = ({ setFormato }: CrearFormatoProps) => {
                                                     id={`campos.${index}.opciones`}
                                                     label="Opciones"
                                                     variant="outlined"
-                                                    error={!!errors.campos?.[index]?.opciones}
-                                                    helperText={errors.campos?.[index]?.opciones?.message}
+                                                    //error={!!errors.campos?.[index]?.opciones}
+                                                    //helperText={errors.campos?.[index]?.opciones?.message}
                                                     fullWidth
                                                     onBlur={(e) => onOptionsBlur(e, index)}
                                                 />
@@ -179,7 +181,7 @@ const FormCrearFormato = ({ setFormato }: CrearFormatoProps) => {
                                 )}
 
                                 <CustomButton
-                                    nombre="Borrar"
+                                    nombre="Borrar campo"
                                     accion={() => remove(index)}
                                     iconoIzquierdo={<DeleteIcon />}
                                     style={btnRojo}
@@ -190,7 +192,13 @@ const FormCrearFormato = ({ setFormato }: CrearFormatoProps) => {
                     );
                 })}
 
-                <button type="submit">Guardar Formato</button>
+                
+                <CustomButton
+                    nombre="Guardar formato"
+                    type="submit"
+                    iconoIzquierdo={<SaveAsIcon />}
+                    style={btnVerdeUnahur}
+                />
             </form>
         </>
     );

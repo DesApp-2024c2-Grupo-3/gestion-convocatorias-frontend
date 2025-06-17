@@ -46,7 +46,7 @@ function CvUploader() {
             const token = sessionStorage.getItem("token")
             const decoded = jwtDecode<TokenPayload>(token as string)
             setFileName(decoded.cvNombre)
-            
+            setFile(null)
         } catch (e) {
             setStatus("error");
             toast.error("Hubo un error al cargar el currículum")
@@ -124,9 +124,10 @@ function CvUploader() {
                 </div>
             )}
             {file && status !== "uploading" &&
-                <CustomButton 
-                    nombre="Subir"
-                    accion={(handleFileUpload)}/>
+                <Button 
+                    onClick={(handleFileUpload)}>
+                    Subir
+                </Button>
             }
 
         </div>)
