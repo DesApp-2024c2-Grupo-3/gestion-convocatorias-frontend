@@ -1,10 +1,11 @@
 import axios from "axios";
 
-export const getHeaders = (extraHeaders = {}) => ({
+export const getHeaders = (extraHeaders = {}, otrasOpciones = {}) => ({
     headers: {
         Authorization: `Bearer ${sessionStorage.getItem('token')}`,
         ...extraHeaders
-    }
+    },
+    ...otrasOpciones
 });
 
 export const postConvocatoria = (formData: Object) => {
@@ -49,4 +50,14 @@ export const deleteConvocatoria = async (id: string): Promise<void> => {
         console.error("Error al eliminar la convocatoria", error);
         throw error;
     }
-};
+}
+
+export const getArchivoDeConvocatoria = async (id:string) => {
+    const response = await axios.get(`http://localhost:3000/convocatoria/archivo/${id}`,
+        getHeaders({}, {responseType: "blob"}),
+    )
+    
+    const blob = new Blob([response.data], {type: 'application/pdf'});
+    const url = URL.createObjectURL(blob);
+    window.open(url, "_blank");
+}

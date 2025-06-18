@@ -10,13 +10,13 @@ import { CustomButton } from "../../../components/CustomButton/CustomButtons";
 import { Link } from "react-router-dom";
 import { btnRojo, btnVerdeUnahur } from "../../../components/CustomButton/buttonStyles";
 import { getFormatoById } from "../../../api/formatos.api";
-import { putConvocatoria } from "../../../api/convocatorias.api";
+import { putConvocatoria, getArchivoDeConvocatoria } from "../../../api/convocatorias.api";
 import toast from "react-hot-toast";
 import FormatoDialog from "../../../components/FormatoDialog/FormatoDialog";
 import { ControlDeAcceso, FunctionControlDeAcceso } from "../../../components/ControlDeAcceso/ControlDeAcceso";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../Login/userContext";
-
+import { PictureAsPdf } from "@mui/icons-material";
 
 interface ConvocatoriaDialogProps {
     convocatoriaData: ConvocatoriaCardProps
@@ -160,6 +160,13 @@ const ConvocatoriaDialog = ({ convocatoriaData, showDialogState, fechaFinState }
                         setFormatoData(formato)
                         setShowFormatoDialog(true)
                     }}
+                />
+
+                <CustomButton
+                    nombre="bases y condiciones"
+                    accion={() => getArchivoDeConvocatoria(convocatoriaData.idConvocatoria)}
+                    iconoIzquierdo={<PictureAsPdf />}
+                    style={{...btnVerdeUnahur, margin: 0 }}
                 />
 
                 <ControlDeAcceso rolesPermitidos={["admin", "super_admin"]}>
