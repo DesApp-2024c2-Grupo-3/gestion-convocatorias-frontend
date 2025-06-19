@@ -1,12 +1,29 @@
-import  React from "react"
+import React from "react"
 import { useEffect, useState } from "react"
-import { Dialog, DialogTitle, DialogContent, DialogActions, IconButton, Typography, Box, Divider, Grid, Paper, CircularProgress, Tabs,
-  Tab, List, ListItem, ListItemText, ListItemIcon, } from "@mui/material"
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  IconButton,
+  Typography,
+  Box,
+  Grid,
+  Paper,
+  CircularProgress,
+  Tabs,
+  Tab,
+  Card,
+  CardContent,
+} from "@mui/material"
 import CloseIcon from "@mui/icons-material/Close"
 import PersonIcon from "@mui/icons-material/Person"
-import DescriptionIcon from "@mui/icons-material/Description"
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday"
 import CategoryIcon from "@mui/icons-material/Category"
+import TitleIcon from "@mui/icons-material/Title"
+import ProblemIcon from "@mui/icons-material/ReportProblem"
+import TargetIcon from "@mui/icons-material/GpsFixed"
+import InfoIcon from "@mui/icons-material/Info"
 import { CustomButton } from "../../components/CustomButton/CustomButtons"
 import { getProyectoPorId } from "../../api/proyectos.api"
 
@@ -28,12 +45,12 @@ function TabPanel(props: TabPanelProps) {
       {...other}
       style={{
         padding: "16px 0",
-        height: "400px", 
+        height: "400px",
         overflowY: "auto", // Scroll si el contenido es muy largo
       }}
     >
       {value === index && <Box sx={{ height: "100%" }}>{children}</Box>}
-    </div>
+    </div> 
   )
 }
 
@@ -53,6 +70,44 @@ interface ProyectoDetalle {
   camposExtra: Record<string, any>
   estado?: string
   categoria?: string
+}
+
+// Función para obtener el icono apropiado según el campo
+const getFieldIcon = (fieldName: string) => {
+  const lowerFieldName = fieldName.toLowerCase()
+
+  if (lowerFieldName.includes("titulo") || lowerFieldName.includes("nombre")) {
+    return <TitleIcon />
+  }
+  if (lowerFieldName.includes("problema") || lowerFieldName.includes("diagnostico")) {
+    return <ProblemIcon />
+  }
+  if (lowerFieldName.includes("objetivo")) {
+    return <TargetIcon />
+  }
+  if (lowerFieldName.includes("categoria")) {
+    return <CategoryIcon />
+  }
+  return <InfoIcon />
+}
+
+// Función para obtener el color del campo
+const getFieldColor = (fieldName: string) => {
+  const lowerFieldName = fieldName.toLowerCase()
+
+  if (lowerFieldName.includes("titulo")) {
+    return "#1976d2"
+  }
+  if (lowerFieldName.includes("problema") || lowerFieldName.includes("diagnostico")) {
+    return "#f57c00"
+  }
+  if (lowerFieldName.includes("objetivo")) {
+    return "#388e3c"
+  }
+  if (lowerFieldName.includes("categoria")) {
+    return "#7b1fa2"
+  }
+  return "#56A42C"
 }
 
 const PostulacionDialog: React.FC<PostulacionDialogProps> = ({ open, onClose, proyectoId }) => {
@@ -85,18 +140,6 @@ const PostulacionDialog: React.FC<PostulacionDialogProps> = ({ open, onClose, pr
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue)
   }
-{/* 
-  const getEstadoColor = (estado = "pendiente"): "success" | "error" | "warning" => {
-    switch (estado) {
-      case "aprobado":
-        return "success"
-      case "rechazado":
-        return "error"
-      default:
-        return "warning"
-    }
-  }
-*/}
 
   if (!open) return null
 
@@ -108,7 +151,7 @@ const PostulacionDialog: React.FC<PostulacionDialogProps> = ({ open, onClose, pr
       fullWidth
       PaperProps={{
         sx: {
-          height: "80vh", // Altura fija del modal
+          height: "80vh",
           maxHeight: "80vh",
         },
       }}
@@ -121,7 +164,7 @@ const PostulacionDialog: React.FC<PostulacionDialogProps> = ({ open, onClose, pr
           justifyContent: "space-between",
           alignItems: "center",
           p: 2,
-          flexShrink: 0, // No se encoge
+          flexShrink: 0,
         }}
       >
         <Typography variant="h6">Detalles de la Postulación</Typography>
@@ -134,10 +177,10 @@ const PostulacionDialog: React.FC<PostulacionDialogProps> = ({ open, onClose, pr
         dividers
         sx={{
           p: 0,
-          flex: 1, // Toma todo el espacio disponible
+          flex: 1,
           display: "flex",
           flexDirection: "column",
-          overflow: "hidden", // Evita scroll en el contenedor principal
+          overflow: "hidden",
         }}
       >
         {loading ? (
@@ -150,7 +193,6 @@ const PostulacionDialog: React.FC<PostulacionDialogProps> = ({ open, onClose, pr
           </Box>
         ) : proyecto ? (
           <Box sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
-            {/* Encabezado con información básica - Altura fija */}
             <Box sx={{ p: 3, backgroundColor: "#f9f9f9", flexShrink: 0 }}>
               <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", mb: 2 }}>
                 <Typography variant="h5" gutterBottom sx={{ fontWeight: 600, mb: 0 }}>
@@ -163,7 +205,10 @@ const PostulacionDialog: React.FC<PostulacionDialogProps> = ({ open, onClose, pr
                   <Box sx={{ display: "flex", alignItems: "center" }}>
                     <CalendarTodayIcon fontSize="small" sx={{ color: "text.secondary", mr: 1 }} />
                     <Typography variant="body2" color="text.secondary">
-                      Fecha: {new Date(proyecto.fechaCreacion).toLocaleDateString()}
+                      Fecha: 
+                      {proyecto.fechaCreacion && !isNaN(Date.parse(proyecto.fechaCreacion))
+                        ? new Date(proyecto.fechaCreacion).toLocaleDateString()
+                        : "No disponible"}
                     </Typography>
                   </Box>
                 </Grid>
@@ -186,7 +231,6 @@ const PostulacionDialog: React.FC<PostulacionDialogProps> = ({ open, onClose, pr
               </Grid>
             </Box>
 
-            {/* Pestañas - Altura fija */}
             <Box sx={{ borderBottom: 1, borderColor: "divider", flexShrink: 0 }}>
               <Tabs value={tabValue} onChange={handleTabChange} aria-label="detalles del proyecto">
                 <Tab label="Información General" />
@@ -194,29 +238,90 @@ const PostulacionDialog: React.FC<PostulacionDialogProps> = ({ open, onClose, pr
               </Tabs>
             </Box>
 
-            {/* Contenido de las pestañas - Altura flexible con scroll */}
             <Box sx={{ flex: 1, p: 3, overflow: "hidden" }}>
               {/* Pestaña de Información General */}
               <TabPanel value={tabValue} index={0}>
-                
                 <Typography variant="h4" gutterBottom>
-                  Información Adicional
+                  Información General
                 </Typography>
 
-                {Object.entries(proyecto.camposExtra).map(([key, value]) => (
-                  <Box key={key} sx={{ mb: 3 }}>
-                    <Typography variant="h5" fontWeight="bold">
-                      {key}
-                    </Typography> 
-                    <Typography variant="body1">
-                      {value || "No especificado"}
-                    </Typography>
-                  </Box>
+                {Object.entries(proyecto.camposExtra)
+                  .filter(([_, value]: [string, string]) => {
+                    const v = value?.trim().toLowerCase()
+                    return v && v !== "" && v !== "asd" // Filtramos campos inválidos
+                  })
+                  .map(([key, value]: [string, string]) => (
+                    <Card
+                      key={key}
+                      elevation={2}
+                      sx={{
+                        mb: 3,
+                        transition: "transform 0.2s, box-shadow 0.2s",
+                        "&:hover": {
+                          transform: "translateY(-2px)",
+                          boxShadow: 4,
+                        },
+                      }}
+                    >
+                      <CardContent>
+                        <Box sx={{ display: "flex", alignItems: "flex-start", gap: 2 }}>
+                          <Box
+                            sx={{
+                              width: 40,
+                              height: 40,
+                              borderRadius: "50%",
+                              backgroundColor: getFieldColor(key),
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              color: "white",
+                              flexShrink: 0,
+                              mt: 0.5,
+                            }}
+                          >
+                            {getFieldIcon(key)}
+                          </Box>
+
+                          <Box sx={{ flex: 1 }}>
+                            <Typography
+                              variant="h6"
+                              fontWeight="bold"
+                              sx={{
+                                color: "#2c3e50",
+                                borderBottom: `2px solid ${getFieldColor(key)}`,
+                                paddingBottom: 0.5,
+                                marginBottom: 1.5,
+                              }}
+                            >
+                              {key}
+                            </Typography>
+
+                            <Paper
+                              elevation={0}
+                              sx={{
+                                p: 2,
+                                backgroundColor: "#f8f9fa",
+                                borderLeft: `4px solid ${getFieldColor(key)}`,
+                                borderRadius: 1,
+                              }}
+                            >
+                              <Typography
+                                variant="body1"
+                                sx={{
+                                  lineHeight: 1.6,
+                                  color: "#34495e",
+                                }}
+                              >
+                                {value}
+                              </Typography>
+                            </Paper>
+                          </Box>
+                        </Box>
+                      </CardContent>
+                    </Card>
                 ))}
               </TabPanel>
-              
 
-              {/* Pestaña de Equipo */}
               <TabPanel value={tabValue} index={1}>
                 <Typography variant="h6" gutterBottom>
                   Responsable del Proyecto
@@ -287,8 +392,8 @@ const PostulacionDialog: React.FC<PostulacionDialogProps> = ({ open, onClose, pr
                                 fontWeight: "bold",
                               }}
                             >
-                            </Box>
                             
+                            </Box>
                           </Paper>
                         </Grid>
                       ))}

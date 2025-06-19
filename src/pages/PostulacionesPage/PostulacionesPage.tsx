@@ -52,7 +52,6 @@ const PostulacionesPage = () => {
                 equipo: [autor, ...invitados],
                 fechaCreacion: new Date(proyecto.fechaCreacion || Date.now()).toLocaleDateString(),
                 // estado: "pendiente", 
-                categoria: "General", // Valor por defecto
               }
             })
 
@@ -72,13 +71,11 @@ const PostulacionesPage = () => {
     getProyectos()
   }, [idConvocatoria])
 
-  // Función para abrir el modal de detalles
   const handleVerDetalles = (proyectoId: string): void => {
     setSelectedProyectoId(proyectoId)
     setModalOpen(true)
   }
 
-  // Función para cerrar el modal
   const handleCloseModal = (): void => {
     setModalOpen(false)
     setSelectedProyectoId(null)
@@ -118,7 +115,6 @@ const PostulacionesPage = () => {
   return (
     <>
       <Container maxWidth="lg" sx={{ py: 4 }}>
-        {/* Breadcrumbs */}
         <Box sx={{ mb: 3 }}>
           <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
             <MuiLink component={Link} to="/convocatorias" color="inherit">

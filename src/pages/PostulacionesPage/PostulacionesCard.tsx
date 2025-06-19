@@ -1,16 +1,6 @@
 import React from "react"
-import {
-  Card,
-  CardContent,
-  Typography,
-  Paper,
-  Grid,
-  Box,
-  Chip,
-  Tooltip,
-  IconButton,
-  CardActions,
-  Divider,
+import { Card, CardContent, Typography, Paper, Grid, Box, Chip, Tooltip, IconButton,
+  CardActions, Divider,
 } from "@mui/material"
 import { CustomButton } from "../../components/CustomButton/CustomButtons"
 import VisibilityIcon from "@mui/icons-material/Visibility"
@@ -33,11 +23,12 @@ const PostulacionesCard = (props: Props) => {
         titulo,
         descripcion,
         equipo,
-        fechaCreacion = new Date().toLocaleDateString(),
+        fechaCreacion,
         //estado = "pendiente",
         categoria = "General",
         onVerDetalles = () => {}
     } = props
+    
     
     /*
     const getEstadoColor = (estado: string): "success" | "error" | "warning" => {
@@ -51,27 +42,26 @@ const PostulacionesCard = (props: Props) => {
         }
     }*/
 
-    // Truncar descripción si es muy larga
-    const descripcionTruncada: string = descripcion.length > 120 ? descripcion.substring(0, 120) + "..." : descripcion
+    const descripcionTruncada: string = descripcion.length > 150 ? descripcion.substring(0, 150) + "..." : descripcion
 
     return (
         <Card
-        sx={{
-            display: "flex",
-            flexDirection: "column",
-            borderTop: 5,
-            borderTopColor: "#56A42C",
-            height: "100%", // Cambio importante: altura flexible
-            transition: "transform 0.2s, box-shadow 0.2s",
-            "&:hover": {
-            transform: "translateY(-4px)",
-            boxShadow: 4,
-            },
-        }}
-        elevation={2}
+            sx={{
+                display: "flex",
+                flexDirection: "column",
+                borderTop: 5,
+                borderTopColor: "#56A42C",
+                height: "330px", 
+                transition: "transform 0.2s, box-shadow 0.2s",
+                "&:hover": {
+                transform: "translateY(-4px) scale(1.02)",
+                boxShadow: 4,
+                },
+            }}
+            elevation={2}
         >
         <CardContent sx={{ flex: 1, pb: 1 }}>
-            {/* Header con título y estado
+            {/* 
             <Box
             sx={{
                 display: "flex",
@@ -85,8 +75,8 @@ const PostulacionesCard = (props: Props) => {
             </Typography>
             <Chip label={estado.toUpperCase()} color={getEstadoColor(estado)} size="small" sx={{ fontWeight: 500 }} />
             </Box>
-                 */}
-            {/* Información adicional */}
+            */}
+                
             <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
             <CalendarTodayIcon fontSize="small" sx={{ color: "text.secondary", mr: 0.5 }} />
             <Typography variant="caption" color="text.secondary">
@@ -95,14 +85,12 @@ const PostulacionesCard = (props: Props) => {
             <Chip label={categoria} size="small" variant="outlined" sx={{ ml: 1, fontSize: "0.7rem" }} />
             </Box>
 
-            {/* Descripción */}
-            <Typography variant="body2" paragraph sx={{ mb: 2 }}>
+            <Typography variant="body2" paragraph sx={{ mb: 1 }}>
             {descripcionTruncada}
             </Typography>
 
             <Divider sx={{ my: 1.5 }} />
 
-            {/* Sección de equipo mejorada */}
             <Typography variant="body2" fontWeight="bold" sx={{ mb: 1 }}>
             Equipo ({equipo.length}):
             </Typography>
@@ -121,7 +109,7 @@ const PostulacionesCard = (props: Props) => {
                         gap: 1,
                     }}
                     >
-                    {/* Avatar con inicial */}
+                    {/* avatar con inicial */}
                     <Box
                         sx={{
                         width: 24,
@@ -160,8 +148,6 @@ const PostulacionesCard = (props: Props) => {
             )}
             </Grid>
         </CardContent>
-
-        {/* Acciones en la parte inferior */}
         <CardActions sx={{ justifyContent: "flex-end", pt: 0 }}>
             <IconButton size="small" title="Descargar información">
             <DownloadIcon fontSize="small" />
@@ -169,7 +155,7 @@ const PostulacionesCard = (props: Props) => {
             <CustomButton nombre="Ver detalles" iconoIzquierdo={<VisibilityIcon />} accion={onVerDetalles} />
         </CardActions>
         </Card>
-  )
+    )
 }
 
 export default PostulacionesCard
