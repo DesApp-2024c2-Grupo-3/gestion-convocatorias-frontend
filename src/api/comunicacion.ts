@@ -1,5 +1,6 @@
 import axios from "axios";
-import { getHeaders } from "./convocatorias.api";
+import { getHeaders } from "@api/convocatorias.api";
+import { API_BASE_URL } from "@constants/app.config";
 
 interface SendEmailData {
     fromEmail?: string;
@@ -11,6 +12,6 @@ interface SendEmailData {
 }
 
 export const enviarCorreo = async (emailData: SendEmailData): Promise<any> => {
-    const response = await axios.post("http://localhost:3000/comunicacion/enviar-correo", emailData, getHeaders());
+    const response = await axios.post(`${API_BASE_URL}/comunicacion/enviar-correo`, emailData, getHeaders());
     return response.data;
 };
