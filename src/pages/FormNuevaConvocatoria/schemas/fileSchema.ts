@@ -13,8 +13,9 @@ function checkFileType(file: File) {
 
 export const fileSchema = z.object({
     file: z.any()
+        .refine((file: File) => !!file, {message: "No hay archivo"})
         .refine((file: File) => file?.size !== 0, { message: "El archivo es obligatorio" })
-        .refine((file: File) => file?.size <= MAX_FILE_SIZE, { message: "El archivo es muy grande" })
+        .refine((file: File) => file?.size <= MAX_FILE_SIZE, { message: "El archivo debe ser menor a 5 MB" })
         .refine((file: File) => checkFileType(file), { message: "El archivo debe ser un PDF o DOCX" })
 });
 

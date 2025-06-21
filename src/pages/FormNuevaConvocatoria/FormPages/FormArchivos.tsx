@@ -5,6 +5,8 @@ import React, { useState } from "react";
 import { postConvocatoria } from "../../../api/convocatorias.api";
 import { IConvocatoria } from "../FormNuevaConvocatoria";
 import styles from "../../Home/formularios.module.css";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 interface FormArchivosProps {
     savedData: IConvocatoria;
@@ -19,8 +21,9 @@ const FormArchivos = ({ savedData }: FormArchivosProps) => {
         resolver: zodResolver(fileSchema),
     });
 
-    const onSubmit: SubmitHandler<FileValues> = (data) => {
-        console.log(data);
+    const navigate = useNavigate()
+
+    const onSubmit: SubmitHandler<FileValues> = async (data) => {
         const newData = {...savedData, archivo: data.file}
 
         const formData = new FormData();
@@ -31,13 +34,29 @@ const FormArchivos = ({ savedData }: FormArchivosProps) => {
         formData.append('formato', newData.formato)
         formData.append('archivo', newData.archivo)
         
-        postConvocatoria(formData)
+        const response = await postConvocatoria(formData)
+        console.log(response);
     };
+
+    function handleConvocatoriaSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    handleSubmit(
+        (data) => {
+            toast.success("Convocatoria creada correctamente");
+            onSubmit(data);
+            navigate("/Convocatorias")
+        },
+        (formErrors) => {
+            toast.error("Ocurrió un error al crear la convocatoria");
+            console.error(formErrors);
+        }
+    )();
+}
 
     return (
         <>
             <h2>Subir archivos</h2>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleConvocatoriaSubmit}>
                 <Controller
                     name="file"
                     control={control}

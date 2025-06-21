@@ -20,22 +20,28 @@ interface FormFormatoProps {
 const FormFormato = ({ setStep, savedData, setData }: FormFormatoProps) => {
     const [tipoFormulario, setTipoFormulario] = useState<JSX.Element | null>(null);
     const [formato, setFormato] = useState<string | null>(null);
+    const [nombreFormato, setNombreFormato] = useState<string|null>(null)
 
     return (
         <>
-            <h2>Definir Formato</h2>
+            <h2>Formato de convocatoria</h2>
             <div className={styles["btn-select-formato-group"]}>
                 <CustomButton
                     nombre="Seleccionar Formato"
-                    accion={() => {setTipoFormulario(<SelectorFormato setFormato={setFormato}/>)}}
+                    accion={() => {setTipoFormulario(<SelectorFormato setFormato={setFormato} setTipoFormulario={setTipoFormulario} setNombreFormato={setNombreFormato} />)}}
                     style={formatSelectorBtn}
                 />
                 <CustomButton
                     nombre="Crear Formato"
-                    accion={() => {setTipoFormulario(<FormCrearFormato setFormato={setFormato} />)}}
+                    accion={() => {setTipoFormulario(<FormCrearFormato setFormato={setFormato} setTipoFormulario={setTipoFormulario} setNombreFormato={setNombreFormato}/>)}}
                     style={formatSelectorBtn}
                 />
             </div>
+
+            {nombreFormato && (
+                <p>Formato actual: {nombreFormato}</p>
+            )}
+
             <hr />
 
             {tipoFormulario}
@@ -53,7 +59,7 @@ const FormFormato = ({ setStep, savedData, setData }: FormFormatoProps) => {
                     style={formNavSiguienteBtn}
                     accion={() => {
                         if (!formato) {
-                            alert("Por favor selecciona o crea un formato")
+                            alert("Por favor seleccione o cree un formato")
                         } else {
                             setStep(3)
                             setData({ ...savedData, formato })
@@ -69,9 +75,11 @@ export default FormFormato;
 
 interface SelectorFormatoProps {
     setFormato: (data: string) => void;
+    setTipoFormulario: React.Dispatch<React.SetStateAction<JSX.Element | null>>;
+    setNombreFormato: (nombre: string) => void
 }
 
-const SelectorFormato = ({ setFormato }: SelectorFormatoProps) => {
+const SelectorFormato = ({ setFormato, setTipoFormulario, setNombreFormato }: SelectorFormatoProps) => {
     const [listFormatos, setListFormatos] = useState<FormatoProps[]>([])
     const [selectedFormato, setSelectedFormato] = useState<number | null>(null);
     const [showFormatoDialog, setShowFormatoDialog] = useState(false)
@@ -99,6 +107,8 @@ const SelectorFormato = ({ setFormato }: SelectorFormatoProps) => {
                     onClick={() => {
                         setSelectedFormato(index)
                         setFormato(formato._id.toString())
+                        setTipoFormulario(null)
+                        setNombreFormato(formato.nombreDelFormato)
                     }}
                     selected={selectedFormato === index}
                     

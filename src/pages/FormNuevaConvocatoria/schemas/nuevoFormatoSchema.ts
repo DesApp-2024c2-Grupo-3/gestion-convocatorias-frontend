@@ -33,7 +33,7 @@ export const nuevoFormatoSchema = z.object({
             tipo: z.literal("texto"),
             maxNumeroDeCaracteres: z.number()
         })
-    ]))
+    ])).min(1, { message: "Debe haber al menos un campo" })
 });
 
 export type NuevoFormatoValues = z.infer<typeof nuevoFormatoSchema>;

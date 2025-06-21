@@ -10,11 +10,13 @@ import { CustomButton } from "../../../components/CustomButton/CustomButtons";
 import { Link } from "react-router-dom";
 import { btnRojo, btnVerdeUnahur } from "../../../components/CustomButton/buttonStyles";
 import { getFormatoById } from "../../../api/formatos.api";
-import { putConvocatoria } from "../../../api/convocatorias.api";
+import { putConvocatoria, getArchivoDeConvocatoria } from "../../../api/convocatorias.api";
 import toast from "react-hot-toast";
 import FormatoDialog from "../../../components/FormatoDialog/FormatoDialog";
 import { ControlDeAcceso, FunctionControlDeAcceso } from "../../../components/ControlDeAcceso/ControlDeAcceso";
+import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../Login/userContext";
+import { PictureAsPdf } from "@mui/icons-material";
 
 interface ConvocatoriaDialogProps {
     convocatoriaData: ConvocatoriaCardProps
@@ -32,10 +34,12 @@ interface showDialogStateProps {
     setShowDialog: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const ConvocatoriaDialog = ({ convocatoriaData, showDialogState, fechaFinState }: ConvocatoriaDialogProps) => {
 
+const ConvocatoriaDialog = ({ convocatoriaData, showDialogState, fechaFinState }: ConvocatoriaDialogProps) => {
+    const navigate = useNavigate();
     const [fechaFinPicker, setFechaFinPicker] = useState<Dayjs | null>(dayjs(fechaFinState.editableFechaFin).tz("America/Argentina/Buenos_Aires"))
     const [showSubmitButton, setShowSubmitButton] = useState(false)
+    const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
     const [formatoData, setFormatoData] = useState({
         _id: '',
         nombreDelFormato: '',
@@ -53,6 +57,11 @@ const ConvocatoriaDialog = ({ convocatoriaData, showDialogState, fechaFinState }
         setShowSubmitButton(false)
         showDialogState.setShowDialog(false)
     }
+
+    const handleOpenDeleteConfirmation = () => {
+        setShowDeleteConfirmation(true);
+    };
+
 
     const submitNewFechaFin = async () => {
         try {
@@ -153,13 +162,21 @@ const ConvocatoriaDialog = ({ convocatoriaData, showDialogState, fechaFinState }
                     }}
                 />
 
-                <ControlDeAcceso rolesPermitidos={["admin", "super_admin"]}>
                 <CustomButton
-                    nombre="Borrar"
-                    iconoIzquierdo={<DeleteIcon />}
-                    style={btnRojo}
+                    nombre="bases y condiciones"
+                    accion={() => getArchivoDeConvocatoria(convocatoriaData.idConvocatoria)}
+                    iconoIzquierdo={<PictureAsPdf />}
+                    style={{...btnVerdeUnahur, margin: 0 }}
                 />
-                </ControlDeAcceso>
+
+                <ControlDeAcceso rolesPermitidos={["admin", "super_admin"]}>
+                    <CustomButton
+                        nombre="Borrar"
+                        iconoIzquierdo={<DeleteIcon />}
+                        style={btnRojo}
+                        accion={handleOpenDeleteConfirmation}
+                    />
+                </ControlDeAcceso>  
                 
                 <Button
                     variant="contained"
@@ -167,6 +184,16 @@ const ConvocatoriaDialog = ({ convocatoriaData, showDialogState, fechaFinState }
                     to={`/Convocatorias/${convocatoriaData.idConvocatoria}/inscripcion/${convocatoriaData.formato}`}
                     sx={{ backgroundColor: "#56A42C" }}
                 >Inscribirse</Button>
+
+                <ControlDeAcceso rolesPermitidos={["admin", "super_admin"]}>
+                    <Button
+                        variant="outlined"
+                        sx={{ ml: 2 }}
+                        onClick={() => navigate(`/convocatorias/${convocatoriaData.idConvocatoria}/postulaciones`)}
+                    >
+                        Ver Postulaciones
+                    </Button>
+                </ControlDeAcceso>
             </DialogActions>
 
         </Dialog>
@@ -175,6 +202,7 @@ const ConvocatoriaDialog = ({ convocatoriaData, showDialogState, fechaFinState }
                 formatoData={formatoData}
                 showDialogState={{showFormatoDialog, setShowFormatoDialog}}
             />
+            
         </>
     )
 
