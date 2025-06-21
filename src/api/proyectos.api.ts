@@ -1,12 +1,13 @@
 import axios from "axios";
 import { IFormularioInscripcion } from "../pages/FormInscripcionProyecto/FormInscripcionProyecto";
 import { getHeaders } from "./convocatorias.api";
+import { API_BASE_URL } from "@constants/app.config";
 
 export const postProyecto = async (idConvocatoria: string, formularioInscripcionData: IFormularioInscripcion) => {
     try {
         console.log('Datos que envío:', formularioInscripcionData);
         const response = await axios.post(
-            `http://localhost:3000/proyecto/${idConvocatoria}`,
+            `${API_BASE_URL}/proyecto/${idConvocatoria}`,
             formularioInscripcionData,
             getHeaders({ "Content-Type": "application/json" })
         );
@@ -20,7 +21,7 @@ export const postProyecto = async (idConvocatoria: string, formularioInscripcion
 
 export const getProyectosPorConvocatoria = async (idConvocatoria: string) => {
     const response = await axios.get(
-        `http://localhost:3000/proyecto/convocatoria/${idConvocatoria}`, getHeaders()
+        `${API_BASE_URL}/proyecto/convocatoria/${idConvocatoria}`, getHeaders()
     );
     console.log("Respuesta backend:", response.data); // 🔍 AGREGADO
     return response.data.proyectos ?? response.data;
@@ -28,7 +29,7 @@ export const getProyectosPorConvocatoria = async (idConvocatoria: string) => {
 
 export const getProyectoPorId = async (idProyecto: string ) => {
     const response = await axios.get(
-        `http://localhost:3000/proyecto/${idProyecto}`,
+        `${API_BASE_URL}/proyecto/${idProyecto}`,
         getHeaders()
     );
     console.log("Respuesta backend:", response.data);

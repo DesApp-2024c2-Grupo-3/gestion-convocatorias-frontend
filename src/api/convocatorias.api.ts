@@ -11,7 +11,7 @@ export const getHeaders = (extraHeaders = {}, otrasOpciones = {}) => ({
 
 export const postConvocatoria = (formData: Object) => {
     axios
-        .post("http://localhost:3000/convocatoria", formData, 
+        .post(`${API_BASE_URL}/convocatoria`, formData, 
             getHeaders({"Content-Type": "multipart/form-data"}))
         .then(function (response) {
             console.log(response);
@@ -22,19 +22,19 @@ export const postConvocatoria = (formData: Object) => {
 };
 
 export const getConvocatorias = async () => {
-    const response = await axios.get("http://localhost:3000/convocatoria", getHeaders());
+    const response = await axios.get(`${API_BASE_URL}/convocatoria`, getHeaders());
     return response.data;
 };
 
 export const getConvocatoriaById = async (id: string) => {
-    const response = await axios.get(`http://localhost:3000/convocatoria/${id}`, getHeaders());
+    const response = await axios.get(`${API_BASE_URL}/convocatoria/${id}`, getHeaders());
     return response.data;
 };
 
 
 export const putConvocatoria = async (id: string, edicionDeConvocatoria: FormData) => {
     const response = await axios
-        .put(`http://localhost:3000/convocatoria/${id}`, edicionDeConvocatoria, 
+        .put(`${API_BASE_URL}/convocatoria/${id}`, edicionDeConvocatoria, 
             getHeaders({"Content-Type": "multipart/form-data"}))
         .then(function(response){
             console.log(response)
@@ -43,7 +43,7 @@ export const putConvocatoria = async (id: string, edicionDeConvocatoria: FormDat
 
 export const deleteConvocatoria = async (id: string): Promise<void> => {
     try {
-        await axios.delete(`http://localhost:3000/convocatoria/${id}`, {
+        await axios.delete(`${API_BASE_URL}/convocatoria/${id}`, {
             headers: { Authorization: `Bearer ${sessionStorage.getItem("token")}` }
         });
         console.log("Convocatoria eliminada correctamente");
@@ -54,7 +54,7 @@ export const deleteConvocatoria = async (id: string): Promise<void> => {
 }
 
 export const getArchivoDeConvocatoria = async (id:string) => {
-    const response = await axios.get(`http://localhost:3000/convocatoria/archivo/${id}`,
+    const response = await axios.get(`${API_BASE_URL}/convocatoria/archivo/${id}`,
         getHeaders({}, {responseType: "blob"}),
     )
     

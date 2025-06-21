@@ -1,12 +1,13 @@
 import axios from "axios";
 import { getHeaders } from "./convocatorias.api";
+import { API_BASE_URL } from "@constants/app.config";
 
 export const registrarUsuario = async (
     nombre: string,
     email: string,
     password: string
 ): Promise<any> => {
-    const response = await axios.post("http://localhost:3000/auth/register", {
+    const response = await axios.post(`${API_BASE_URL}/auth/register`, {
         nombre,
         email,
         password,
@@ -22,7 +23,7 @@ export const registrarUsuario = async (
 
 export const loginUsuario = async (email: string, password: string) => {
     try {
-        const response = await axios.post("http://localhost:3000/auth/login", {
+        const response = await axios.post(`${API_BASE_URL}/auth/login`, {
             email,
             password,
         });
@@ -43,7 +44,7 @@ export const loginUsuario = async (email: string, password: string) => {
 export const deleteUsuario = async (email: string): Promise<void> => {
     try {
         const response = await axios.delete(
-            `http://localhost:3000/usuario/${email}`,
+            `${API_BASE_URL}/usuario/${email}`,
             getHeaders()
         );
         if (response.status === 200) {
@@ -58,7 +59,7 @@ export const deleteUsuario = async (email: string): Promise<void> => {
 };
 
 export const updateContrasenia = async (email: string, nuevaContrasenia: string) => {
-    await axios.patch(`http://localhost:3000/usuario/${email}`, {password : nuevaContrasenia}, getHeaders())
+    await axios.patch(`${API_BASE_URL}/usuario/${email}`, {password : nuevaContrasenia}, getHeaders())
         .then(function(response) {
             console.log(response)
         })
@@ -68,7 +69,7 @@ export const updateCv = async (email:string, archivo: FormData) => {
     archivo.append("email", email)
     try {
         const response = await axios.put(
-            'http://localhost:3000/usuario/cv', archivo,
+            `${API_BASE_URL}/usuario/cv`, archivo,
             getHeaders()
         );
         if (response.status === 200) {
@@ -84,12 +85,12 @@ export const updateCv = async (email:string, archivo: FormData) => {
 }
 
 export const getUsuarios = async () => {
-    const response = await axios.get("http://localhost:3000/usuario", getHeaders());
+    const response = await axios.get(`${API_BASE_URL}/usuario`, getHeaders());
     return response.data;
 };
 
 export const updateRoles = async (email:string, roles: string[]) => {
-    const response = await axios.patch(`http://localhost:3000/usuario/roles/${email}`, {roles}, getHeaders())
+    const response = await axios.patch(`${API_BASE_URL}/usuario/roles/${email}`, {roles}, getHeaders())
     .then(response => {
   console.log('Rol actualizado:', response.data);
 })
@@ -99,6 +100,6 @@ export const updateRoles = async (email:string, roles: string[]) => {
 }
 
 export const downloadCv = async (id: number) => {
-    const response = await axios.get(`http://localhost:3000/usuario/cv/download/${id}`, getHeaders());
+    const response = await axios.get(`${API_BASE_URL}/usuario/cv/download/${id}`, getHeaders());
     return response.data;
 };
