@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./register.module.css";
 import { registrarUsuario } from "../../api/usuarios.api";
+import { enviarCorreo } from "../../api/comunicacion";
 import toast from "react-hot-toast";
 import Logo from "../Login/Logo";
 
@@ -19,6 +20,16 @@ const Register: React.FC = () => {
       const data = await registrarUsuario(nombre, email, password);
       if (data) {
         toast.success('Cuenta creada exitosamente');
+        await enviarCorreo({
+          toEmail: email,
+          toName: nombre,
+          type: 'registro_exitoso',
+          variables: {
+            userEmail: email,
+            name: nombre
+          }
+        });
+
          setTimeout(() => {
            navigate("/login");
          }, 1500);
