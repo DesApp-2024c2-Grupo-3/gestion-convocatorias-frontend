@@ -1,5 +1,5 @@
-import { Button, FormHelperText, TextField } from "@mui/material";
-import React, { useContext, useState } from "react";
+import { Button, FormHelperText, TextField, Breadcrumbs, Typography } from "@mui/material";
+import React, { useContext } from "react";
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import { equipoDeTrabajoSchema, EquipoDeTrabajoValues, getUserEmailForZod } from "../schemas/equipoDeTrabajoSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -12,14 +12,26 @@ import { ArrowBack, ArrowForward } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import { UserContext } from "../../Login/userContext";
 import { IFormularioInscripcion } from "../FormInscripcionProyecto";
+import { enviarCorreosMasivo } from "@/api/comunicacion.api";
+import toast from "react-hot-toast";
 
+interface EmailDataObject {
+    fromEmail?: string;
+    toEmail: string;
+    toName: string;
+    subject?: string;
+    type?: string;
+    variables?: Record<string, any>;
+}
 interface EquipoDeTrabajoProps {
     irSiguiente: (step: number) => void;
     datosDelFormulario: IFormularioInscripcion;
     setDatosDelFormulario: (datos: IFormularioInscripcion) => void;
+    convocatoria: any;
 }
 
-const EquipoDeTrabajo = ({ irSiguiente, datosDelFormulario, setDatosDelFormulario }: EquipoDeTrabajoProps) => {
+const EquipoDeTrabajo = ({ irSiguiente, datosDelFormulario, setDatosDelFormulario, convocatoria }:
+    EquipoDeTrabajoProps) => {
 
     const { usuario } = useContext(UserContext)
     if (usuario)
@@ -27,7 +39,7 @@ const EquipoDeTrabajo = ({ irSiguiente, datosDelFormulario, setDatosDelFormulari
 
     const {
         control,
-        register,   
+        register,
         handleSubmit,
         formState: { errors },
     } = useForm<EquipoDeTrabajoValues>({
@@ -44,31 +56,101 @@ const EquipoDeTrabajo = ({ irSiguiente, datosDelFormulario, setDatosDelFormulari
         control
     })
 
-    /* const { usuario } = useContext(UserContext)
-    const [ ownMailError, setOwnMailError ] = useState(false)
 
-    const checkError = (lista: {invitado: string}[]) => {
-        const stringList = lista.map(i => i.invitado)
-
-        if (usuario && stringList.includes(usuario.email)) {
-            setOwnMailError(true)
-        } else {
-            setOwnMailError(false)
+    function validarYLimpiarCorreos(listaDeCorreos: string[]) {
+        if (!listaDeCorreos || listaDeCorreos.length === 0) {
+            return {
+                status: 'empty',
+                message: 'La lista de invitados está vacía.'
+            };
         }
-    }*/
 
-    const soloListaDeMails = (data: EquipoDeTrabajoValues) => {
-        return data.invitados.map((i) => i.invitado)
+        const correosUnicos = [...new Set(listaDeCorreos)];
+
+        const emailRegex = new RegExp(
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        );
+
+        const correosValidos = [];
+        const correosInvalidos = [];
+
+        for (const correo of correosUnicos) {
+            if (emailRegex.test(correo)) {
+                correosValidos.push(correo);
+            } else {
+                correosInvalidos.push(correo);
+            }
+        }
+
+        if (correosInvalidos.length > 0) {
+            return {
+                status: 'error',
+                message: `Se encontraron ${correosInvalidos.length} correos con formato inválido. Por favor, corrígelos.`,
+            };
+        }
+
+        return {
+            status: 'success',
+            data: correosValidos
+        };
     }
 
-    const onSubmit: SubmitHandler<EquipoDeTrabajoValues> = (data) => {
-        setDatosDelFormulario({...datosDelFormulario, invitados: soloListaDeMails(data)})
-        irSiguiente(2)
+
+    const onSubmit: SubmitHandler<EquipoDeTrabajoValues> = async (data) => {
+        const listaDeCorreos = data.invitados.map((i) => i.invitado);
+        const resultadoValidacion = validarYLimpiarCorreos(listaDeCorreos);
+
+        if (resultadoValidacion.status !== 'success') {
+            toast.error(resultadoValidacion.message || 'Por favor, revisa los correos ingresados.');
+            return;
+        }
+
+        const correosValidos = resultadoValidacion.data || [];
+        setDatosDelFormulario({ ...datosDelFormulario, invitados: correosValidos });
+
+        toast.loading('Enviando invitaciones...');
+     
+        try {
+            const emailsParaEnviar: EmailDataObject[] = correosValidos.map(correo => ({
+                toEmail: correo,
+                toName: correo,
+                type: 'invitacion_grupo_convocatoria',
+                variables: {
+                    nombreDelProyecto: convocatoria?.titulo,
+                    descripcion: convocatoria?.descripcion,
+                    fechaFin: convocatoria?.fechaFin,
+                    remitenteEmail: usuario?.email,
+                    remitenteNombre: usuario?.nombre,
+                }
+            }));
+
+            const payload = {
+                emails: emailsParaEnviar
+            };
+
+            await enviarCorreosMasivo(payload);
+
+            toast.dismiss();
+            toast.success('¡Invitaciones enviadas con éxito!');
+
+
+            irSiguiente(2);
+
+        } catch (error) {
+            toast.dismiss();
+            toast.error('No se pudieron enviar las invitaciones. Intenta de nuevo.');
+            console.error("Error en el envío de invitaciones:", error);
+        }
     }
 
     return (
         <>
-            <h2>Equipo de Trabajo</h2>
+            <Breadcrumbs aria-label="breadcrumb" sx={{ mb: 2 }}>
+                <Typography color="text.primary">Convocatorias</Typography>
+                <Typography color="text.primary">{convocatoria?.titulo || 'Cargando...'}</Typography>
+                <Typography color="primary">Equipo de Trabajo</Typography>
+            </Breadcrumbs>
+            <h3>Equipo de Trabajo</h3>
             <hr />
             <Box
                 sx={{
@@ -81,7 +163,7 @@ const EquipoDeTrabajo = ({ irSiguiente, datosDelFormulario, setDatosDelFormulari
             >
                 Por favor ingrese a continuacion los mails de aquellos que desea invitar al proyecto
             </Box>
-            <h3>Invitados:</h3>
+            <h4>Invitados:</h4>
             <form onSubmit={handleSubmit(onSubmit)}>
                 {fields.map((field, index) => {
                     return (
@@ -99,7 +181,7 @@ const EquipoDeTrabajo = ({ irSiguiente, datosDelFormulario, setDatosDelFormulari
                                 placeholder="ejemplo@gmail.com"
                                 error={!!errors.invitados?.[index]?.invitado}
                             />
-                            <FormHelperText sx={{marginTop: '4em'}} className={styles['mensaje-error']} error id={`invitados.${index}.invitado`}>
+                            <FormHelperText sx={{ marginTop: '4em' }} className={styles['mensaje-error']} error id={`invitados.${index}.invitado`}>
                                 {errors.invitados?.[index]?.invitado?.message}
                             </FormHelperText>
 
