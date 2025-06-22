@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "@/pages/Register/Register.module.css";
 import { registrarUsuario } from "@/api/usuarios.api";
-import { enviarCorreo } from "@/api/comunicacion";
+import { enviarCorreo } from "@/api/comunicacion.api";
 import toast from "react-hot-toast";
 import Logo from "@/pages/Login/Logo";
 
@@ -20,15 +20,20 @@ const Register: React.FC = () => {
       const data = await registrarUsuario(nombre, email, password);
       if (data) {
         toast.success('Cuenta creada exitosamente');
-        await enviarCorreo({
-          toEmail: email,
-          toName: nombre,
-          type: 'registro_exitoso',
-          variables: {
-            userEmail: email,
-            name: nombre
-          }
-        });
+
+        
+
+        if(data.access_token) {
+          await enviarCorreo({
+            toEmail: email,
+            toName: nombre,
+            type: 'registro_exitoso',
+            variables: {
+              userEmail: email,
+              name: nombre
+            }
+          }, data.access_token);
+        }
 
          setTimeout(() => {
            navigate("/login");
