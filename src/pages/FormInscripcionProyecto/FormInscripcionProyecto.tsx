@@ -9,6 +9,7 @@ import { postProyecto } from "../../api/proyectos.api";
 import Presupuesto from "./FormPages/Presupuesto";
 import { getConvocatoriaById } from "../../api/convocatorias.api";
 import { getFormatoById } from "../../api/formatos.api";
+import { ENV } from "../../constants/app.config";
 
 // Interfaces
 export interface CampoFormato {
@@ -117,13 +118,14 @@ const FormInscripcionProyectos = () => {
           />
         )}
       </div>
-      
-      <Button
-        variant="outlined"
-        onClick={() => console.log(datosDelFormulario)}
-      >
-        Ver data
-      </Button>
+      {ENV === 'dev' && (
+        <Button
+          variant="outlined"
+          onClick={() => console.log(datosDelFormulario)}
+        >
+          Ver data
+        </Button>
+      )}
     </>
   );
 };
