@@ -1,4 +1,4 @@
-import { Alert, Button, TextField } from "@mui/material";
+import { Alert, Button, TextField, Breadcrumbs, Typography } from "@mui/material";
 import React, { useState, forwardRef } from "react";
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -13,6 +13,7 @@ import { postProyecto } from "../../../api/proyectos.api";
 import { useNavigate, useParams } from "react-router-dom";
 import Snackbar from "@mui/material/Snackbar";
 
+
 const MuiAlert = forwardRef(function MuiAlert(props: any, ref) {
      return <Alert elevation={6} ref={ref} variant="filled" {...props} />; 
 });
@@ -22,6 +23,7 @@ interface Props {
     irAtras: (step: number) => void;
     datosDelFormulario: IFormularioInscripcion;
     setDatosDelFormulario: (datos: IFormularioInscripcion) => void;
+    convocatoria: any;
 }
 
 type Presupuesto = {
@@ -40,6 +42,7 @@ function Presupuesto({
     irAtras,
     datosDelFormulario,
     setDatosDelFormulario,
+    convocatoria
     }: Props) {
     const { id } = useParams();
     const [openSnackbar, setOpenSnackbar] = useState(false);
@@ -104,9 +107,14 @@ function Presupuesto({
 
     return (
         <>
-        <h2>Presupuesto</h2>
+        <Breadcrumbs aria-label="breadcrumb" sx={{ mb: 2 }}>
+            <Typography color="text.primary">Convocatorias</Typography>
+            <Typography color="text.primary">{convocatoria?.titulo || 'Cargando...'}</Typography>
+            <Typography color="primary">Presupuesto</Typography>
+        </Breadcrumbs>
+        <h3>Presupuesto</h3>
         <hr />
-        <h3>Gastos de capital</h3>
+        <h4>Gastos de capital</h4>
         <form onSubmit={handleSubmit(onSubmit)}>
             {capitalFields.map((field, index) => (
             <div key={field.id} style={{ marginBottom: "1.5em" }}>
@@ -182,7 +190,7 @@ function Presupuesto({
             </Button>
 
             <hr />
-            <h3>Gastos corrientes</h3>
+            <h4>Gastos corrientes</h4>
 
             {corrientesFields.map((field, index) => (
             <div key={field.id} style={{ marginBottom: "1.5em" }}>

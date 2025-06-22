@@ -13,6 +13,8 @@ import {
     MenuItem,
     Select,
     FormHelperText,
+    Breadcrumbs,
+    Typography,
 } from '@mui/material';
 
 interface Props {
@@ -21,6 +23,7 @@ interface Props {
     datosDelFormulario: IFormularioInscripcion;
     setDatosDelFormulario: React.Dispatch<React.SetStateAction<IFormularioInscripcion>>;
     campos: CampoFormato[];
+    convocatoria: any;
 }
 
 const DatosDelProyecto = ({
@@ -28,7 +31,8 @@ const DatosDelProyecto = ({
     irAtras,
     datosDelFormulario,
     setDatosDelFormulario,
-    campos
+    campos,
+    convocatoria
 }: Props) => {
 
     const defaultValues = campos.reduce((acc, campo) => {
@@ -56,7 +60,12 @@ const DatosDelProyecto = ({
 
     return (
         <form className={styles["form-card"]} onSubmit={handleSubmit(onSubmit)}>
-            <h2 className={styles["form-title"]}>Datos del Proyecto</h2>
+            <Breadcrumbs aria-label="breadcrumb" sx={{ mb: 2 }}>
+                <Typography color="text.primary">Convocatorias</Typography>
+                <Typography color="text.primary">{convocatoria?.titulo || 'Cargando...'}</Typography>
+                <Typography color="primary">Equipo de Trabajo</Typography>
+            </Breadcrumbs>
+            <h3 className={styles["form-title"]}>Datos del Proyecto</h3>
             <hr />
             <div className={styles["form-fields"]}>
                 {campos.map((campo, index) => (

@@ -92,6 +92,7 @@ const FormInscripcionProyectos = () => {
             irSiguiente={setStep}
             datosDelFormulario={datosDelFormulario}
             setDatosDelFormulario={setDatosDelFormulario}
+            convocatoria={convocatoria}
           />
         )}
 
@@ -102,6 +103,7 @@ const FormInscripcionProyectos = () => {
             datosDelFormulario={datosDelFormulario}
             setDatosDelFormulario={setDatosDelFormulario}
             campos={campos}
+            convocatoria={convocatoria}
           />
         )}
 
@@ -111,6 +113,7 @@ const FormInscripcionProyectos = () => {
             irAtras={setStep}
             datosDelFormulario={datosDelFormulario}
             setDatosDelFormulario={setDatosDelFormulario}
+            convocatoria={convocatoria}
           />
         )}
       </div>
