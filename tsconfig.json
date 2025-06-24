@@ -19,6 +19,7 @@
       "@constants/*": ["src/constants/*"],
       "@pages/*": ["src/pages/*"],
       "@routers/*": ["src/routers/*"],
+      "@styles/*": ["src/styles/*"],
     }        
   }
 }

@@ -1,0 +1,6 @@
+@use '@/styles/__colors.scss' as *;
+
+body {
+    background-color: $primary-green;
+    color: $primary-blue;
+  }
