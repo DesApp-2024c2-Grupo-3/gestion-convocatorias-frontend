@@ -1,0 +1,10 @@
+@use '@/styles/__colors.scss' as *; 
+
+.login-panel {
+    width: 100%;
+    background-color: $primary-color;
+}
+
+.login-panel p, h3, a {
+    color: $gray-100;
+}

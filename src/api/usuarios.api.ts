@@ -7,18 +7,29 @@ export const registrarUsuario = async (
     email: string,
     password: string
 ): Promise<any> => {
-    const response = await axios.post(`${API_BASE_URL}/auth/register`, {
-        nombre,
-        email,
-        password,
-    }, getHeaders());
+    try {
+        const response = await axios.post(`${API_BASE_URL}/auth/register`, {
+            nombre,
+            email,
+            password,
+        }, getHeaders());
 
-    const { token } = response.data;
-    if (token) {
-        sessionStorage.setItem("authToken", token);
+        const { token } = response.data;
+
+        if (token) {
+            sessionStorage.setItem("authToken", token);
+        }
+        return response.data;
+    } catch (error: any) {
+        console.log(error);
+        return {
+            success: false,
+            message: error.response.data?.message || 'Error de autenticación',
+            status: error.response.status
+        };
     }
 
-    return response.data;
+
 };
 
 export const loginUsuario = async (email: string, password: string) => {
@@ -29,7 +40,7 @@ export const loginUsuario = async (email: string, password: string) => {
         });
 
         const { access_token } = response.data;
-       
+
         if (access_token) {
             sessionStorage.setItem("authToken", access_token);
         }
@@ -42,7 +53,7 @@ export const loginUsuario = async (email: string, password: string) => {
                 data: error.response.data,
                 message: error.response.data?.message
             });
-            
+
             return {
                 success: false,
                 message: error.response.data?.message || 'Error de autenticación',
@@ -70,13 +81,13 @@ export const deleteUsuario = async (email: string): Promise<void> => {
 };
 
 export const updateContrasenia = async (email: string, nuevaContrasenia: string) => {
-    await axios.patch(`${API_BASE_URL}/usuario/${email}`, {password : nuevaContrasenia}, getHeaders())
-        .then(function(response) {
+    await axios.patch(`${API_BASE_URL}/usuario/${email}`, { password: nuevaContrasenia }, getHeaders())
+        .then(function (response) {
             console.log(response)
         })
 };
 
-export const updateCv = async (email:string, archivo: FormData) => {
+export const updateCv = async (email: string, archivo: FormData) => {
     archivo.append("email", email)
     try {
         const response = await axios.put(
@@ -100,17 +111,36 @@ export const getUsuarios = async () => {
     return response.data;
 };
 
-export const updateRoles = async (email:string, roles: string[]) => {
-    const response = await axios.patch(`${API_BASE_URL}/usuario/roles/${email}`, {roles}, getHeaders())
-    .then(response => {
-  console.log('Rol actualizado:', response.data);
-})
-.catch(error => {
-  console.error('Error al actualizar roles:', error.response?.data || error.message);
-});
+export const updateRoles = async (email: string, roles: string[]) => {
+    const response = await axios.patch(`${API_BASE_URL}/usuario/roles/${email}`, { roles }, getHeaders())
+        .then(response => {
+            console.log('Rol actualizado:', response.data);
+        })
+        .catch(error => {
+            console.error('Error al actualizar roles:', error.response?.data || error.message);
+        });
 }
 
 export const downloadCv = async (id: number) => {
     const response = await axios.get(`${API_BASE_URL}/usuario/cv/download/${id}`, getHeaders());
     return response.data;
 };
+
+
+export const recuperarContrasenia = async (email: string) => {
+    try {
+        const response = await axios.post(
+            `${API_BASE_URL}/auth/recuperar-contrasena`,
+            { email },
+            getHeaders()
+        );
+        return response.data;
+    } catch (error: any) {
+        return {
+            success: false,
+            message: error.response.data?.message || 'Error de autenticación',
+            status: error.response.status
+        };
+    }
+};
+
