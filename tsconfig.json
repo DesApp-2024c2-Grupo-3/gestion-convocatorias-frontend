@@ -17,6 +17,8 @@
       "@assets/*": ["src/assets/*"],
       "@components/*": ["src/components/*"],      
       "@constants/*": ["src/constants/*"],
+      "helpers/*": ["src/helpers/*"],
+      "@hooks/*": ["src/hooks/*"],
       "@pages/*": ["src/pages/*"],
       "@routers/*": ["src/routers/*"],
       "@styles/*": ["src/styles/*"],

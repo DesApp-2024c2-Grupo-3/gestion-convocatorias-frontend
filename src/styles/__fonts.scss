@@ -1,0 +1,48 @@
+
+// src/styles/fonts.scss
+
+// 1. Familias tipográficas
+$font-family-base: 'Roboto', 'Arial', sans-serif;
+$font-family-title: 'Montserrat', 'Arial', sans-serif;
+$font-family-mono: 'Fira Mono', 'Consolas', monospace;
+
+// 2. Tamaños de fuente
+$font-size-xs: 0.75rem;   // 12px
+$font-size-sm: 0.875rem;  // 14px
+$font-size-md: 1rem;      // 16px
+$font-size-lg: 1.25rem;   // 20px
+$font-size-xl: 1.5rem;    // 24px
+$font-size-xxl: 2rem;     // 32px
+
+// 3. Pesos de fuente
+$font-weight-light: 300;
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-bold: 700;
+
+// 4. Altura de línea
+$line-height-base: 1.5;
+$line-height-title: 1.2;
+
+// 5. Ejemplo de uso en clases
+.body-text {
+  font-family: $font-family-base;
+  font-size: $font-size-md;
+  font-weight: $font-weight-normal;
+  line-height: $line-height-base;
+}
+
+.title {
+  font-family: $font-family-title;
+  font-size: $font-size-xl;
+  font-weight: $font-weight-bold;
+  line-height: $line-height-title;
+}
+
+.small-text {
+  font-size: $font-size-xs;
+}
+
+.mono {
+  font-family: $font-family-mono;
+}

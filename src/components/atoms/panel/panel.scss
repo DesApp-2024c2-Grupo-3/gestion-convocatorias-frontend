@@ -1,0 +1,17 @@
+@use '@/styles/__colors.scss' as *;
+
+.panel-login {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: 80vh;
+    background-color: $gray-100;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+
+    @media (max-width: 600px) {
+        min-height: 40vh;
+    }
+}

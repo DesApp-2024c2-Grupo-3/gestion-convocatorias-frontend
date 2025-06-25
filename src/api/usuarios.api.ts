@@ -29,15 +29,26 @@ export const loginUsuario = async (email: string, password: string) => {
         });
 
         const { access_token } = response.data;
+       
         if (access_token) {
             sessionStorage.setItem("authToken", access_token);
-            console.log("Token guardado en sessionStorage:", access_token);
         }
 
         return response.data;
-    } catch (error) {
-        console.error("Error al realizar login:", error);
-        return null;
+    } catch (error: any) {
+        if (error.response) {
+            console.log('Error del backend:', {
+                status: error.response.status,
+                data: error.response.data,
+                message: error.response.data?.message
+            });
+            
+            return {
+                success: false,
+                message: error.response.data?.message || 'Error de autenticación',
+                status: error.response.status
+            };
+        }
     }
 };;
 
