@@ -6,6 +6,7 @@ import { CustomButton } from "../../components/CustomButton/CustomButtons"
 import VisibilityIcon from "@mui/icons-material/Visibility"
 import DownloadIcon from "@mui/icons-material/Download"
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday"
+import { btnAzulUnahur } from "@/components/CustomButton/buttonStyles"
 
 interface Props {
   titulo: string
@@ -151,7 +152,12 @@ const PostulacionesCard = (props: Props) => {
             <IconButton size="small" title="Descargar información">
             <DownloadIcon fontSize="small" />
             </IconButton>
-            <CustomButton nombre="Ver detalles" iconoIzquierdo={<VisibilityIcon />} accion={onVerDetalles} />
+            <CustomButton 
+                nombre="Ver detalles" 
+                iconoIzquierdo={<VisibilityIcon />} 
+                accion={onVerDetalles} 
+                style={{ ...btnAzulUnahur, margin: 0 }}
+                />
         </CardActions>
         </Card>
     )
