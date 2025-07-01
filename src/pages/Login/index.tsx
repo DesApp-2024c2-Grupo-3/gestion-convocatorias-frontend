@@ -102,7 +102,11 @@ const Login = () => {
         toast.success('Sesión iniciada correctamente');
 
         setTimeout(() => {
-          navigate("/Convocatorias");
+          if (data.usuario.roles.includes("super_admin")) {
+            navigate("/usuarios");
+          } else {
+            navigate("/convocatorias")
+          }
         }, 1500);
       } else {
         toast.error("Email o contraseña incorrectos");
