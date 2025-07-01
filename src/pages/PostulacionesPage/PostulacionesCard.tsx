@@ -29,7 +29,17 @@ const PostulacionesCard = (props: Props) => {
         onVerDetalles = () => {}
     } = props
     
-    const descripcionTruncada: string = descripcion.length > 150 ? descripcion.substring(0, 150) + "..." : descripcion
+    /*
+    const getEstadoColor = (estado: string): "success" | "error" | "warning" => {
+        switch (estado) {
+        case "aprobado":
+            return "success"
+        case "rechazado":
+            return "error"
+        default:
+            return "warning"
+        }
+    }*/
 
     return (
         <Card
@@ -56,8 +66,10 @@ const PostulacionesCard = (props: Props) => {
             
             </Box>
 
-            <Typography variant="body2" paragraph sx={{ mb: 1 }}>
-            {descripcionTruncada}
+            <Typography variant="body2" sx={{ 
+                mb: 1, overflow: 'hidden', WebkitLineClamp: 9, WebkitBoxOrient: 'vertical', display: '-webkit-box'
+            }}>
+            {descripcion}
             </Typography>
 
             <Divider sx={{ my: 1.5 }} />

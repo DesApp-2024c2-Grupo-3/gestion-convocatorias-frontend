@@ -184,7 +184,7 @@ const ConvocatoriaDialog = ({ convocatoriaData, showDialogState, fechaFinState }
                 <Button
                     variant="contained"
                     component={Link}
-                    to={`/Convocatorias/${convocatoriaData.idConvocatoria}/inscripcion/${convocatoriaData.formato}`}
+                    to={`/convocatorias/${convocatoriaData.idConvocatoria}/inscripcion/${convocatoriaData.formato}`}
                     sx={{ backgroundColor: "#56A42C" }}
                 >Inscribirse</Button>
                 </ControlDeAcceso>

@@ -32,12 +32,16 @@ const Login = () => {
           cv: data.usuario.cv
         });
 
-        console.log("roles", data.usuario.roles);
+        console.log("roles: ", data.usuario.roles);
 
         sessionStorage.setItem("token", data.access_token);
         toast.success('Sesion iniciada correctamente');
         setTimeout(() => {
-          navigate("/Convocatorias");
+          if (data.usuario.roles.includes("super_admin")) {
+            navigate("/usuarios");
+          } else {
+            navigate("/convocatorias")
+          }
         }, 1500);
         
       } else {
