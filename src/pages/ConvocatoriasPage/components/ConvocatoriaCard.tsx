@@ -2,6 +2,7 @@ import { Card, CardActionArea, CardActions, CardContent } from "@mui/material";
 import React, { useState } from "react";
 import { CustomButton } from "../../../components/CustomButton/CustomButtons";
 import ConvocatoriaDialog from "./ConvocatoriaDialog";
+import { btnAzulUnahur } from "@/components/CustomButton/buttonStyles";
 
 export interface ConvocatoriaCardProps {
     idConvocatoria: string;
@@ -30,12 +31,13 @@ const ConvocatoriasCard = (props: ConvocatoriaCardProps) => {
         <>
         <Card
         sx={{
-            borderTop: 15,
+            borderTop: 5,
             borderTopColor: "#56A42C",
             width: {
                 xs: '25rem',
                 md: '500px'
-            }
+            },
+            height: "330px",
         }}>
             <CardContent>
                 <h5>{titulo}</h5>
@@ -50,6 +52,7 @@ const ConvocatoriasCard = (props: ConvocatoriaCardProps) => {
                 <CustomButton
                     nombre="Ver Más"
                     accion={() => {setShowDialog(true)}}
+                    style={{...btnAzulUnahur, margin: 0 }}
                 />
             </CardActions>
         </Card>

@@ -65,19 +65,19 @@ export const Items = [
     {
         ItemIcon: <PodcastIcon />,
         ItemText: 'Convocatorias',
-        navigateTo: '/Convocatorias',
-        rolesPermitidos: ['admin', 'super_admin', 'investigador']
+        navigateTo: '/convocatorias',
+        rolesPermitidos: ['admin', 'investigador']
     },
     {
         ItemIcon: <FormatListNumbered />,
         ItemText: 'Formatos',
-        navigateTo: '/Formatos',
-        rolesPermitidos: ['admin', 'super_admin']
+        navigateTo: '/formatos',
+        rolesPermitidos: ['admin']
     },
     {
         ItemIcon: <GroupsIcon />,
         ItemText: 'Usuarios',
-        navigateTo: '/Usuarios',
+        navigateTo: '/usuarios',
         rolesPermitidos: ['super_admin']
     },
 ];

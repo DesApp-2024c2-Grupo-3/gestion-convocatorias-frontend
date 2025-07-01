@@ -60,7 +60,7 @@ const Login = () => {
     }
 
     if (formMode === "login" || formMode === "register") {
-      const passwordError = getPasswordError(password);
+      const passwordError = getPasswordError(password, formMode === "register");
       if (passwordError) {
         newErrors.password = passwordError;
       }
@@ -206,7 +206,6 @@ const Login = () => {
                   errors={errors}
                   onEmailChange={(e) => setEmail(e.target.value)}
                   onSubmit={handleRecuperarContrasenia}
-                  onBackToLogin={showLogin}
                 />
               ) : (
                 <RegisterForm
@@ -220,7 +219,6 @@ const Login = () => {
                   onPasswordChange={(e) => setPassword(e.target.value)}
                   onPasswordConfirmChange={(e) => setPasswordConfirm(e.target.value)}
                   onSubmit={handleRegistrarUsuario}
-                  onBackToLogin={showLogin}
                 />
               )
             }

@@ -8,7 +8,7 @@ import { DateTimePicker } from "@mui/x-date-pickers";
 import dayjs, { Dayjs } from "dayjs";
 import { CustomButton } from "../../../components/CustomButton/CustomButtons";
 import { Link } from "react-router-dom";
-import { btnRojo, btnVerdeUnahur } from "../../../components/CustomButton/buttonStyles";
+import { btnAzulUnahur, btnRojo, btnVerdeUnahur } from "../../../components/CustomButton/buttonStyles";
 import { getFormatoById } from "../../../api/formatos.api";
 import { putConvocatoria, getArchivoDeConvocatoria } from "../../../api/convocatorias.api";
 import toast from "react-hot-toast";
@@ -160,15 +160,17 @@ const ConvocatoriaDialog = ({ convocatoriaData, showDialogState, fechaFinState }
                         setFormatoData(formato)
                         setShowFormatoDialog(true)
                     }}
+                    style={{...btnAzulUnahur, margin: 0 }}
                 />
 
                 <CustomButton
                     nombre="bases y condiciones"
                     accion={() => getArchivoDeConvocatoria(convocatoriaData.idConvocatoria)}
                     iconoIzquierdo={<PictureAsPdf />}
-                    style={{...btnVerdeUnahur, margin: 0 }}
+                    style={{...btnAzulUnahur, margin: 0 }}
                 />
 
+                {/*
                 <ControlDeAcceso rolesPermitidos={["admin", "super_admin"]}>
                     <CustomButton
                         nombre="Borrar"
@@ -176,23 +178,24 @@ const ConvocatoriaDialog = ({ convocatoriaData, showDialogState, fechaFinState }
                         style={btnRojo}
                         accion={handleOpenDeleteConfirmation}
                     />
-                </ControlDeAcceso>  
+                </ControlDeAcceso>*/}
                 
+                <ControlDeAcceso rolesPermitidos={["investigador"]}>
                 <Button
                     variant="contained"
                     component={Link}
                     to={`/Convocatorias/${convocatoriaData.idConvocatoria}/inscripcion/${convocatoriaData.formato}`}
                     sx={{ backgroundColor: "#56A42C" }}
                 >Inscribirse</Button>
+                </ControlDeAcceso>
 
-                <ControlDeAcceso rolesPermitidos={["admin", "super_admin"]}>
-                    <Button
-                        variant="outlined"
-                        sx={{ ml: 2 }}
-                        onClick={() => navigate(`/convocatorias/${convocatoriaData.idConvocatoria}/postulaciones`)}
+                <ControlDeAcceso rolesPermitidos={["admin"]}>
+                    <CustomButton
+                        nombre="Ver postulaciones"
+                        accion={() => navigate(`/convocatorias/${convocatoriaData.idConvocatoria}/postulaciones`)}
+                        style={{...btnAzulUnahur, margin: 0 }}
                     >
-                        Ver Postulaciones
-                    </Button>
+                    </CustomButton>
                 </ControlDeAcceso>
             </DialogActions>
 

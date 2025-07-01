@@ -11,22 +11,20 @@ interface RecoverFormProps {
     };
     onEmailChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     onSubmit: (e: React.FormEvent) => void;
-    onBackToLogin: () => void;
 }
 
 const RecoverForm: React.FC<RecoverFormProps> = ({
     email,
     errors = {},
     onEmailChange,
-    onSubmit,
-    onBackToLogin,
+    onSubmit
 }) => {
     const isMobile = useIsMobile();
 
     return (
         <Panel borderRadius={isMobile ? "0 0 10px 10px" : "0 10px 10px 0"}>
             <form className="login-form" onSubmit={onSubmit}>
-                <div className="login-form-inputs">
+                <div className="login-form-inputs margin-b-40">
                     <Label htmlFor="email" className="form-label">
                         Email
                     </Label>
@@ -37,14 +35,6 @@ const RecoverForm: React.FC<RecoverFormProps> = ({
                         onChange={onEmailChange}
                     />
                     {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
-                </div>
-                <div className="w-100 text-center">
-                    <Link onClick={(e) => {
-                        e.preventDefault();
-                        onBackToLogin();
-                    }}>
-                        Volver al login
-                    </Link>
                 </div>
                 <Button type="submit" className="btn-login">
                     Recuperar contraseña

@@ -19,7 +19,6 @@ interface RegisterFormProps {
   onPasswordChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onPasswordConfirmChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onSubmit: (e: React.FormEvent) => void;
-  onBackToLogin: () => void;
 } 
 
 const RegisterForm: React.FC<RegisterFormProps> = ({
@@ -33,14 +32,13 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
   onPasswordChange,
   onPasswordConfirmChange,
   onSubmit,
-  onBackToLogin,
 }) => {
   const isMobile = useIsMobile();
 
   return (
     <Panel borderRadius={isMobile ? "0 0 10px 10px" : "0 10px 10px 0"}>
       <form className="login-form" onSubmit={onSubmit}>
-        <div className="login-form-inputs">
+        <div className="login-form-inputs margin-b-40">
 
         <Label htmlFor="nombre" className="form-label">
             Nombre
@@ -87,14 +85,6 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
         </div>
         {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
 
-        <div className="w-100 text-center">
-          <Link onClick={(e) => {
-            e.preventDefault();
-            onBackToLogin();
-          }}>
-            Volver al login
-          </Link>
-        </div>
         <Button type="submit" className="btn-login">
           Registrarse
         </Button>

@@ -107,9 +107,6 @@ const Login = () => {
               />
             </div>
             {error && <p className={styles["error-message"]}>{error}</p>}
-            <div className="mb-5">
-              <a href="#" className={styles["redirect"]}>¿Olvidaste tu contraseña? Haz clic aquí</a>
-            </div>
             <button type="submit" className={styles["btn-login"]}>
               Ingresar
             </button>

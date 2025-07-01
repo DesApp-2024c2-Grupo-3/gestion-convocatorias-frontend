@@ -8,6 +8,7 @@ import toast from "react-hot-toast";
 import {jwtDecode} from "jwt-decode";
 import { CustomButton } from "../CustomButton/CustomButtons";
 import { Button } from "react-bootstrap";
+import "./CvUploader.css"
 
 type UploadStatus = "idle" | "uploading" | "success" | "error"
 
@@ -49,7 +50,7 @@ function CvUploader() {
             setFile(null)
         } catch (e) {
             setStatus("error");
-            toast.error("Hubo un error al cargar el currículum")
+            toast.error("Ocurrió un error al cargar el currículum. Intente de nuevo más tarde")
         };
     }
 
@@ -64,7 +65,8 @@ function CvUploader() {
             link.click();
             link.remove();
         } catch (error) {
-            console.error('Error al descargar el CV:', error);
+            console.error("Error al descargar el CV: ", error);
+            toast.error("Ocurrió un error al descargar el currículum. Intente de nuevo más tarde")
         }
     };
 
@@ -103,9 +105,11 @@ function CvUploader() {
 
     return (
         <div>
+            <p>
+            {fileName}
+            </p>
             {usuario?.cv?.nombre &&
                 <div style={{marginBottom: "15px"}}>
-                    {fileName}
                     <div onClick={() => descargarCV(usuario._id)} style={{ cursor: 'pointer', display: 'inline-block' }}>
                         <svg style={{ width: "20px", marginLeft: "10px" }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
                             <g data-name="35-Arrow Down">
@@ -117,12 +121,14 @@ function CvUploader() {
 
 
                 </div>}
+            <div className="cv-select">
             <input type="file" accept=".pdf,.docx" onChange={handleFileChange} />
             {file && (
                 <div>
                     <p>Peso: {(file.size / 1024).toFixed(2)} KB</p>
                 </div>
             )}
+            </div>
             {file && status !== "uploading" &&
                 <Button 
                     onClick={(handleFileUpload)}>

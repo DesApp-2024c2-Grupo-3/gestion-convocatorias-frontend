@@ -11,12 +11,12 @@ export const getEmailError = (email: string): string | null => {
     return null;
 };
 
-export const getPasswordError = (password: string): string | null => {
+export const getPasswordError = (password: string, validarPassword: boolean = true): string | null => {
     if (!password) {
-        return "La contraseña es requerida";
+      return "La contraseña es requerida";
     }
-    if (!isValidPassword(password)) {
-        return "La contraseña debe tener al menos 8 caracteres";
+    if (validarPassword && !isValidPassword(password)) {
+      return "La contraseña debe tener al menos 8 caracteres";
     }
     return null;
-};
+  };

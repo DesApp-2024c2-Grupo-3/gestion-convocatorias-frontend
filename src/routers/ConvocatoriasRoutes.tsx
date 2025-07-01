@@ -19,26 +19,43 @@ export const ConvocatoriasRoutes = () => {
         <Router>
           <Routes>
             <Route path="/" element={<Home />} >
-                <Route path="/Convocatorias" element={<ConvocatoriasPage />} />
-                <Route
-                    element={
-                        <PrivateRoute
-                            rolesPermitidos={["admin", "super_admin"]}
-                        />
-                    }
-                > 
-                    <Route path="convocatorias/:idConvocatoria/postulaciones" element={<PostulacionesPage/>} />
-                    <Route path="Formatos" element={<Formatos />} />
-                    <Route path="Form" element={<FormNuevaConvocatoria />} /> 
-                    <Route path="/Formatos" element={<Formatos />} />
-                    <Route path="/Form" element={<FormNuevaConvocatoria />} />
-                    <Route path="/usuarios" element={<Usuarios />} />
+              <Route
+                  element={
+                      <PrivateRoute
+                          rolesPermitidos={["investigador","admin"]}
+                      />
+                  }
+              >
+                <Route path="/convocatorias" element={<ConvocatoriasPage />} />
+              </Route>
 
-                </Route>
-                <Route path="Convocatorias/:id/inscripcion/:formato" element={<FormInscripcionProyectos />} />
+              <Route
+                  element={
+                      <PrivateRoute
+                          rolesPermitidos={["admin"]}
+                      />
+                  }
+              >
+                  <Route path="convocatorias/:idConvocatoria/postulaciones" element={<PostulacionesPage/>} />
+                  <Route path="formatos" element={<Formatos />} />
+                  <Route path="form" element={<FormNuevaConvocatoria />} /> 
+                  <Route path="/formatos" element={<Formatos />} />
+                  <Route path="/form" element={<FormNuevaConvocatoria />} />
+                  <Route path="convocatorias/:id/inscripcion/:formato" element={<FormInscripcionProyectos />} />
+              </Route>
+
+              <Route
+                  element={
+                      <PrivateRoute
+                          rolesPermitidos={["super_admin"]}
+                      />
+                  }
+              >
+                <Route path="/usuarios" element={<Usuarios />} />
+              </Route>
             </ Route>
-            <Route path="/Login" element={<Login />} />
-            <Route path="/Register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
             <Route path="/mi-perfil" element={<MiPerfil />} />
           </Routes>
         </Router>

@@ -102,14 +102,14 @@ const MiPerfil: React.FC = () => {
             >
               Cambiar contraseña
             </button>
-            {/* Botón para eliminar cuenta */}
+            {/* Botón para eliminar cuenta
             <button
               type="button"
               className={`${styles["button"]} ${styles["deleteButton"]}`}
               onClick={() => setShowConfirmation(true)} 
             >
               Eliminar cuenta
-            </button>
+            </button> */}
           </form>
         </div>
       </div>

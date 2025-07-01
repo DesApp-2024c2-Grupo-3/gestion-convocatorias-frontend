@@ -82,7 +82,6 @@ const PostulacionesCard = (props: Props) => {
             <Typography variant="caption" color="text.secondary">
                 {fechaCreacion}
             </Typography>
-            <Chip label={categoria} size="small" variant="outlined" sx={{ ml: 1, fontSize: "0.7rem" }} />
             </Box>
 
             <Typography variant="body2" paragraph sx={{ mb: 1 }}>
