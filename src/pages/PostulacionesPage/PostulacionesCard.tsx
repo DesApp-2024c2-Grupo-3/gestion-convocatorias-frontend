@@ -6,6 +6,7 @@ import { CustomButton } from "../../components/CustomButton/CustomButtons"
 import VisibilityIcon from "@mui/icons-material/Visibility"
 import DownloadIcon from "@mui/icons-material/Download"
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday"
+import { btnAzulUnahur } from "@/components/CustomButton/buttonStyles"
 
 interface Props {
   titulo: string
@@ -24,11 +25,9 @@ const PostulacionesCard = (props: Props) => {
         descripcion,
         equipo,
         fechaCreacion,
-        //estado = "pendiente",
         categoria = "General",
         onVerDetalles = () => {}
     } = props
-    
     
     /*
     const getEstadoColor = (estado: string): "success" | "error" | "warning" => {
@@ -59,27 +58,12 @@ const PostulacionesCard = (props: Props) => {
             elevation={2}
         >
         <CardContent sx={{ flex: 1, pb: 1 }}>
-            {/* 
-            <Box
-            sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "flex-start",
-                mb: 1,
-            }}
-            >
-            <Typography variant="h6" gutterBottom sx={{ fontWeight: 600, mb: 0 }}>
-                {titulo}
-            </Typography>
-            <Chip label={estado.toUpperCase()} color={getEstadoColor(estado)} size="small" sx={{ fontWeight: 500 }} />
-            </Box>
-            */}
-                
+            
             <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
-            <CalendarTodayIcon fontSize="small" sx={{ color: "text.secondary", mr: 0.5 }} />
-            <Typography variant="caption" color="text.secondary">
-                {fechaCreacion}
+            <Typography variant="h5" color="text.primary">
+                {titulo + " "}
             </Typography>
+            
             </Box>
 
             <Typography variant="body2" sx={{ 
@@ -151,7 +135,12 @@ const PostulacionesCard = (props: Props) => {
             <IconButton size="small" title="Descargar información">
             <DownloadIcon fontSize="small" />
             </IconButton>
-            <CustomButton nombre="Ver detalles" iconoIzquierdo={<VisibilityIcon />} accion={onVerDetalles} />
+            <CustomButton 
+                nombre="Ver detalles" 
+                iconoIzquierdo={<VisibilityIcon />} 
+                accion={onVerDetalles} 
+                style={{ ...btnAzulUnahur, margin: 0 }}
+                />
         </CardActions>
         </Card>
     )
