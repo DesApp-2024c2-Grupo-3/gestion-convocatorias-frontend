@@ -41,9 +41,8 @@ export const ConvocatoriasRoutes = () => {
                   <Route path="form" element={<FormNuevaConvocatoria />} /> 
                   <Route path="/formatos" element={<Formatos />} />
                   <Route path="/form" element={<FormNuevaConvocatoria />} />
-                  <Route path="convocatorias/:id/inscripcion/:formato" element={<FormInscripcionProyectos />} />
               </Route>
-
+                  <Route path="convocatorias/:id/inscripcion/:formato" element={<FormInscripcionProyectos />} />
               <Route
                   element={
                       <PrivateRoute
