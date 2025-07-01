@@ -50,7 +50,7 @@ function TabPanel(props: TabPanelProps) {
       }}
     >
       {value === index && <Box sx={{ height: "100%" }}>{children}</Box>}
-    </div> 
+    </div>
   )
 }
 
@@ -125,6 +125,7 @@ const PostulacionDialog: React.FC<PostulacionDialogProps> = ({ open, onClose, pr
 
       try {
         const data = await getProyectoPorId(proyectoId)
+        console.log("Datos del proyecto:", data) // Para debug
         setProyecto(data)
       } catch (err) {
         console.error("Error al obtener detalles del proyecto:", err)
@@ -201,17 +202,6 @@ const PostulacionDialog: React.FC<PostulacionDialogProps> = ({ open, onClose, pr
               </Box>
 
               <Grid container spacing={2} alignItems="center">
-                <Grid item xs={12} sm={6} md={4}>
-                  <Box sx={{ display: "flex", alignItems: "center" }}>
-                    <CalendarTodayIcon fontSize="small" sx={{ color: "text.secondary", mr: 1 }} />
-                    <Typography variant="body2" color="text.secondary">
-                      Fecha: 
-                      {proyecto.fechaCreacion && !isNaN(Date.parse(proyecto.fechaCreacion))
-                        ? new Date(proyecto.fechaCreacion).toLocaleDateString()
-                        : "No disponible"}
-                    </Typography>
-                  </Box>
-                </Grid>
                 <Grid item xs={12} sm={6} md={4}>
                   <Box sx={{ display: "flex", alignItems: "center" }}>
                     <CategoryIcon fontSize="small" sx={{ color: "text.secondary", mr: 1 }} />
@@ -319,7 +309,7 @@ const PostulacionDialog: React.FC<PostulacionDialogProps> = ({ open, onClose, pr
                         </Box>
                       </CardContent>
                     </Card>
-                ))}
+                  ))}
               </TabPanel>
 
               <TabPanel value={tabValue} index={1}>
@@ -361,44 +351,75 @@ const PostulacionDialog: React.FC<PostulacionDialogProps> = ({ open, onClose, pr
                   </Box>
                 </Paper>
 
-                {proyecto.invitados.length > 0 && (
+                {proyecto.invitados && proyecto.invitados.length > 0 ? (
                   <>
                     <Typography variant="h6" gutterBottom>
-                      Miembros del Equipo
+                      Miembros del Equipo ({proyecto.invitados.length})
                     </Typography>
                     <Grid container spacing={2}>
-                      {proyecto.invitados.map((miembro, index) => (
-                        <Grid item xs={12} sm={6} key={index}>
-                          <Paper
-                            sx={{
-                              p: 2,
-                              borderLeft: 3,
-                              borderLeftColor: "#56A42C",
-                              display: "flex",
-                              alignItems: "center",
-                              gap: 2,
-                            }}
-                          >
-                            <Box
+                      {proyecto.invitados.map((miembro, index) => {
+                        let nombreMiembro = ""
+                        let inicialMiembro = "?"
+
+                        if (typeof miembro === "string") {
+                          nombreMiembro = miembro
+                          inicialMiembro = miembro.charAt(0).toUpperCase()
+                        }
+
+                        return (
+                          <Grid item xs={12} sm={6} key={index}>
+                            <Paper
                               sx={{
-                                width: 40,
-                                height: 40,
-                                borderRadius: "50%",
-                                bgcolor: "#56A42C",
+                                p: 2,
+                                borderLeft: 3,
+                                borderLeftColor: "#3498db",
                                 display: "flex",
                                 alignItems: "center",
-                                justifyContent: "center",
-                                color: "white",
-                                fontWeight: "bold",
+                                gap: 2,
+                                backgroundColor: "#f8fcff",
                               }}
                             >
-                            
-                            </Box>
-                          </Paper>
-                        </Grid>
-                      ))}
+                              <Box
+                                sx={{
+                                  width: 40,
+                                  height: 40,
+                                  borderRadius: "50%",
+                                  bgcolor: "#3498db",
+                                  display: "flex",
+                                  alignItems: "center",
+                                  justifyContent: "center",
+                                  color: "white",
+                                  fontWeight: "bold",
+                                }}
+                              >
+                                {inicialMiembro}
+                              </Box>
+                              <Box>
+                                <Typography variant="body1" fontWeight="medium">
+                                  {nombreMiembro}
+                                </Typography>
+                                <Typography variant="caption" color="text.secondary">
+                                  Miembro del equipo
+                                </Typography>
+                              </Box>
+                            </Paper>
+                          </Grid>
+                        )
+                      })}
                     </Grid>
                   </>
+                ) : (
+                  <Paper
+                    sx={{
+                      p: 3,
+                      textAlign: "center",
+                      backgroundColor: "#f5f5f5",
+                    }}
+                  >
+                    <Typography variant="body2" color="text.secondary">
+                      No hay miembros adicionales en el equipo
+                    </Typography>
+                  </Paper>
                 )}
               </TabPanel>
 

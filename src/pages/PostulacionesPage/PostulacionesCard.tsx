@@ -25,24 +25,10 @@ const PostulacionesCard = (props: Props) => {
         descripcion,
         equipo,
         fechaCreacion,
-        //estado = "pendiente",
         categoria = "General",
         onVerDetalles = () => {}
     } = props
     
-    
-    /*
-    const getEstadoColor = (estado: string): "success" | "error" | "warning" => {
-        switch (estado) {
-        case "aprobado":
-            return "success"
-        case "rechazado":
-            return "error"
-        default:
-            return "warning"
-        }
-    }*/
-
     const descripcionTruncada: string = descripcion.length > 150 ? descripcion.substring(0, 150) + "..." : descripcion
 
     return (
@@ -62,27 +48,12 @@ const PostulacionesCard = (props: Props) => {
             elevation={2}
         >
         <CardContent sx={{ flex: 1, pb: 1 }}>
-            {/* 
-            <Box
-            sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "flex-start",
-                mb: 1,
-            }}
-            >
-            <Typography variant="h6" gutterBottom sx={{ fontWeight: 600, mb: 0 }}>
-                {titulo}
-            </Typography>
-            <Chip label={estado.toUpperCase()} color={getEstadoColor(estado)} size="small" sx={{ fontWeight: 500 }} />
-            </Box>
-            */}
-                
+            
             <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
-            <CalendarTodayIcon fontSize="small" sx={{ color: "text.secondary", mr: 0.5 }} />
-            <Typography variant="caption" color="text.secondary">
-                {fechaCreacion}
+            <Typography variant="h5" color="text.primary">
+                {titulo + " "}
             </Typography>
+            
             </Box>
 
             <Typography variant="body2" paragraph sx={{ mb: 1 }}>
