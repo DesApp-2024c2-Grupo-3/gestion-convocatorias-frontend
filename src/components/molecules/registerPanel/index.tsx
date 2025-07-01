@@ -25,8 +25,6 @@ const RegisterPanel: React.FC<RegisterPanelProps> = ({ onLogin, icon }) => {
           color={gray100}
         />
       </p>
-      <h3>Registro de Usuario</h3>
-      <p>¿Ya tienes cuenta?</p>
       <Link onClick={onLogin} color={gray100}>
         Iniciar sesión
       </Link>

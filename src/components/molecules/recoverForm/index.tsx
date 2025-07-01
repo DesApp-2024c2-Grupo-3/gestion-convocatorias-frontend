@@ -11,13 +11,15 @@ interface RecoverFormProps {
     };
     onEmailChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     onSubmit: (e: React.FormEvent) => void;
+    onLogin: () => void;
 }
 
 const RecoverForm: React.FC<RecoverFormProps> = ({
     email,
     errors = {},
     onEmailChange,
-    onSubmit
+    onSubmit,
+    onLogin
 }) => {
     const isMobile = useIsMobile();
 
@@ -39,6 +41,14 @@ const RecoverForm: React.FC<RecoverFormProps> = ({
                 <Button type="submit" className="btn-login">
                     Recuperar contraseña
                 </Button>
+                <div className="w-100 text-center">
+                    <Link onClick={(e) => {
+                        e.preventDefault();
+                        onLogin();
+                    }}>
+                        Iniciar sesión
+                    </Link>
+                </div>
             </form>
         </Panel>
     );

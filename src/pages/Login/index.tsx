@@ -210,6 +210,7 @@ const Login = () => {
                   errors={errors}
                   onEmailChange={(e) => setEmail(e.target.value)}
                   onSubmit={handleRecuperarContrasenia}
+                  onLogin={showLogin}
                 />
               ) : (
                 <RegisterForm

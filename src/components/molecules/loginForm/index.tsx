@@ -55,7 +55,9 @@ const LoginForm: React.FC<LoginFormProps> = ({
           />
         </div>
         {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
-
+        <Button type="submit" className="btn-login">
+          Ingresar
+        </Button>
         <div className="w-100 text-center">
           <Link onClick={(e) => {
             e.preventDefault();
@@ -64,9 +66,6 @@ const LoginForm: React.FC<LoginFormProps> = ({
             ¿Olvidaste tu contraseña?
           </Link>
         </div>
-        <Button type="submit" className="btn-login">
-          Ingresar
-        </Button>
       </form>
     </Panel>
   );
