@@ -1,5 +1,5 @@
 import React from 'react';
-import Panel from '.';
+import Panel from './Panel';
 
 export default {
     title: 'Atoms/Panel',

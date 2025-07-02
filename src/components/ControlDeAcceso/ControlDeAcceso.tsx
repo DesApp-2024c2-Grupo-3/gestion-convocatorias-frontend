@@ -1,5 +1,5 @@
 import React from "react";
-import { UserContext } from "../../pages/Login/userContext";
+import { UserContext } from "@/contexts/userContext";
 import { Navigate } from "react-router-dom";
 
 type RequireRoleProps = {

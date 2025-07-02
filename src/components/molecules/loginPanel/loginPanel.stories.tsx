@@ -1,5 +1,5 @@
 import React from 'react';
-import LoginPanel from '.';
+import LoginPanel from './LoginPanel';
 import PersonIcon from '@mui/icons-material/Person2Rounded';
 
 export default {

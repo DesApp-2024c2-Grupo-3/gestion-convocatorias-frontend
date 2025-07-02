@@ -10,7 +10,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import Box from '@mui/material/Box';
 import { ArrowBack, ArrowForward } from "@mui/icons-material";
 import { Link } from "react-router-dom";
-import { UserContext } from "../../Login/userContext";
+import { UserContext } from "@/contexts/userContext";
 import { IFormularioInscripcion } from "../FormInscripcionProyecto";
 import { enviarCorreosMasivo } from "@/api/comunicacion.api";
 import toast from "react-hot-toast";

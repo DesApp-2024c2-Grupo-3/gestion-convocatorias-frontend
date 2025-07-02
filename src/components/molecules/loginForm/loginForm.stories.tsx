@@ -1,5 +1,5 @@
 import React from 'react';
-import LoginForm from './index';
+import LoginForm from './LoginForm';
 
 export default {
     title: 'Molecules/LoginForm',
@@ -14,4 +14,5 @@ export const Default = () => <LoginForm
     onPasswordChange={() => {}}
     onSubmit={() => {}}
     onRegister={() => {}}
+    onForgotPassword={() => {}}
 />

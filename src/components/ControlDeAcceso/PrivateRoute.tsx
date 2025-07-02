@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import { FunctionControlDeAcceso } from "./ControlDeAcceso";
-import { UserContext } from "../../pages/Login/userContext";
+import { UserContext } from "@/contexts/userContext";
 
 interface PrivateRouteProps {
     rolesPermitidos: string[];

@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { UserContext } from "../../pages/Login/userContext";
+import { UserContext } from "@/contexts/userContext";
 import { Avatar, IconButton, Menu, MenuItem, Tooltip, Typography } from "@mui/material";
 
 const UserDropdown = () => {

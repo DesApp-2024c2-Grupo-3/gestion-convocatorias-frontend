@@ -7,7 +7,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import { Link, NavLink } from "react-router-dom";
 import { FormatListNumbered } from "@mui/icons-material";
 import { ControlDeAcceso, FunctionControlDeAcceso } from "../ControlDeAcceso/ControlDeAcceso";
-import { UserContext } from "../../pages/Login/userContext";
+import { UserContext } from "@/contexts/userContext";
 
 interface SideBarListProps {
     ItemIcon: React.ReactNode;

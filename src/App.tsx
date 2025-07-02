@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ConvocatoriasRoutes } from "./routers/ConvocatoriasRoutes";
 import { Toaster } from "react-hot-toast";
-import { UserProvider } from "./pages/Login/userContext";
+import { UserProvider } from "@/contexts/userContext";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import 'dayjs/locale/es'

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Col, Row } from "react-bootstrap";
 import toast from "react-hot-toast";
 import { loginUsuario, recuperarContrasenia, registrarUsuario } from "@/api/usuarios.api";
-import { UserContext } from "./userContext";
+import { UserContext } from "@/contexts/userContext";
 import { LoginLayout } from "@/components/layouts";
 import { LoginPanel, LoginForm, RegisterForm, RecoverForm, RegisterPanel } from "@/components/molecules";
 import { getEmailError, getPasswordError } from "@/helpers/errorMessages"

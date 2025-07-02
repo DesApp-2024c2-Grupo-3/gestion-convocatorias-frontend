@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { BrowserRouter } from 'react-router-dom';
-import { UserContext } from './userContext';
+import { UserContext } from '@/contexts/userContext';
 import Login from './';
 
 const mockUserContext = {
