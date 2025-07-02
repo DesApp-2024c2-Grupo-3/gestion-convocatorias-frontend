@@ -50,12 +50,14 @@ export function useLoginForm() {
         const emailError = getEmailError(email);
         if (emailError) newErrors.email = emailError;
 
-        const nombreError = getTextError(nombre);
-        if (nombreError) newErrors.nombre = nombreError;
-
         if (formMode === "login" || formMode === "register") {
             const passwordError = getPasswordError(password, formMode === "register");
             if (passwordError) newErrors.password = passwordError;
+        }
+
+        if (formMode === "register") {
+            const nombreError = getTextError(nombre);
+            if (nombreError) newErrors.nombre = nombreError;
         }
 
         if (formMode === "register" && password !== passwordConfirm) {
@@ -69,7 +71,7 @@ export function useLoginForm() {
     const ingresarLogin = async (e: React.FormEvent) => {
         e.preventDefault();
         setErrors({});
-
+        
         if (!validateFields()) return;
 
         try {
