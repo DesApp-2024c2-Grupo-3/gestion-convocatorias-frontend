@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Navigate, Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import Login from "../pages/Login";
+import Login from "@/pages/Login";
 import Home from "../pages/Home/home";
 import FormNuevaConvocatoria from "../pages/FormNuevaConvocatoria/FormNuevaConvocatoria";
 import Register from "../pages/Register/Register";

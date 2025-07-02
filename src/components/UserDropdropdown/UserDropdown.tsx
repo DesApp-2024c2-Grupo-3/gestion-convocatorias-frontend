@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import "./UserDropdown.css";
 import { useNavigate } from "react-router-dom";
-import { UserContext } from "../../pages/Login/userContext";
+import { UserContext } from "@/contexts/userContext";
 
 const UserDropdown = () => {
   const navigate = useNavigate();

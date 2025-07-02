@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
-import { UserContext } from '../Login/userContext';
+import { UserContext } from '@/contexts/userContext';
 import { Toolbar, Box } from '@mui/material';
 import SideBar from '../../components/drawer/SideBar';
 

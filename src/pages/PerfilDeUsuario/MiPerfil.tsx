@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { UserContext } from "../Login/userContext";
+import { UserContext } from "@/contexts/userContext";
 import { useNavigate } from "react-router-dom";
 import { deleteUsuario, updateContrasenia } from "../../api/usuarios.api";
 import styles from "./miperfil.module.css";

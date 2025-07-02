@@ -15,7 +15,7 @@ import toast from "react-hot-toast";
 import FormatoDialog from "../../../components/FormatoDialog/FormatoDialog";
 import { ControlDeAcceso, FunctionControlDeAcceso } from "../../../components/ControlDeAcceso/ControlDeAcceso";
 import { useNavigate } from "react-router-dom";
-import { UserContext } from "../../Login/userContext";
+import { UserContext } from "@/contexts/userContext";
 import { PictureAsPdf } from "@mui/icons-material";
 
 interface ConvocatoriaDialogProps {

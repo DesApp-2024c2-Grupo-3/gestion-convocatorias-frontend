@@ -4,7 +4,7 @@ import styles from "../Home/formularios.module.css";
 import EquipoDeTrabajo from "./FormPages/EquipoDeTrabajo";
 import DatosDelProyecto from "./FormPages/DatosDelProyecto/DatosDelProyecto";
 import { Button } from "@mui/material";
-import { UserContext } from "../Login/userContext";
+import { UserContext } from "@/contexts/userContext";
 import { postProyecto } from "../../api/proyectos.api";
 import Presupuesto from "./FormPages/Presupuesto";
 import { getConvocatoriaById } from "../../api/convocatorias.api";

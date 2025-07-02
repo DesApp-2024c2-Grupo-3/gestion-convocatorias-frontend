@@ -2,7 +2,7 @@ import React, { ChangeEvent, useContext, useState } from "react";
 import axios from "axios"
 import { downloadCv, updateCv } from "../../api/usuarios.api";
 import { useRef } from "react";
-import { UserContext } from "../../pages/Login/userContext";
+import { UserContext } from "@/contexts/userContext";
 import stylesButton from "./CvUploader.module.css"
 import toast from "react-hot-toast";
 import {jwtDecode} from "jwt-decode";

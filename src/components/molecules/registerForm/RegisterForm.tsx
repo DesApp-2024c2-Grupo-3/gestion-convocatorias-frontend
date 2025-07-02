@@ -71,7 +71,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
             value={password}
             onChange={onPasswordChange}
           />
-
+          {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
           
         <Label htmlFor="passwordConfirm" className="form-label">
             Confirmar contraseña
@@ -82,8 +82,9 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
             value={passwordConfirm}
             onChange={onPasswordConfirmChange}
           />
+          {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
         </div>
-        {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
+
 
         <Button type="submit" className="btn-login">
           Registrarse

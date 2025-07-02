@@ -8,6 +8,10 @@ export default {
     tags: ['autodocs'],
 };
 
+const onForgotPassword = () => {
+    console.log('forgot password');
+}
+
 export const Default = () => <LoginLayout 
     left={<LoginPanel onRegister={() => {}} icon="bi-person-circle" />}
     right={<LoginForm 
@@ -17,5 +21,6 @@ export const Default = () => <LoginLayout
         onPasswordChange={() => {}}
         onSubmit={() => {}}
         onRegister={() => {}}
+        onForgotPassword={onForgotPassword}
     />}
 />
