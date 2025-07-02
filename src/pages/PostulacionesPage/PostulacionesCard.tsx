@@ -9,14 +9,13 @@ import CalendarTodayIcon from "@mui/icons-material/CalendarToday"
 import { btnAzulUnahur } from "@/components/CustomButton/buttonStyles"
 
 interface Props {
-  titulo: string
-  descripcion: string
-  equipo: string[]
-  fechaCreacion?: string
-  //estado?: "pendiente" | "aprobado" | "rechazado"
-  categoria?: string
-  onVerDetalles?: () => void
-}
+    titulo: string
+    descripcion: string
+    equipo: string[]
+    fechaCreacion?: string
+    categoria?: string
+    onVerDetalles?: () => void
+    }
 
 const PostulacionesCard = (props: Props) => {
 
@@ -29,18 +28,6 @@ const PostulacionesCard = (props: Props) => {
         onVerDetalles = () => {}
     } = props
     
-    /*
-    const getEstadoColor = (estado: string): "success" | "error" | "warning" => {
-        switch (estado) {
-        case "aprobado":
-            return "success"
-        case "rechazado":
-            return "error"
-        default:
-            return "warning"
-        }
-    }*/
-
     return (
         <Card
             sx={{
@@ -66,10 +53,10 @@ const PostulacionesCard = (props: Props) => {
             
             </Box>
 
-            <Typography variant="body2" sx={{ 
-                mb: 1, overflow: 'hidden', WebkitLineClamp: 9, WebkitBoxOrient: 'vertical', display: '-webkit-box'
+            <Typography variant="body2" gutterBottom sx={{
+                overflow: 'hidden', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', display: '-webkit-box'
             }}>
-            {descripcion}
+                {descripcion}
             </Typography>
 
             <Divider sx={{ my: 1.5 }} />

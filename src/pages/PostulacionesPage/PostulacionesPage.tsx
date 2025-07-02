@@ -8,6 +8,7 @@ import NavigateNextIcon from "@mui/icons-material/NavigateNext"
 import PostulacionesCard from "./PostulacionesCard"
 import PostulacionDialog from "./PostulacionDialog"
 import { CustomButton } from "../../components/CustomButton/CustomButtons"
+import { getConvocatoriaById } from "@/api/convocatorias.api"
 
 interface Proyecto {
   _id: string
@@ -23,53 +24,55 @@ const PostulacionesPage = () => {
   const [proyectos, setProyectos] = useState<Proyecto[]>([])
   const [loading, setLoading] = useState<boolean>(true)
   const [error, setError] = useState<string | null>(null)
+  const [tituloConvocatoria, setTituloConvocatoria] = useState<string>("")
 
   // Estados para el modal de detalles
   const [modalOpen, setModalOpen] = useState<boolean>(false)
   const [selectedProyectoId, setSelectedProyectoId] = useState<string | null>(null)
 
   useEffect(() => {
-    const getProyectos = async (): Promise<void> => {
-      if (idConvocatoria) {
-        try {
-          setLoading(true)
-          const data = await getProyectosPorConvocatoria(idConvocatoria)
+  const fetchData = async () => {
+    if (!idConvocatoria) return;
+    try {
+      setLoading(true)
 
-          if (Array.isArray(data)) {
-            const proyectosTransformados: Proyecto[] = data.map((proyecto: any) => {
-              const titulo: string = proyecto.camposExtra?.["Titulo del proyecto"] || "Sin título"
-              const descripcion: string =
-                proyecto.camposExtra?.["Problemática Detectada (Diagnostico)"] || "Sin descripción"
-              const autor: string = proyecto.autor || "Autor desconocido"
-              const invitados: string[] = Array.isArray(proyecto.invitados)
-                ? proyecto.invitados.map((i: any) => i.nombre || i)
-                : []
+      // 1. Obtener proyectos
+      const data = await getProyectosPorConvocatoria(idConvocatoria)
+      const proyectosTransformados: Proyecto[] = Array.isArray(data)
+        ? data.map((proyecto: any) => {
+            const titulo: string = proyecto.camposExtra?.["Titulo del proyecto"] || "Sin título"
+            const descripcion: string =
+              proyecto.camposExtra?.["Problemática Detectada (Diagnostico)"] || "Sin descripción"
+            const autor: string = proyecto.autor || "Autor desconocido"
+            const invitados: string[] = Array.isArray(proyecto.invitados)
+              ? proyecto.invitados.map((i: any) => i.nombre || i)
+              : []
 
-              return {
-                _id: proyecto._id,
-                titulo,
-                descripcion,
-                equipo: [autor, ...invitados],
-                fechaCreacion: new Date(proyecto.fechaCreacion || Date.now()).toLocaleDateString(),
-                // estado: "pendiente", 
-              }
-            })
+            return {
+              _id: proyecto._id,
+              titulo,
+              descripcion,
+              equipo: [autor, ...invitados],
+              fechaCreacion: new Date(proyecto.fechaCreacion || Date.now()).toLocaleDateString(),
+            }
+          })
+        : []
 
-            setProyectos(proyectosTransformados)
-          } else {
-            setProyectos([])
-          }
-        } catch (error: any) {
-          console.error("Error al obtener los proyectos:", error)
-          setError("Hubo un error al cargar los proyectos.")
-        } finally {
-          setLoading(false)
-        }
-      }
+      setProyectos(proyectosTransformados)
+
+      // 2. Obtener título de la convocatoria
+      const convocatoria = await getConvocatoriaById(idConvocatoria)
+      setTituloConvocatoria(convocatoria?.titulo || "Convocatoria sin título")
+    } catch (error) {
+      console.error("Error al cargar los datos:", error)
+      setError("Hubo un error al cargar las postulaciones.")
+    } finally {
+      setLoading(false)
     }
+  }
 
-    getProyectos()
-  }, [idConvocatoria])
+  fetchData()
+}, [idConvocatoria])
 
   const handleVerDetalles = (proyectoId: string): void => {
     setSelectedProyectoId(proyectoId)
@@ -127,7 +130,7 @@ const PostulacionesPage = () => {
         {/* Título */}
         <Box sx={{ mb: 4 }}>
           <Typography variant="h4" gutterBottom>
-            Postulaciones para la convocatoria
+            Postulaciones para la convocatoria: {tituloConvocatoria}
           </Typography>
           <Typography variant="body2" color="text.secondary">
             {proyectos.length} postulaciones encontradas
