@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { CustomButton } from "../../../components/CustomButton/CustomButtons";
 import ConvocatoriaDialog from "./ConvocatoriaDialog";
 import { btnAzulUnahur } from "@/components/CustomButton/buttonStyles";
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 export interface ConvocatoriaCardProps {
     idConvocatoria: string;
@@ -78,6 +79,7 @@ const ConvocatoriasCard = (props: ConvocatoriaCardProps) => {
                         nombre="Ver Más"
                         accion={() => { setShowDialog(true) }}
                         style={{ ...btnAzulUnahur, margin: 0 }}
+                        iconoIzquierdo={<VisibilityIcon />}
                     />
                 </CardActions>
             </Card>

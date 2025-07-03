@@ -4,7 +4,7 @@ import { FormatoProps } from "../Formatos";
 import FormatoDialog from "../../../components/FormatoDialog/FormatoDialog";
 import { CustomButton } from "@/components/CustomButton/CustomButtons";
 import { btnAzulUnahur } from "@/components/CustomButton/buttonStyles";
-import CalendarTodayIcon from "@mui/icons-material/CalendarToday"
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 const FormatoCard = ({ _id, nombreDelFormato, campos }: FormatoProps) => {
 
@@ -73,15 +73,6 @@ const FormatoCard = ({ _id, nombreDelFormato, campos }: FormatoProps) => {
             </Card>*/}
 
             <Card
-                /*sx={{
-                    borderTop: 5,
-                    borderTopColor: "#56A42C",
-                    width: {
-                        xs: '25rem',
-                        md: '500px'
-                    },
-                    height: "330px",
-                }}*/
                 sx={{
                     display: "flex",
                     flexDirection: "column",
@@ -111,6 +102,7 @@ const FormatoCard = ({ _id, nombreDelFormato, campos }: FormatoProps) => {
                 <CardActions
                     sx={{ display:"flex", flexDirection:"row-reverse", px: 2 }}>
                     <CustomButton
+                        iconoIzquierdo={<VisibilityIcon />}
                         nombre="Ver formato"
                         accion={() => { setShowFormatoDialog(true) }}
                         style={{ ...btnAzulUnahur, margin: 0 }}

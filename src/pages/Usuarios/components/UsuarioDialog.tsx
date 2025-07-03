@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { UsuarioProps } from "../Usuarios";
-import { Dialog, DialogContent, DialogTitle, DialogActions, IconButton, FormGroup, FormControlLabel, Checkbox } from "@mui/material";
+import { Dialog, DialogContent, DialogTitle, DialogActions, IconButton, FormGroup, FormControlLabel, Checkbox, RadioGroup, FormControl, Radio } from "@mui/material";
 import { CustomButton } from "../../../components/CustomButton/CustomButtons";
 import { updateRoles } from "../../../api/usuarios.api";
 import toast from "react-hot-toast";
+import { FormLabel } from "react-bootstrap";
+import { btnVerdeUnahur } from "@/components/CustomButton/buttonStyles";
 
 interface UsuarioDialogProps {
     usuarioData: UsuarioProps;
@@ -21,48 +23,30 @@ interface ShowDialogStateProps {
     setShowUsuarioDialog: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const rolesConfig = [
-    { label: "Investigador", value: "investigador" },
-    { label: "Administrador", value: "admin" },
-    { label: "Superadministrador", value: "super_admin" },
-];
-
 const UsuarioDialog = ({ usuarioData, showDialogState, onRefresh }: UsuarioDialogProps) => {
 
-    const [checkedList, setCheckedList] = useState<string[]>([]);
+    const [value, setValue] = useState<string>(usuarioData.roles[0])
 
-    useEffect(() => {
-        setCheckedList(usuarioData.roles);
-    }, [usuarioData.roles]);
-
-    const handleSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const value = event.target.value;
-        const isChecked = event.target.checked
-
-        if (isChecked) {
-            setCheckedList([...checkedList, value])
-        } else {
-            const filteredList = checkedList.filter((item) => item !== value);
-            setCheckedList(filteredList)
-        }
-    }
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValue((event.target as HTMLInputElement).value);
+  };
 
     const handleClose = () => {
         showDialogState.setShowUsuarioDialog(false)
     }
 
-    const handleUpdate = async (usuario: usuario, roles: string[]) => {
-        if (checkedList.length !== 0) {
+    const handleUpdate = async (usuario: usuario, rol: string) => {
+        if (rol !== usuarioData.roles[0]){
             try {
-                await updateRoles(usuario.email, roles)
+                await updateRoles(usuario.email, [rol])
                 onRefresh()
             } catch (error) {
                 console.error(error);
             }
-            toast.success(`Roles de ${usuario.nombre} actualizados correctamente`)
+            toast.success(`Rol de ${usuario.nombre} actualizado correctamente`)
             handleClose()
         } else {
-            toast.error(`Seleccione al menos un rol`)
+            toast.error("Seleccione un rol distinto al actual")
         }
     }
 
@@ -81,33 +65,26 @@ const UsuarioDialog = ({ usuarioData, showDialogState, onRefresh }: UsuarioDialo
             >{usuarioData.nombre}</DialogTitle>
             <DialogContent dividers>
                 <p className="usuario-email">{usuarioData.email}</p>
-                <div className="roles">
-
-                    <p>{usuarioData.roles.join(", ")}</p>
-
-                </div>
                 <div className="roles-checkbox">
-                    <FormGroup>
-                        {rolesConfig.map((role) => (
-                            <FormControlLabel
-                                key={role.value}
-                                control={
-                                    <Checkbox
-                                        checked={checkedList.includes(role.value)}
-                                        onChange={handleSelect}
-                                        value={role.value}
-                                    />
-                                }
-                                label={role.label}
-                            />
-                        ))}
-                    </FormGroup>
+                    <FormControl>
+                        <FormLabel id="roles-group">Rol</FormLabel>
+                        <RadioGroup
+                            aria-labelledby="roles-group"
+                            name="roles-buttons-group"
+                            value={value}
+                            onChange={handleChange}
+                        >
+                            <FormControlLabel value="investigador" control={<Radio />} label="Investigador" />
+                            <FormControlLabel value="admin" control={<Radio />} label="Administrador" />
+                            </RadioGroup>
+                    </FormControl>
                 </div>
             </DialogContent>
             <DialogActions>
                 <CustomButton
                     nombre="Cambiar roles"
-                    accion={() => handleUpdate(usuarioData, checkedList)}
+                    accion={() => handleUpdate(usuarioData, value)}
+                    style={{ ...btnVerdeUnahur, margin:0}}
                 />
             </DialogActions>
         </Dialog>

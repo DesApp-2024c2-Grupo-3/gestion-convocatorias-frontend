@@ -31,10 +31,9 @@ const ConvocatoriasPage = () => {
                     setListConvocatorias(data);
                 }
             } catch (error) {
-                console.log("ERROR")
                 setError("Ocurrió un error al cargar las convocatorias")
+                console.log(error)
             } finally {
-                console.log("OK")
                 setLoading(false)
             }
         }
@@ -43,34 +42,34 @@ const ConvocatoriasPage = () => {
 
     if (loading) {
         return (
-          <Container maxWidth="lg" sx={{ py: 4 }}>
-            <Box sx={{ mb: 3 }}>
-              <Skeleton variant="text" width={300} height={40} />
-              <Skeleton variant="text" width={200} />
-            </Box>
-            <Grid container spacing={3}>
-              {[1, 2, 3, 4].map((item: number) => (
-                <Grid item xs={12} md={6} key={item}>
-                  <Skeleton variant="rectangular" height={300} />
+            <Container maxWidth="lg" sx={{ py: 4 }}>
+                <Box sx={{ mb: 3 }}>
+                    <Skeleton variant="text" width={300} height={40} />
+                    <Skeleton variant="text" width={200} />
+                </Box>
+                <Grid container spacing={3}>
+                    {[1, 2, 3, 4].map((item: number) => (
+                        <Grid item xs={12} md={6} key={item}>
+                            <Skeleton variant="rectangular" height={300} />
+                        </Grid>
+                    ))}
                 </Grid>
-              ))}
-            </Grid>
-          </Container>
+            </Container>
         )
-      }
-    
-      if (error) {
+    }
+
+    if (error) {
         return (
-          <Container maxWidth="lg" sx={{ py: 4 }}>
-            <Paper sx={{ p: 4, textAlign: "center" }}>
-              <Typography color="error" variant="h6" gutterBottom>
-                {error}
-              </Typography>
-              <CustomButton nombre="Reintentar" accion={() => window.location.reload()} />
-            </Paper>
-          </Container>
+            <Container maxWidth="lg" sx={{ py: 4 }}>
+                <Paper sx={{ p: 4, textAlign: "center" }}>
+                    <Typography color="error" variant="h6" gutterBottom>
+                        {error}
+                    </Typography>
+                    <CustomButton nombre="Reintentar" accion={() => window.location.reload()} />
+                </Paper>
+            </Container>
         )
-      }
+    }
 
     return (
         <>

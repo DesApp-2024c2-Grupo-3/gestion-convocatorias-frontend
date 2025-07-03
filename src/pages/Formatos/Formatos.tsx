@@ -32,7 +32,8 @@ const Formatos = () => {
                 key={index}
                 nombreDelFormato={formato.nombreDelFormato}
                 campos={formato.campos}
-            /></Grid>
+            />
+            </Grid>
         ))
     ) : (
         <>
