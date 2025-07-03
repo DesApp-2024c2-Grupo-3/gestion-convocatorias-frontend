@@ -5,6 +5,12 @@ import { deleteUsuario, updateContrasenia } from "../../api/usuarios.api";
 import styles from "./miperfil.module.css";
 import toast from "react-hot-toast";
 import CvUploader from "../../components/FileUploader/CvUploader";
+import { Button } from "@mui/material";
+import { btnVerdeUnahur, btnAzulUnahur } from "@/components/CustomButton/buttonStyles";
+import { CustomButton } from "@/components/CustomButton/CustomButtons";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { primaryColor, secondaryColor } from "@/styles/colors";
 
 const MiPerfil: React.FC = () => {
   const { usuario, cerrarSesion } = useContext(UserContext);
@@ -61,14 +67,15 @@ const MiPerfil: React.FC = () => {
     <div className={styles["page"]}>
       <div className={styles["container"]}>
         <div className={styles["sidebar"]}>
-          <button
-            type="button"
-            className={styles["backButton"]}
-            onClick={() => navigate(-1)}
+          <Button
+          onClick={() => navigate(-1)}
+          startIcon={<ArrowBackIcon/>}
+          sx={{marginBottom: "25px", color: "white", backgroundColor:secondaryColor}}
           >
-            ← Volver
-          </button>
+            Volver
+          </Button>
           <p>Bienvenido {usuario?.nombre}</p>
+          <AccountCircleIcon sx={{fontSize:"4rem"}} />
         </div>
         <div className={styles["formContainer"]}>
           <h2 className={styles["title"]}>Configuración del perfil</h2>
@@ -77,7 +84,7 @@ const MiPerfil: React.FC = () => {
             {usuario?.nombre}
             <label className={styles["label"]}>Email:</label>
             {usuario?.email}
-            <label className={styles["label"]}>Currículum Vitae</label>
+            <label className={styles["label"]}>CV:</label>
             <CvUploader />            
             <label className={styles["label"]}>Nueva contraseña:</label>
             <input
@@ -95,13 +102,12 @@ const MiPerfil: React.FC = () => {
               value={confirmarContra}
               onChange={(e) => setConfirmarContra(e.target.value)}
             />
-            <button
-              type="button"
-              className={styles["button"]}
-              onClick={handleUpdatePassword}
+            <CustomButton
+              accion={handleUpdatePassword}
+              style={{...btnVerdeUnahur}}
+              nombre="Cambiar contraseña"
             >
-              Cambiar contraseña
-            </button>
+            </CustomButton>
             {/* Botón para eliminar cuenta
             <button
               type="button"

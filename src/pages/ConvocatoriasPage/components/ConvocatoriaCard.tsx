@@ -55,7 +55,7 @@ const ConvocatoriasCard = (props: ConvocatoriaCardProps) => {
                 elevation={2}
             >
                 <CardContent sx={{ flex: 1, pb: 1 }}>
-                    <Typography variant="h5" gutterBottom>
+                    <Typography variant="h5" gutterBottom sx={{}}>
                         {titulo}
                     </Typography>
                     <Typography variant="body2" gutterBottom sx={{
