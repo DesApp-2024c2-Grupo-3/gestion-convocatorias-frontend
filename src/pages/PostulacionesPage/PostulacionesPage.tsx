@@ -42,7 +42,7 @@ const PostulacionesPage = () => {
         ? data.map((proyecto: any) => {
             const titulo: string = proyecto.camposExtra?.["Titulo del proyecto"] || "Sin título"
             const descripcion: string =
-              proyecto.camposExtra?.["Problemática Detectada (Diagnostico)"] || "Sin descripción"
+              proyecto.camposExtra?.["Descripcion"] || "Sin descripción"
             const autor: string = proyecto.autor || "Autor desconocido"
             const invitados: string[] = Array.isArray(proyecto.invitados)
               ? proyecto.invitados.map((i: any) => i.nombre || i)

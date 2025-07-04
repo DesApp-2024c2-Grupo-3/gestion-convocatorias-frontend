@@ -34,7 +34,19 @@ const FormCrearFormato = ({ setFormato, setTipoFormulario, setNombreFormato }: C
     } = useForm<NuevoFormatoValues>({
         resolver: zodResolver(nuevoFormatoSchema),
         defaultValues: {
-            nombreDelFormato: ""
+            nombreDelFormato: "",
+            campos: [
+                {
+                    nombreDelCampo: "Titulo del proyecto",
+                    tipo: "texto",
+                    maxNumeroDeCaracteres: 100
+                },
+                {
+                    nombreDelCampo: "Descripcion",
+                    tipo: "texto",
+                    maxNumeroDeCaracteres: 300
+                }
+            ]
         }
     });
 
