@@ -1,7 +1,7 @@
 import React from "react";
 import { useLoginForm } from "@/hooks/userLoginForm";
 import { LoginPanel, LoginForm, RegisterForm, RecoverForm, RegisterPanel } from "@/components/molecules";
-import LoginTemplate from "@/components/templates/loginTemplate";
+import LoginTemplate from "@/components/templates/loginTemplate_";
 
 interface LoginContainerProps {
   leftPanel?: React.ReactNode;
