@@ -1,6 +1,6 @@
 import React from "react";
 import { Icon, Link, Panel } from "@/components/atoms";
-import './registerPanel_.scss';
+import './registerPanel.scss';
 import PersonIcon from '@mui/icons-material/Person2Rounded';
 import { gray100 } from '@/styles/colors';
 import useIsMobile from "@/hooks/useMobile";
