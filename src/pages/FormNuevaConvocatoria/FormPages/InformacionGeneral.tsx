@@ -43,7 +43,9 @@ const InformacionGeneral = ({ setStep, savedData, setData }: InformacionGeneralP
         dayjs()
     );
     const [fechaFinDayjs, setFechaFinDayjs] = useState<dayjs.Dayjs | null>(
-        dayjs()
+        savedData.fechaFin
+            ? dayjs(savedData.fechaFin)
+            : dayjs(savedData.fechaInicio ? savedData.fechaInicio : dayjs()).add(30, "day")
     );
 
     const onSubmit: SubmitHandler<InformacionGeneralValues> = (data) => {
