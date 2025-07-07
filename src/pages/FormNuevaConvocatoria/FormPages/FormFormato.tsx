@@ -6,7 +6,7 @@ import styles from "../../Home/formularios.module.css";
 import { btnVerdeUnahur, formatSelectorBtn, formNavAnteriorBtn, formNavSiguienteBtn } from "../../../components/CustomButton/buttonStyles";
 import { ArrowBack, ArrowForward } from "@mui/icons-material";
 import { IConvocatoria } from "../FormNuevaConvocatoria";
-import { Button, List, ListItem, ListItemButton, ListItemText, ListSubheader } from "@mui/material";
+import { Button, List, ListItem, ListItemButton, ListItemText, ListSubheader, Typography } from "@mui/material";
 import { getFormatos } from "../../../api/formatos.api";
 import { FormatoProps } from "../../Formatos/Formatos";
 import FormatoDialog from "../../../components/FormatoDialog/FormatoDialog";
@@ -39,7 +39,9 @@ const FormFormato = ({ setStep, savedData, setData }: FormFormatoProps) => {
             </div>
 
             {nombreFormato && (
-                <p>Formato actual: {nombreFormato}</p>
+                <Typography variant="body1" sx={{ mb: 2 }}>
+                    <strong>Formato actual:</strong> {nombreFormato}
+                </Typography>
             )}
 
             <hr />
@@ -101,38 +103,58 @@ const SelectorFormato = ({ setFormato, setTipoFormulario, setNombreFormato }: Se
     }, [])
 
     const formatos = listFormatos.length ? (
-        listFormatos.map((formato, index) => (
-            <ListItem key={index}>
-                <ListItemButton
-                    onClick={() => {
-                        setSelectedFormato(index)
-                        setFormato(formato._id.toString())
-                        setTipoFormulario(null)
-                        setNombreFormato(formato.nombreDelFormato)
-                    }}
-                    selected={selectedFormato === index}
-                    
-                    >
-                    <ListItemText primary={formato.nombreDelFormato} />
-                </ListItemButton>
-                <Button
-                    variant="outlined"
+        <List
+            sx={{
+                width: '100%',
+                backgroundColor: 'background.paper',
+                borderRadius: 2,
+                boxShadow: 1,
+                p: 1,
+                maxHeight: '40vh',
+                overflowY: 'auto'
+            }}
+            >
+            {listFormatos.map((formato, index) => (
+                <ListItem
+                key={index}
+                secondaryAction={
+                    <Button
+                    variant="contained"
                     sx={{
                         ...btnVerdeUnahur,
-                        borderRadius: '5px',
-                        padding: '5px 10px',
-                        fontSize: '0.8rem',
-                        margin: 0,
-                        color: 'white',
+                        fontSize: '0.75rem',
+                        padding: '4px 12px',
+                        borderRadius: '6px',
                     }}
                     onClick={() => {
                         setDataForFormatoDialog(formato)
                         setShowFormatoDialog(true)
                     }}
-                >Ver Formato</Button>
-            </ListItem>
-                
-        ))
+                    >
+                    Ver Formato
+                    </Button>
+                }
+                disablePadding
+                >
+                <ListItemButton
+                    selected={selectedFormato === index}
+                    onClick={() => {
+                    setSelectedFormato(index);
+                    setFormato(formato._id.toString());
+                    setTipoFormulario(null);
+                    setNombreFormato(formato.nombreDelFormato);
+                    }}
+                    sx={{
+                    borderRadius: 1,
+                    mx: 1,
+                    my: 0.5
+                    }}
+                >
+                    <ListItemText primary={formato.nombreDelFormato} />
+                </ListItemButton>
+                </ListItem>
+            ))}
+            </List>
     ) : (
         <>
             <div>
@@ -143,15 +165,16 @@ const SelectorFormato = ({ setFormato, setTipoFormulario, setNombreFormato }: Se
 
     return (
         <>
-            <h3>Seleccionar Formato</h3>
-
+            <Typography variant="h6" sx={{ mb: 2 }}>
+                Seleccionar Formato
+            </Typography>
             <List
                 sx={{
                     width: '100%',
                 }}
                 subheader={
                     <ListSubheader component="div" id="nested-list-subheader">
-                        Formatos
+                        Formatos disponibles
                     </ListSubheader>
                 }
             >
