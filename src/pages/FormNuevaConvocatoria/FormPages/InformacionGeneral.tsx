@@ -118,7 +118,7 @@ const InformacionGeneral = ({ setStep, savedData, setData }: InformacionGeneralP
                                     name="fechaInicio"
                                     label="Fecha de Inicio"
                                     value={fechaInicioDayjs}
-                                    minDateTime={dayjs().subtract(1, "day")}
+                                    minDateTime={dayjs(fechaInicioDayjs)}
                                     onChange={(newValue) => {
                                         setFechaInicioDayjs(newValue);
                                         if (newValue) {
@@ -153,9 +153,9 @@ const InformacionGeneral = ({ setStep, savedData, setData }: InformacionGeneralP
                                     className="date-time-picker"
                                     name="fechaFin"
                                     label="Fecha Fin"
-                                    defaultValue={dayjs()}
-                                    value={fechaFinDayjs}
-                                    minDateTime={dayjs(fechaInicioDayjs)}
+                                    defaultValue={dayjs(fechaInicioDayjs).add(1, "month")}
+                                    value={dayjs(fechaInicioDayjs).add(1, "month")}
+                                    minDateTime={dayjs(fechaInicioDayjs).add(1, "day")}
                                     onChange={(newValue) => {
                                         setFechaFinDayjs(newValue);
                                         if (newValue) {
