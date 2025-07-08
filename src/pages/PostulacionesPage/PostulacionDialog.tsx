@@ -65,7 +65,6 @@ interface ProyectoDetalle {
   titulo: string
   descripcion: string
   autor: string
-  autor_email: string
   invitados: string[]
   fechaCreacion: string
   camposExtra: Record<string, any>
@@ -339,11 +338,11 @@ const PostulacionDialog: React.FC<PostulacionDialogProps> = ({ open, onClose, pr
                         fontWeight: "bold",
                       }}
                     >
-                      {proyecto.autor_email.charAt(0).toUpperCase()}
+                      {proyecto.autor.charAt(0).toUpperCase()}
                     </Box>
                     <Box>
                       <Typography variant="body1" fontWeight="medium">
-                        {proyecto.autor_email}
+                        {proyecto.autor}
                       </Typography>
                       <Typography variant="caption" color="text.secondary">
                         Responsable Principal
