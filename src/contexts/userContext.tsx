@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { Buffer } from "buffer";
 
 interface Cv {
@@ -28,36 +28,33 @@ export const UserContext = createContext<UserContextProps>({
   cerrarSesion: () => {},
 });
 
+
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
-  const [usuario, setUsuario] = useState<Usuario | null>(() => {
-    const usuarioGuardado = sessionStorage.getItem("usuario");
-    return usuarioGuardado ? JSON.parse(usuarioGuardado) : null;
-  });
+    const [usuario, setUsuario] = useState<Usuario | null>(null);
 
-  const iniciarSesion = (usuario: Usuario) => {
-    const usuarioFormateado: Usuario = {
-      ...usuario,
-      cv: usuario.cv
-        ? {
-            ...usuario.cv,
-            contenido: Buffer.from(usuario.cv.contenido).toString('base64'),
-          }
-        : null,
+    useEffect(() => {
+        const usuarioGuardado = sessionStorage.getItem("usuario");
+        if (usuarioGuardado) {
+          setUsuario(JSON.parse(usuarioGuardado));
+        } else {
+          setUsuario(null);
+        }
+    }, []);
+
+    const iniciarSesion = (usuario: Usuario) => {
+        sessionStorage.setItem("usuario", JSON.stringify(usuario));
+        setUsuario(usuario);
     };
-  
-    setUsuario(usuarioFormateado);
-    sessionStorage.setItem("usuario", JSON.stringify(usuarioFormateado));
-  };
 
-  const cerrarSesion = () => {
-    setUsuario(null);
-    sessionStorage.removeItem("usuario");
-    sessionStorage.removeItem("token")
-  };
+    const cerrarSesion = () => {
+        sessionStorage.removeItem("usuario");
+        sessionStorage.removeItem("token");
+        setUsuario(null);
+    };
 
-  return (
-    <UserContext.Provider value={{ usuario, iniciarSesion, cerrarSesion }}>
-      {children}
-    </UserContext.Provider>
-  );
+    return (
+      <UserContext.Provider value={{ usuario, iniciarSesion, cerrarSesion }}>
+          {children}
+      </UserContext.Provider>
+    );
 };

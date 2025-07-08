@@ -9,12 +9,12 @@ type RequireRoleProps = {
 
 export const ControlDeAcceso = ({ rolesPermitidos, children }: RequireRoleProps) => {
 
-        const { usuario } = React.useContext(UserContext);
-        if (!usuario) {
-            return <Navigate to="/Login"/>
-        }
+    const { usuario } = React.useContext(UserContext);
+    if (!usuario) {
+        return <Navigate to="/Login"/>
+    }
 
-        return FunctionControlDeAcceso(rolesPermitidos, usuario.roles) ? <>{children}</> : null
+    return FunctionControlDeAcceso(rolesPermitidos, usuario.roles) ? <>{children}</> : null
 }
 
 export const FunctionControlDeAcceso = (rolesPermitidos: string[], rolesDeUsuario: string[]) => {

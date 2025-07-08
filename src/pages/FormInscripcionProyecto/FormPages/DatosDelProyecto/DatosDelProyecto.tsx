@@ -16,6 +16,7 @@ import {
     Breadcrumbs,
     Typography,
 } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 interface Props {
     irSiguiente: (n: number) => void;
@@ -50,7 +51,7 @@ const DatosDelProyecto = ({
 
     const onSubmit = (data: Record<string, string>) => {
         setDatosDelFormulario(prev => ({
-            ...prev,
+            ...prev,    
             camposExtra: {
                 ...data
             }
@@ -110,12 +111,9 @@ const DatosDelProyecto = ({
 
             <div className={styles["nav-btn-group"]}>
                 <Button
-                    sx={formNavAnteriorBtn}
-                    onClick={() => irAtras(1)}
-                    startIcon={<ArrowBack />}
-                >
-                    Anterior
-                </Button>
+                    sx={{ ...formNavAnteriorBtn, color: 'white' }}
+                    component={Link} to='/Convocatorias'
+                ><ArrowBack />Anterior</Button>
 
                 <CustomButton
                     nombre="Siguiente"

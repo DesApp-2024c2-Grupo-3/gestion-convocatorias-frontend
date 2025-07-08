@@ -115,7 +115,6 @@ const FormatoCard = ({ _id, nombreDelFormato, campos }: FormatoProps) => {
                 showDialogState={{ showFormatoDialog, setShowFormatoDialog }}
             />
         </>
-
     )
 }
 

@@ -6,24 +6,37 @@ import {
     informacionGeneralSchema,
     InformacionGeneralValues,
 } from "../schemas/informacionGeneralSchema";
-
 import dayjs from "dayjs";
-import { FormHelperText, TextField } from "@mui/material";
+import {
+    Box,
+    Grid,
+    TextField,
+    Typography,
+    FormHelperText,
+    Divider,
+} from "@mui/material";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
-
-import styles from "../../Home/formularios.module.css";
 import { CustomButton } from "../../../components/CustomButton/CustomButtons";
 import { ArrowBack, ArrowForward } from "@mui/icons-material";
-import { formNavAnteriorBtn, formNavSiguienteBtn } from "../../../components/CustomButton/buttonStyles";
+import {
+    formNavAnteriorBtn,
+    formNavSiguienteBtn,
+} from "../../../components/CustomButton/buttonStyles";
 import { IConvocatoria } from "../FormNuevaConvocatoria";
+
+import styles from "../../Home/formularios.module.css";
 
 interface InformacionGeneralProps {
     setStep: (step: number) => void;
-    savedData: IConvocatoria
+    savedData: IConvocatoria;
     setData: (data: IConvocatoria) => void;
 }
 
-const InformacionGeneral = ({ setStep, savedData, setData }: InformacionGeneralProps) => {
+const InformacionGeneral = ({
+    setStep,
+    savedData,
+    setData,
+}: InformacionGeneralProps) => {
     const {
         control,
         handleSubmit,
@@ -34,163 +47,179 @@ const InformacionGeneral = ({ setStep, savedData, setData }: InformacionGeneralP
             titulo: savedData.titulo || "",
             descripcion: savedData.descripcion || "",
             fechaInicio: savedData.fechaInicio || new Date(),
-            fechaFin: savedData.fechaFin || new Date(),
+            fechaFin: savedData.fechaFin || dayjs().add(1, "month").toDate(),
         },
         resolver: zodResolver(informacionGeneralSchema),
     });
 
-    const [fechaInicioDayjs, setFechaInicioDayjs] = useState<dayjs.Dayjs | null>(
-        dayjs()
+    const [fechaInicioDayjs, setFechaInicioDayjs] = useState<dayjs.Dayjs>(
+        dayjs(savedData.fechaInicio || new Date())
     );
-    const [fechaFinDayjs, setFechaFinDayjs] = useState<dayjs.Dayjs | null>(
+    const [fechaFinDayjs, setFechaFinDayjs] = useState<dayjs.Dayjs>(
         savedData.fechaFin
             ? dayjs(savedData.fechaFin)
-            : dayjs(savedData.fechaInicio ? savedData.fechaInicio : dayjs()).add(30, "day")
+            : dayjs(savedData.fechaInicio || dayjs()).add(30, "day")
     );
 
     const onSubmit: SubmitHandler<InformacionGeneralValues> = (data) => {
-        console.log(data);
         setData({ ...savedData, ...data });
         setStep(2);
     };
 
     return (
-        <>
-            <h2>Informacion General</h2>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                {/*     INPUT TITULO     */}
-                <div className={styles['input-field']}>
+        <Box component="form" onSubmit={handleSubmit(onSubmit)} px={3} py={2}>
+            <Typography variant="h5" mb={2}>
+                Información General
+            </Typography>
+
+            <Grid container spacing={3}>
+                {/* TÍTULO */}
+                <Grid item xs={12}>
                     <Controller
                         name="titulo"
                         control={control}
                         render={({ field }) => (
                             <TextField
                                 {...field}
-                                id="titulo"
-                                label="Titulo"
-                                variant="outlined"
-                                //helperText={errors.titulo ? false : "Por favor, ingrese el titulo/nombre de la convocatoria"}
-                                helperText="Por favor, ingrese el titulo/nombre de la convocatoria"
-                                error={!!errors.titulo}
+                                label="Título"
                                 fullWidth
+                                error={!!errors.titulo}
+                                helperText={
+                                    errors.titulo?.message || "Ingrese el título de la convocatoria"
+                                }
                             />
                         )}
                     />
-                    <FormHelperText className={styles['mensaje-error']} error id="titulo">
-                        {errors.titulo?.message}
-                    </FormHelperText>
-                </div>
+                </Grid>
 
-                {/*     INPUT DESCRIPCION     */}
-                <div className={styles['input-field']}>
+                {/* DESCRIPCIÓN */}
+                <Grid item xs={12}>
                     <Controller
                         name="descripcion"
                         control={control}
                         render={({ field }) => (
                             <TextField
                                 {...field}
-                                id="descripcion"
-                                label="Descripcion"
-                                variant="outlined"
-                                helperText="Por favor, ingrese una descripcion de la convocatoria"
-                                error={!!errors.descripcion}
-                                multiline
+                                label="Descripción"
                                 fullWidth
+                                multiline
+                                error={!!errors.descripcion}
+                                helperText={
+                                    errors.descripcion?.message || "Describa brevemente la convocatoria"
+                                }
                             />
                         )}
                     />
-                    <FormHelperText className={styles['mensaje-error']} error id="descripcion">
-                        {errors.descripcion?.message}
-                    </FormHelperText>
-                </div>
+                </Grid>
+            </Grid>
 
-                <h2>Periodo de Inscripcion a la Convocatoria</h2>
-                {/*     INPUT FECHA INICIO     */}
-                <div className={styles['input-group']}>
-                    <div className={styles['input-field']}>
+            {/* FECHAS */}
+            <Box mt={4}>
+                <Typography variant="h6" mb={1}>
+                    Período de Inscripción a Convocatoria
+                </Typography>
+                <Divider sx={{ mb: 2 }} />
+
+                <Grid container spacing={3}>
+                    {/* Fecha de Inicio */}
+                    <Grid item xs={12} md={6}>
                         <Controller
                             name="fechaInicio"
                             control={control}
                             render={({ field }) => (
                                 <DateTimePicker
                                     {...field}
-                                    className="date-time-picker"
-                                    name="fechaInicio"
                                     label="Fecha de Inicio"
                                     value={fechaInicioDayjs}
-                                    minDateTime={dayjs(fechaInicioDayjs)}
+                                    minDateTime={dayjs()}
                                     onChange={(newValue) => {
-                                        setFechaInicioDayjs(newValue);
                                         if (newValue) {
+                                            setFechaInicioDayjs(newValue);
+                                            setFechaFinDayjs(newValue.add(1, "month")); // autocalcular
                                             setValue("fechaInicio", newValue.toDate());
+                                            setValue("fechaFin", newValue.add(1, "month").toDate());
                                         }
                                     }}
-                                /* onError={(newError) => setError(newError)}
+                                    slotProps={{
+                                        textField: {
+                                            fullWidth: true,
+                                            error: !!errors.fechaInicio,
+                                            helperText:
+                                                errors.fechaInicio?.message,
+                                        },
+                                    }}
+                                />
+                            )}
+                        />
+                    </Grid>
+
+                    {/* Fecha de Fin */}
+                    <Grid item xs={12} md={6}>
+                        <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '112px' }}>
+                            <Controller
+                                name="fechaFin"
+                                control={control}
+                                render={({ field }) => (
+                                    <>
+                                        <DateTimePicker
+                                            {...field}
+                                            label="Fecha de Fin"
+                                            value={fechaFinDayjs}
+                                            minDateTime={fechaInicioDayjs.add(1, "day")}
+                                            onChange={(newValue) => {
+                                                if (newValue) {
+                                                    setFechaFinDayjs(newValue);
+                                                    setValue("fechaFin", newValue.toDate());
+                                                }
+                                            }}
                                             slotProps={{
-                                              textField: {
-                                              helperText: errorMessage,
-                                              },
-                                            }} */
-                                />
-                            )}
-                        />
-                        <FormHelperText id="fechaInicio">
-                            Fecha de inicio del periodo de Inscripcion
-                        </FormHelperText>
-                        <FormHelperText className={styles['mensaje-error']} error id="fechaInicio">
-                            {errors.fechaInicio?.message}
-                        </FormHelperText>
-                    </div>
+                                                textField: {
+                                                    fullWidth: true,
+                                                    error: !!errors.fechaFin,
+                                                    helperText: null,
+                                                },
+                                            }}
+                                        />
+                                        <Box
+                                            sx={{
+                                                minHeight: '1.5em',
+                                                mt: '4px',
+                                                ml: '14px',
+                                                fontSize: '0.8rem',
+                                                color: !!errors.fechaFin ? 'error.main' : 'text.secondary',
+                                            }}
+                                        >
+                                            {errors.fechaFin?.message}
+                                        </Box>
+                                    </>
+                                )}
+                            />
+                        </Box>
+                    </Grid>
+                </Grid>
+            </Box>
 
-                    {/*     INPUT FECHA FIN     */}
-                    <div className={styles['input-field']}>
-                        <Controller
-                            name="fechaFin"
-                            control={control}
-                            render={({ field }) => (
-                                <DateTimePicker
-                                    {...field}
-                                    className="date-time-picker"
-                                    name="fechaFin"
-                                    label="Fecha Fin"
-                                    defaultValue={dayjs(fechaInicioDayjs).add(1, "month")}
-                                    value={dayjs(fechaInicioDayjs).add(1, "month")}
-                                    minDateTime={dayjs(fechaInicioDayjs).add(1, "day")}
-                                    onChange={(newValue) => {
-                                        setFechaFinDayjs(newValue);
-                                        if (newValue) {
-                                            setValue("fechaFin", newValue.toDate());
-                                        }
-                                    }}
-                                />
-                            )}
-                        />
-                        <FormHelperText id="fechaInicio">
-                            Fecha de fin del periodo de Inscripcion
-                        </FormHelperText>
-                        <FormHelperText className={styles['mensaje-error']} error id="fechaFin">
-                            {errors.fechaFin?.message}
-                        </FormHelperText>
-                    </div>
-                </div>
-
-                <div className={styles['nav-btn-group']}>
-                    <CustomButton
-                        nombre="Salir"
-                        iconoIzquierdo={<ArrowBack />}
-                        style={formNavAnteriorBtn}
-                    />
-                    <CustomButton
-                        nombre="Siguiente"
-                        type="submit"
-                        iconoDerecho={<ArrowForward />}
-                        style={formNavSiguienteBtn}
-                    />
-                </div>
-            </form>
-        </>
+            {/* Botones */}
+            <Box
+                display="flex"
+                justifyContent="space-between"
+                mt={4}
+                className={styles["nav-btn-group"]}
+            >
+                <CustomButton
+                    nombre="Salir"
+                    iconoIzquierdo={<ArrowBack />}
+                    style={formNavAnteriorBtn}
+                />
+                <CustomButton
+                    nombre="Siguiente"
+                    type="submit"
+                    iconoDerecho={<ArrowForward />}
+                    style={formNavSiguienteBtn}
+                />
+            </Box>
+        </Box>
     );
 };
 
 export default InformacionGeneral;
-
