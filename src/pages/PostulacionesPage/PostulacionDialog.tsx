@@ -47,7 +47,7 @@ function TabPanel(props: TabPanelProps) {
       {...other}
       style={{
         padding: "16px 0",
-        height: "400px",
+        height: "100%",
         overflowY: "auto", // Scroll si el contenido es muy largo
       }}
     >
@@ -467,7 +467,7 @@ const PostulacionDialog: React.FC<PostulacionDialogProps> = ({ open, onClose, pr
                     <Grid item xs={12} sm={4}>
                       <Box sx={{ textAlign: "center" }}>
                         <Typography variant="h4" color="primary" fontWeight="bold">
-                          ${totalCapital}
+                          ${totalCapital.toLocaleString()}
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
                           Gastos de Capital
@@ -477,7 +477,7 @@ const PostulacionDialog: React.FC<PostulacionDialogProps> = ({ open, onClose, pr
                     <Grid item xs={12} sm={4}>
                       <Box sx={{ textAlign: "center" }}>
                         <Typography variant="h4" color="secondary" fontWeight="bold">
-                          ${totalCorrientes}
+                          ${totalCorrientes.toLocaleString()}
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
                           Gastos Corrientes
@@ -487,7 +487,7 @@ const PostulacionDialog: React.FC<PostulacionDialogProps> = ({ open, onClose, pr
                     <Grid item xs={12} sm={4}>
                       <Box sx={{ textAlign: "center" }}>
                         <Typography variant="h4" color="success.main" fontWeight="bold">
-                          ${totalGeneral}
+                          ${totalGeneral.toLocaleString()}
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
                           Total General
@@ -537,7 +537,7 @@ const PostulacionDialog: React.FC<PostulacionDialogProps> = ({ open, onClose, pr
 
                     <Box sx={{ mt: 2, pt: 2, borderTop: 1, borderColor: "divider" }}>
                       <Typography variant="h6" sx={{ textAlign: "right", color: "#1976d2" }}>
-                        Subtotal Gastos de Capital: ${totalCapital}
+                        Subtotal Gastos de Capital: ${totalCapital.toLocaleString()}
                       </Typography>
                     </Box>
                   </Paper>
@@ -583,7 +583,7 @@ const PostulacionDialog: React.FC<PostulacionDialogProps> = ({ open, onClose, pr
 
                     <Box sx={{ mt: 2, pt: 2, borderTop: 1, borderColor: "divider" }}>
                       <Typography variant="h6" sx={{ textAlign: "right", color: "#7b1fa2" }}>
-                        Subtotal Gastos Corrientes: ${totalCorrientes}
+                        Subtotal Gastos Corrientes: ${totalCorrientes.toLocaleString()}
                       </Typography>
                     </Box>
                   </Paper>
