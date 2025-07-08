@@ -6,6 +6,7 @@ import { Box, Breadcrumbs, Grid, Link, Link as MuiLink, Paper, Skeleton, Typogra
 import NavigateNextIcon from "@mui/icons-material/NavigateNext"
 import { Container } from "@mui/material";
 import { CustomButton } from "@/components/CustomButton/CustomButtons";
+import LoadingSpinner from "@/components/molecules/loadingSpinner";
 
 interface Convocatoria {
     _id: string
@@ -25,6 +26,8 @@ const ConvocatoriasPage = () => {
     useEffect(() => {
         const getConvocatoria = async () => {
             setLoading(true)
+
+            console.log("Cargando convocatorias")
             try {
                 const data = await getConvocatorias();
                 if (Array.isArray(data)) {
@@ -41,21 +44,7 @@ const ConvocatoriasPage = () => {
     }, [])
 
     if (loading) {
-        return (
-            <Container maxWidth="lg" sx={{ py: 4 }}>
-                <Box sx={{ mb: 3 }}>
-                    <Skeleton variant="text" width={300} height={40} />
-                    <Skeleton variant="text" width={200} />
-                </Box>
-                <Grid container spacing={3}>
-                    {[1, 2, 3, 4].map((item: number) => (
-                        <Grid item xs={12} md={6} key={item}>
-                            <Skeleton variant="rectangular" height={300} />
-                        </Grid>
-                    ))}
-                </Grid>
-            </Container>
-        )
+        return (<LoadingSpinner />)
     }
 
     if (error) {
