@@ -119,9 +119,6 @@ const PostulacionesCard = (props: Props) => {
             </Grid>
         </CardContent>
         <CardActions sx={{ justifyContent: "flex-end", pt: 0 }}>
-            <IconButton size="small" title="Descargar información">
-            <DownloadIcon fontSize="small" />
-            </IconButton>
             <CustomButton 
                 nombre="Ver detalles" 
                 iconoIzquierdo={<VisibilityIcon />} 
