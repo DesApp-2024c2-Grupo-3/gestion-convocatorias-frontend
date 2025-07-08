@@ -1,10 +1,12 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Avatar, IconButton, Menu, MenuItem, Tooltip, Typography } from "@mui/material";
 import { UserContext } from "@/contexts/userContext";
+import LogoutSpinner from "@/components/molecules/logoutSpinner";
 
 const UserDropdown = () => {
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+    const [cerrando, setCerrando] = useState(false);
 
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElUser(event.currentTarget);
@@ -22,6 +24,14 @@ const UserDropdown = () => {
     const navigateMiPerfil = () => {
         navigate("/mi-perfil");
     };
+
+    const handleCerrarSesion = () => {
+        setCerrando(true);
+        setTimeout(() => {
+          cerrarSesion();
+          navigate("/login", { replace: true });
+        }, 1500);
+      };
 
     return (
         <>
@@ -51,11 +61,10 @@ const UserDropdown = () => {
                 }}  
             >
                 <MenuItem onClick={navigateMiPerfil}>Mi Perfil</MenuItem>
-                <MenuItem onClick={() => {
-                    cerrarSesion();
-                    navigate("/login", { replace: true });
-                }}>Cerrar Sesión</MenuItem>
+                <MenuItem onClick={handleCerrarSesion}>Cerrar Sesión</MenuItem>
             </Menu>
+
+            {cerrando && <LogoutSpinner />}
         </>
     );
 };

@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { useLoginForm } from "@/hooks/userLoginForm";
 import { LoginPanel, LoginForm, RegisterForm, RecoverForm, RegisterPanel } from "@/components/molecules";
 import LoginTemplate from "@/components/templates/loginTemplate";
+import LoadingSpinner from "@/components/molecules/loadingSpinner";
+
 
 interface LoginContainerProps {
   leftPanel?: React.ReactNode;
@@ -28,12 +30,40 @@ const LoginContainer = ({ leftPanel: leftPanelProp, rightForm: rightFormProp }: 
     handleRegistrarUsuario
   } = useLoginForm();
 
+  const [loading, setLoading] = React.useState(false);
   
   const leftPanel = leftPanelProp !== undefined
     ? leftPanelProp
     : (formMode === "register"
         ? <RegisterPanel onLogin={showLogin} />
         : <LoginPanel onRegister={showRegister} />);
+
+  const handleLogin = async (e: React.FormEvent) => {
+    setLoading(true);
+    try {
+      await ingresarLogin(e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleRegister = async (e: React.FormEvent) => {
+    setLoading(true);
+    try {
+      await handleRegistrarUsuario(e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleRecover = async (e: React.FormEvent) => {
+    setLoading(true);
+    try {
+      await handleRecuperarContrasenia(e);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const rightForm = rightFormProp !== undefined
     ? rightFormProp
@@ -44,7 +74,7 @@ const LoginContainer = ({ leftPanel: leftPanelProp, rightForm: rightFormProp }: 
             errors={errors}
             onEmailChange={(e) => setEmail(e.target.value)}
             onPasswordChange={(e) => setPassword(e.target.value)}
-            onSubmit={ingresarLogin}
+            onSubmit={handleLogin}
             onForgotPassword={showRecover}
             onRegister={showRegister}
           />
@@ -53,7 +83,7 @@ const LoginContainer = ({ leftPanel: leftPanelProp, rightForm: rightFormProp }: 
             email={email}
             errors={errors}
             onEmailChange={(e) => setEmail(e.target.value)}
-            onSubmit={handleRecuperarContrasenia}
+            onSubmit={handleRecover}
             onLogin={showLogin}
           />
         : <RegisterForm
@@ -66,11 +96,14 @@ const LoginContainer = ({ leftPanel: leftPanelProp, rightForm: rightFormProp }: 
             onEmailChange={(e) => setEmail(e.target.value)}
             onPasswordChange={(e) => setPassword(e.target.value)}
             onPasswordConfirmChange={(e) => setPasswordConfirm(e.target.value)}
-            onSubmit={handleRegistrarUsuario}
+            onSubmit={handleRegister}
           />);
 
   return (
-    <LoginTemplate leftPanel={leftPanel} rightForm={rightForm} />
+    <>
+      {loading && <LoadingSpinner />}
+      <LoginTemplate leftPanel={leftPanel} rightForm={rightForm} />
+    </>
   );
 };
 

@@ -6,3 +6,5 @@ export { default as RecoverForm } from './recoverForm/RecoverForm';
 export { default as DialogTitle } from './dialogTitle/';
 export { default as DialogAction } from './dialogAction';
 export { default as DialogContextConvocatoria } from './dialogContextConvocatoria';
+export { default as LoadingSpinner } from './loadingSpinner';
+export { default as LogoutSpinner } from './logoutSpinner';
