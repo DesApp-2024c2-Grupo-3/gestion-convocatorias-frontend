@@ -30,7 +30,7 @@ const MiPerfil: React.FC = () => {
       toast.success("Cuenta eliminada exitosamente");
       setTimeout(() => {
         cerrarSesion();
-        navigate("/Login");
+        navigate("/login");
       }, 2000);
     } catch (error) {
       toast.error(

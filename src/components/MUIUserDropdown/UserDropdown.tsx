@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { UserContext } from "@/contexts/userContext";
 import { Avatar, IconButton, Menu, MenuItem, Tooltip, Typography } from "@mui/material";
+import { UserContext } from "@/contexts/userContext";
 
 const UserDropdown = () => {
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
@@ -17,7 +17,7 @@ const UserDropdown = () => {
     const { usuario, cerrarSesion } = useContext(UserContext);
     const navigate = useNavigate();
     const navigateLogin = () => {
-        navigate("/Login");
+        navigate("/login");
     };
     const navigateMiPerfil = () => {
         navigate("/mi-perfil");
@@ -51,7 +51,10 @@ const UserDropdown = () => {
                 }}  
             >
                 <MenuItem onClick={navigateMiPerfil}>Mi Perfil</MenuItem>
-                <MenuItem onClick={navigateLogin}>Cerrar Sesión</MenuItem>
+                <MenuItem onClick={() => {
+                    cerrarSesion();
+                    navigate("/login", { replace: true });
+                }}>Cerrar Sesión</MenuItem>
             </Menu>
         </>
     );

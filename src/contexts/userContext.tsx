@@ -4,16 +4,16 @@ import { Buffer } from "buffer";
 interface Cv {
   nombre: string;
   tipo: string;
-  contenido: string
+  contenido: string;
 }
 
 interface Usuario {
-  _id: number,
+  _id: number;
   nombre: string;
   email: string;
   password: string;
   roles: string[];
-  cv: Cv | null
+  cv: Cv | null;
 }
 
 interface UserContextProps {
@@ -28,33 +28,33 @@ export const UserContext = createContext<UserContextProps>({
   cerrarSesion: () => {},
 });
 
-
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
-    const [usuario, setUsuario] = useState<Usuario | null>(null);
+  const [usuario, setUsuario] = useState<Usuario | null>(() => {
+    try {
+      const guardado = sessionStorage.getItem("usuario");
+      return guardado ? JSON.parse(guardado) : null;
+    } catch {
+      return null;
+    }
+  });
 
-    useEffect(() => {
-        const usuarioGuardado = sessionStorage.getItem("usuario");
-        if (usuarioGuardado) {
-          setUsuario(JSON.parse(usuarioGuardado));
-        } else {
-          setUsuario(null);
-        }
-    }, []);
+  const iniciarSesion = (usuario: Usuario) => {
+    console.log("iniciarSesion llamado con:", usuario);
+    sessionStorage.setItem("usuario", JSON.stringify(usuario));
+    setUsuario(usuario);
+  };
 
-    const iniciarSesion = (usuario: Usuario) => {
-        sessionStorage.setItem("usuario", JSON.stringify(usuario));
-        setUsuario(usuario);
-    };
+  const cerrarSesion = () => {
+    console.log("ANTES:", sessionStorage.getItem("usuario"));
+    sessionStorage.removeItem("usuario");
+    sessionStorage.removeItem("token");
+    console.log("DESPUÉS:", sessionStorage.getItem("usuario")); 
+    setUsuario(null);
+  };
 
-    const cerrarSesion = () => {
-        sessionStorage.removeItem("usuario");
-        sessionStorage.removeItem("token");
-        setUsuario(null);
-    };
-
-    return (
-      <UserContext.Provider value={{ usuario, iniciarSesion, cerrarSesion }}>
-          {children}
-      </UserContext.Provider>
-    );
+  return (
+    <UserContext.Provider value={{ usuario, iniciarSesion, cerrarSesion }}>
+      {children}
+    </UserContext.Provider>
+  );
 };
