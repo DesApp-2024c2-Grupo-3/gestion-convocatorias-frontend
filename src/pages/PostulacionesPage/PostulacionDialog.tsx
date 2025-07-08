@@ -24,6 +24,8 @@ import TitleIcon from "@mui/icons-material/Title"
 import ProblemIcon from "@mui/icons-material/ReportProblem"
 import TargetIcon from "@mui/icons-material/GpsFixed"
 import InfoIcon from "@mui/icons-material/Info"
+import AccountBalanceIcon from "@mui/icons-material/AccountBalance"
+import ReceiptLongIcon from "@mui/icons-material/ReceiptLong"
 import { CustomButton } from "../../components/CustomButton/CustomButtons"
 import { getProyectoPorId } from "../../api/proyectos.api"
 
@@ -70,6 +72,7 @@ interface ProyectoDetalle {
   camposExtra: Record<string, any>
   estado?: string
   categoria?: string
+  presupuesto?: Record<string, any>
 }
 
 // Función para obtener el icono apropiado según el campo
@@ -110,6 +113,16 @@ const getFieldColor = (fieldName: string) => {
   return "#56A42C"
 }
 
+function getGastos(obj: any, tipo: "gastosCapital" | "gastosCorrientes") {
+  if (!obj) return [];
+  return obj?.presupuesto?.[tipo] || [];
+}
+
+function calcularTotal(gastos: { coste: number }[] = []): number {
+  return gastos.reduce((total, item) => total + (item.coste || 0), 0);
+}
+
+
 const PostulacionDialog: React.FC<PostulacionDialogProps> = ({ open, onClose, proyectoId }) => {
   const [proyecto, setProyecto] = useState<ProyectoDetalle | null>(null)
   const [loading, setLoading] = useState<boolean>(false)
@@ -125,7 +138,6 @@ const PostulacionDialog: React.FC<PostulacionDialogProps> = ({ open, onClose, pr
 
       try {
         const data = await getProyectoPorId(proyectoId)
-        console.log("Datos del proyecto:", data) // Para debug
         setProyecto(data)
       } catch (err) {
         console.error("Error al obtener detalles del proyecto:", err)
@@ -141,6 +153,16 @@ const PostulacionDialog: React.FC<PostulacionDialogProps> = ({ open, onClose, pr
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue)
   }
+
+  const gastosCapital = getGastos(proyecto, "gastosCapital");
+  const gastosCorrientes = getGastos(proyecto, "gastosCorrientes");
+
+  console.log(gastosCapital)
+  console.log(gastosCorrientes)
+
+  const totalCapital = gastosCapital.length > 0 ? calcularTotal(gastosCapital) : 0;
+  const totalCorrientes = gastosCorrientes.length > 0 ? calcularTotal(gastosCorrientes) : 0;
+  const totalGeneral = totalCapital + totalCorrientes;
 
   if (!open) return null
 
@@ -200,7 +222,6 @@ const PostulacionDialog: React.FC<PostulacionDialogProps> = ({ open, onClose, pr
                   {proyecto.titulo}
                 </Typography>
               </Box>
-              {console.log(proyecto.camposExtra['Área de Investigación'])}
               <Grid container spacing={2} alignItems="center">
                 <Grid item xs={12} sm={6} md={4}>
                   <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -225,6 +246,7 @@ const PostulacionDialog: React.FC<PostulacionDialogProps> = ({ open, onClose, pr
               <Tabs value={tabValue} onChange={handleTabChange} aria-label="detalles del proyecto">
                 <Tab label="Información General" />
                 <Tab label="Equipo" />
+                <Tab label="Presupuesto" />
               </Tabs>
             </Box>
 
@@ -418,6 +440,169 @@ const PostulacionDialog: React.FC<PostulacionDialogProps> = ({ open, onClose, pr
                   >
                     <Typography variant="body2" color="text.secondary">
                       No hay miembros adicionales en el equipo
+                    </Typography>
+                  </Paper>
+                )}
+              </TabPanel>
+
+              <TabPanel value={tabValue} index={2}>
+                <Typography variant="h6" gutterBottom>
+                  Presupuesto del Proyecto
+                </Typography>
+
+                <Paper
+                  sx={{
+                    p: 3,
+                    mb: 3,
+                    backgroundColor: "#f8f9fa",
+                    borderLeft: 4,
+                    borderLeftColor: "#56A42C",
+                  }}
+                >
+                  <Typography variant="h6" gutterBottom sx={{ color: "#56A42C" }}>
+                    Resumen Presupuestario
+                  </Typography>
+
+                  <Grid container spacing={2}>
+                    <Grid item xs={12} sm={4}>
+                      <Box sx={{ textAlign: "center" }}>
+                        <Typography variant="h4" color="primary" fontWeight="bold">
+                          ${totalCapital}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          Gastos de Capital
+                        </Typography>
+                      </Box>
+                    </Grid>
+                    <Grid item xs={12} sm={4}>
+                      <Box sx={{ textAlign: "center" }}>
+                        <Typography variant="h4" color="secondary" fontWeight="bold">
+                          ${totalCorrientes}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          Gastos Corrientes
+                        </Typography>
+                      </Box>
+                    </Grid>
+                    <Grid item xs={12} sm={4}>
+                      <Box sx={{ textAlign: "center" }}>
+                        <Typography variant="h4" color="success.main" fontWeight="bold">
+                          ${totalGeneral}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          Total General
+                        </Typography>
+                      </Box>
+                    </Grid>
+                  </Grid>
+                </Paper>
+
+                {/* Gastos de Capital */}
+                {totalCapital > 0 && (
+                  <Paper
+                    sx={{
+                      p: 3,
+                      mb: 3,
+                      backgroundColor: "#e3f2fd",
+                      borderLeft: 4,
+                      borderLeftColor: "#1976d2",
+                    }}
+                  >
+                    <Typography variant="h6" gutterBottom sx={{ color: "#1976d2", display: "flex", alignItems: "center" }}>
+                      <AccountBalanceIcon sx={{ mr: 1 }} />
+                      Gastos de Capital
+                    </Typography>
+
+                    <Grid container spacing={2}>
+                      {gastosCapital.map((item: any, index: number) => (
+                        <Grid item xs={12} md={6} key={index}>
+                          <Card elevation={2} sx={{ height: "100%" }}>
+                            <CardContent>
+                              <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", mb: 1 }}>
+                                <Typography variant="h6" fontWeight="bold" sx={{ color: "#1976d2" }}>
+                                  {item.rubro}
+                                </Typography>
+                                <Typography variant="h5" color="primary" fontWeight="bold">
+                                  ${item.coste?.toLocaleString() || 0}
+                                </Typography>
+                              </Box>
+                              <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.5 }}>
+                                {item.descripcion}
+                              </Typography>
+                            </CardContent>
+                          </Card>
+                        </Grid>
+                      ))}
+                    </Grid>
+
+                    <Box sx={{ mt: 2, pt: 2, borderTop: 1, borderColor: "divider" }}>
+                      <Typography variant="h6" sx={{ textAlign: "right", color: "#1976d2" }}>
+                        Subtotal Gastos de Capital: ${totalCapital}
+                      </Typography>
+                    </Box>
+                  </Paper>
+                )}
+
+                {/* Gastos Corrientes */}
+                {totalCorrientes > 0 && (
+                  <Paper
+                    sx={{
+                      p: 3,
+                      mb: 3,
+                      backgroundColor: "#f3e5f5",
+                      borderLeft: 4,
+                      borderLeftColor: "#7b1fa2",
+                    }}
+                  >
+                    <Typography variant="h6" gutterBottom sx={{ color: "#7b1fa2", display: "flex", alignItems: "center" }}>
+                      <ReceiptLongIcon sx={{ mr: 1 }} />
+                      Gastos Corrientes
+                    </Typography>
+
+                    <Grid container spacing={2}>
+                      {gastosCorrientes.map((item: any, index: number) => (
+                        <Grid item xs={12} md={6} key={index}>
+                          <Card elevation={2} sx={{ height: "100%" }}>
+                            <CardContent>
+                              <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", mb: 1 }}>
+                                <Typography variant="h6" fontWeight="bold" sx={{ color: "#7b1fa2" }}>
+                                  {item.rubro}
+                                </Typography>
+                                <Typography variant="h5" color="secondary" fontWeight="bold">
+                                  ${item.coste?.toLocaleString() || 0}
+                                </Typography>
+                              </Box>
+                              <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.5 }}>
+                                {item.descripcion}
+                              </Typography>
+                            </CardContent>
+                          </Card>
+                        </Grid>
+                      ))}
+                    </Grid>
+
+                    <Box sx={{ mt: 2, pt: 2, borderTop: 1, borderColor: "divider" }}>
+                      <Typography variant="h6" sx={{ textAlign: "right", color: "#7b1fa2" }}>
+                        Subtotal Gastos Corrientes: ${totalCorrientes}
+                      </Typography>
+                    </Box>
+                  </Paper>
+                )}
+
+                {/* Mensaje si no hay presupuesto */}
+                {totalGeneral === 0  && (
+                  <Paper
+                    sx={{
+                      p: 4,
+                      textAlign: "center",
+                      backgroundColor: "#f5f5f5",
+                    }}
+                  >
+                    <Typography variant="h6" color="text.secondary" gutterBottom>
+                      No se ha especificado información de presupuesto
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      El proyecto no contiene detalles presupuestarios
                     </Typography>
                   </Paper>
                 )}
