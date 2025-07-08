@@ -200,13 +200,13 @@ const PostulacionDialog: React.FC<PostulacionDialogProps> = ({ open, onClose, pr
                   {proyecto.titulo}
                 </Typography>
               </Box>
-
+              {console.log(proyecto.camposExtra['Área de Investigación'])}
               <Grid container spacing={2} alignItems="center">
                 <Grid item xs={12} sm={6} md={4}>
                   <Box sx={{ display: "flex", alignItems: "center" }}>
                     <CategoryIcon fontSize="small" sx={{ color: "text.secondary", mr: 1 }} />
                     <Typography variant="body2" color="text.secondary">
-                      Categoría: {proyecto.categoria || "General"}
+                      Área de Investigación: {proyecto.camposExtra['Área de Investigación'] || "General"}
                     </Typography>
                   </Box>
                 </Grid>
