@@ -1,63 +1,75 @@
-import React, { useContext } from "react";
-import { Navigate, Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import React from "react";
+import { Routes, Route } from "react-router-dom";
 import Login from "@/pages/Login";
 import Home from "../pages/Home/home";
 import FormNuevaConvocatoria from "../pages/FormNuevaConvocatoria/FormNuevaConvocatoria";
 import Register from "../pages/Register/Register";
 import MiPerfil from "../pages/PerfilDeUsuario/MiPerfil";
-import ConvocatoriasPage from "../pages/ConvocatoriasPage/ConvocatoriasPage"
+import ConvocatoriasPage from "../pages/ConvocatoriasPage/ConvocatoriasPage";
 import Formatos from "../pages/Formatos/Formatos";
 import FormInscripcionProyectos from "../pages/FormInscripcionProyecto/FormInscripcionProyecto";
-import Usuarios from "../pages/Usuarios/Usuarios"
+import Usuarios from "../pages/Usuarios/Usuarios";
 import PrivateRoute from "../components/ControlDeAcceso/PrivateRoute";
 import PostulacionesPage from "../pages/PostulacionesPage/PostulacionesPage";
 
-
 export const ConvocatoriasRoutes = () => {
-    return (
-      <>
-        <Router>
-          <Routes>
-            <Route path="/" element={<Home />} >
-              <Route
-                  element={
-                      <PrivateRoute
-                          rolesPermitidos={["investigador","admin"]}
-                      />
-                  }
-              >
-                <Route path="/convocatorias" element={<ConvocatoriasPage />} />
-              </Route>
+  return (
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <PrivateRoute rolesPermitidos={["investigador", "admin", "super_admin"]}>
+            <Home />
+          </PrivateRoute>
+        }
+      >
+        <Route
+          path="convocatorias"
+          element={
+            <PrivateRoute rolesPermitidos={["investigador", "admin"]}>
+              <ConvocatoriasPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="convocatorias/:idConvocatoria/postulaciones"
+          element={
+            <PrivateRoute rolesPermitidos={["admin"]}>
+              <PostulacionesPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="formatos"
+          element={
+            <PrivateRoute rolesPermitidos={["admin"]}>
+              <Formatos />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="form"
+          element={
+            <PrivateRoute rolesPermitidos={["admin"]}>
+              <FormNuevaConvocatoria />
+            </PrivateRoute>
+          }
+        />
+        <Route path="convocatorias/:id/inscripcion/:formato" element={<FormInscripcionProyectos />} />
+        <Route
+          path="usuarios"
+          element={
+            <PrivateRoute rolesPermitidos={["super_admin"]}>
+              <Usuarios />
+            </PrivateRoute>
+          }
+        />
+      </Route>
 
-              <Route
-                  element={
-                      <PrivateRoute
-                          rolesPermitidos={["admin"]}
-                      />
-                  }
-              >
-                  <Route path="convocatorias/:idConvocatoria/postulaciones" element={<PostulacionesPage/>} />
-                  <Route path="formatos" element={<Formatos />} />
-                  <Route path="form" element={<FormNuevaConvocatoria />} /> 
-                  <Route path="/formatos" element={<Formatos />} />
-                  <Route path="/form" element={<FormNuevaConvocatoria />} />
-              </Route>
-                  <Route path="convocatorias/:id/inscripcion/:formato" element={<FormInscripcionProyectos />} />
-              <Route
-                  element={
-                      <PrivateRoute
-                          rolesPermitidos={["super_admin"]}
-                      />
-                  }
-              >
-                <Route path="/usuarios" element={<Usuarios />} />
-              </Route>
-            </ Route>
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/mi-perfil" element={<MiPerfil />} />
-          </Routes>
-        </Router>
-      </>
-    );
-}
+      {/* Rutas públicas */}
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/mi-perfil" element={<MiPerfil />} />
+    </Routes>
+  );
+};

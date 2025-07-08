@@ -8,7 +8,7 @@ const UserDropdown = () => {
   const navigate = useNavigate();
   const { usuario, cerrarSesion } = useContext(UserContext);
   const navigateLogin = () => {
-    navigate("/Login");
+    navigate("/login", { replace: true });
   };
   const navigateMiPerfil = () => {
     navigate("/mi-perfil");
@@ -21,12 +21,17 @@ const UserDropdown = () => {
         {usuario ? usuario.nombre : "Usuario"}{" "}
       </Dropdown.Toggle>
       <Dropdown.Menu>
-        {usuario ? (  //Mostrará el nombre de usuario.
+        {usuario ? (  
           <>
             {" "}
             
             <Dropdown.Item onClick={navigateMiPerfil}>Mi perfil</Dropdown.Item>
-            <Dropdown.Item onClick={cerrarSesion}>Cerrar Sesión</Dropdown.Item>
+            <Dropdown.Item onClick={() => {
+                cerrarSesion();
+                navigateLogin()
+              }}>
+                Cerrar Sesión
+            </Dropdown.Item>
           </>
         ) : (
           <Dropdown.Item onClick={navigateLogin}>Iniciar Sesión</Dropdown.Item>

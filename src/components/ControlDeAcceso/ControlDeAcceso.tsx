@@ -11,7 +11,7 @@ export const ControlDeAcceso = ({ rolesPermitidos, children }: RequireRoleProps)
 
     const { usuario } = React.useContext(UserContext);
     if (!usuario) {
-        return <Navigate to="/Login"/>
+        return <Navigate to="/login"/>
     }
 
     return FunctionControlDeAcceso(rolesPermitidos, usuario.roles) ? <>{children}</> : null

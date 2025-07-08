@@ -1,24 +1,27 @@
 import React, { useContext } from "react";
 import { Navigate, Outlet } from "react-router-dom";
-import { FunctionControlDeAcceso } from "./ControlDeAcceso";
 import { UserContext } from "@/contexts/userContext";
+import { FunctionControlDeAcceso } from "./ControlDeAcceso";
 
 interface PrivateRouteProps {
     rolesPermitidos: string[];
+    children?: React.ReactNode;
 }
 
-const PrivateRoute = ({ rolesPermitidos }: PrivateRouteProps) => {
+const PrivateRoute = ({ rolesPermitidos, children }: PrivateRouteProps) => {
     const { usuario } = useContext(UserContext);
+
     if (!usuario) {
-        return <Navigate to="/Login" replace/>;
+        return <Navigate to="/login" replace />;
     }
-    const tienePermiso = FunctionControlDeAcceso(rolesPermitidos, usuario.roles?? []);
+
+    const tienePermiso = FunctionControlDeAcceso(rolesPermitidos, usuario.roles);
 
     if (!tienePermiso) {
-        return <Navigate to="/Convocatorias" replace/>;
+        return <Navigate to="/login" replace />;
     }
 
-    return <Outlet />;
-}
+    return <>{children ?? <Outlet />}</>;
+};
 
 export default PrivateRoute;
