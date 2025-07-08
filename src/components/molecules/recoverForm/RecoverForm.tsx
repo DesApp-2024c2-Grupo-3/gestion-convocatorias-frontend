@@ -3,6 +3,7 @@ import { Input, Label, ErrorMessage, Link, Button } from "@/components/atoms";
 import './recoverForm.scss';
 import { Panel } from "@/components/atoms";
 import useIsMobile from "@/hooks/useMobile";
+import { blueButton } from "@/components/atoms/button/button.styles";
 
 interface RecoverFormProps {
     email: string;
@@ -38,9 +39,8 @@ const RecoverForm: React.FC<RecoverFormProps> = ({
                     />
                     {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
                 </div>
-                <Button type="submit" className="btn-login">
-                    Recuperar contraseña
-                </Button>
+                <Button type="submit" sx={blueButton} label="Recuperar contraseña" />
+
                 <div className="w-100 text-center">
                     <Link onClick={(e) => {
                         e.preventDefault();

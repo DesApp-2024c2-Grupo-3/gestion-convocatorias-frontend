@@ -3,6 +3,7 @@ import { Input, Label, ErrorMessage, Link, Button } from "@/components/atoms";
 import './registerForm.scss';
 import { Panel } from "@/components/atoms";
 import useIsMobile from "@/hooks/useMobile";
+import { blueButton } from "@/components/atoms/button/button.styles";
 
 interface RegisterFormProps {
   nombre: string;
@@ -86,9 +87,8 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
         </div>
 
 
-        <Button type="submit" className="btn-login">
-          Registrarse
-        </Button>
+        <Button type="submit" sx={blueButton} label="Registrarse" />
+
       </form>
     </Panel>
   );
