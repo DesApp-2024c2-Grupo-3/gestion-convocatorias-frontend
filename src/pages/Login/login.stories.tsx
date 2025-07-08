@@ -12,7 +12,7 @@ const mockUserContext = {
 };
 
 const meta: Meta<typeof Login> = {
-  title: 'Pages/login',
+  title: 'Pages/Login',
   component: Login,
   decorators: [
     (Story) => (
