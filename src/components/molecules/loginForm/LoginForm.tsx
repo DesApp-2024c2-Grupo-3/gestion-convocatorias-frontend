@@ -1,8 +1,8 @@
 import React from "react";
-import { Input, Label, ErrorMessage, Link, Button } from "@/components/atoms";
-import './loginForm.scss';
-import { Panel } from "@/components/atoms";
+import { Input, Label, ErrorMessage, Link, Button, Panel } from "@/components/atoms";
+import { Stack, Box } from "@mui/material";
 import useIsMobile from "@/hooks/useMobile";
+import { blueButton } from "@/components/atoms/button/button.styles";
 
 interface LoginFormProps {
   email: string;
@@ -31,42 +31,47 @@ const LoginForm: React.FC<LoginFormProps> = ({
 
   return (
     <Panel borderRadius={isMobile ? "0 0 10px 10px" : "0 10px 10px 0"}>
-      <form className="login-form" onSubmit={onSubmit}>
-        <div className="login-form-inputs">
-          <Label htmlFor="email" className="form-label">
-            Email
-          </Label>
-          <Input
-            type="text"
-            id="email"
-            value={email}
-            onChange={onEmailChange}
+      <Box component="form" className="login-form" onSubmit={onSubmit}>
+        <Stack spacing={4}>
+          <div>
+            <Label htmlFor="email" className="form-label">
+              Email
+            </Label>
+            <Input
+              type="text"
+              id="email"
+              value={email}
+              onChange={onEmailChange}
+            />
+            {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
+          </div>
+          <div>
+            <Label htmlFor="password" className="form-label">
+              Contraseña
+            </Label>
+            <Input
+              type="password"
+              id="password"
+              value={password}
+              onChange={onPasswordChange}
+            />
+            {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
+          </div>
+          <Button
+            type="submit"
+            sx={blueButton}
+            label="Ingresar"
           />
-          {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
-
-          <Label htmlFor="password" className="form-label">
-            Contraseña
-          </Label>
-          <Input
-            type="password"
-            id="password"
-            value={password}
-            onChange={onPasswordChange}
-          />
-        </div>
-        {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
-        <Button type="submit" className="btn-login">
-          Ingresar
-        </Button>
-        <div className="w-100 text-center">
-          <Link onClick={(e) => {
-            e.preventDefault();
-            onForgotPassword();
-          }}>
-            ¿Olvidaste tu contraseña?
-          </Link>
-        </div>
-      </form>
+          <Box textAlign="center">
+            <Link onClick={(e) => {
+              e.preventDefault();
+              onForgotPassword();
+            }}>
+              ¿Olvidaste tu contraseña?
+            </Link>
+          </Box>
+        </Stack>
+      </Box>
     </Panel>
   );
 };

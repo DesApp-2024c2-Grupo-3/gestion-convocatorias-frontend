@@ -1,26 +1,45 @@
-import React from "react";
-import "./button.scss";
+import React, { MouseEventHandler } from "react";
+import { Button as MuiButton } from "@mui/material";
+import { SxProps } from "@mui/system";
 
-interface ButtonProps {
-    children?: React.ReactNode;
-    className?: string;
-    type?: "button" | "submit" | "reset";
+export interface ButtonProps {
+  label: string;
+  sx?: SxProps;
+  type?: "button" | "submit" | "reset";
+  onClick?: MouseEventHandler;
+  startIcon?: React.ReactNode;
+  endIcon?: React.ReactNode;
+  disabled?: boolean;
+  component?: React.ElementType;
+  to?: string;
 }
 
-const Button: React.FC<ButtonProps> = ({ 
-    children, 
-    className = "btn-login", 
-    type = "button",
-}) => {
-
-    return (
-        <button
-            type={type}
-            className={className}
-        >
-            {children}
-        </button>
-    );
-};
+const Button: React.FC<ButtonProps> = ({
+  label,
+  sx,
+  type = "button",
+  onClick,
+  startIcon,
+  endIcon,
+  disabled = false,
+  component,
+  to,
+  ...rest
+}) => (
+  <MuiButton
+    variant="contained"
+    sx={sx}
+    type={type}
+    onClick={onClick}
+    startIcon={startIcon}
+    endIcon={endIcon}
+    disabled={disabled}
+    {...(component ? { component } : {})}
+    {...(to ? { to } : {})}
+    {...rest}
+  >
+    {label}
+  </MuiButton>
+);
 
 export default Button;

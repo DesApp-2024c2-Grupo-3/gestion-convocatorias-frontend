@@ -3,3 +3,6 @@ export { default as LoginForm } from './loginForm';
 export { default as LoginPanel } from './loginPanel/LoginPanel';
 export { default as RegisterForm } from './registerForm';
 export { default as RecoverForm } from './recoverForm/RecoverForm';
+export { default as DialogTitle } from './dialogTitle/';
+export { default as DialogAction } from './dialogAction';
+export { default as DialogContextConvocatoria } from './dialogContextConvocatoria';
