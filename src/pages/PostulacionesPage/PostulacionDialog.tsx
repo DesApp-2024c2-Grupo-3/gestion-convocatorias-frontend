@@ -157,9 +157,6 @@ const PostulacionDialog: React.FC<PostulacionDialogProps> = ({ open, onClose, pr
   const gastosCapital = getGastos(proyecto, "gastosCapital");
   const gastosCorrientes = getGastos(proyecto, "gastosCorrientes");
 
-  console.log(gastosCapital)
-  console.log(gastosCorrientes)
-
   const totalCapital = gastosCapital.length > 0 ? calcularTotal(gastosCapital) : 0;
   const totalCorrientes = gastosCorrientes.length > 0 ? calcularTotal(gastosCorrientes) : 0;
   const totalGeneral = totalCapital + totalCorrientes;
