@@ -4,9 +4,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useState } from "react";
 import { postConvocatoria } from "../../../api/convocatorias.api";
 import { IConvocatoria } from "../FormNuevaConvocatoria";
-import styles from "../../Home/formularios.module.css";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { Typography, Box, Button, FormHelperText } from "@mui/material";
+import UploadFileIcon from "@mui/icons-material/UploadFile";
 
 interface FormArchivosProps {
     savedData: IConvocatoria;
@@ -21,60 +22,134 @@ const FormArchivos = ({ savedData }: FormArchivosProps) => {
         resolver: zodResolver(fileSchema),
     });
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const [fileName, setFileName] = useState<string>("");
 
     const onSubmit: SubmitHandler<FileValues> = async (data) => {
-        const newData = {...savedData, archivo: data.file}
+        const newData = { ...savedData, archivo: data.file };
 
         const formData = new FormData();
-        formData.append('titulo', newData.titulo)
-        formData.append('descripcion', newData.descripcion)
-        formData.append('fechaInicio', newData.fechaInicio.toISOString())
-        formData.append('fechaFin', newData.fechaFin.toISOString())
-        formData.append('formato', newData.formato)
-        formData.append('archivo', newData.archivo)
-        
-        const response = await postConvocatoria(formData)
+        formData.append("titulo", newData.titulo);
+        formData.append("descripcion", newData.descripcion);
+        formData.append("fechaInicio", newData.fechaInicio.toISOString());
+        formData.append("fechaFin", newData.fechaFin.toISOString());
+        formData.append("formato", newData.formato);
+        formData.append("archivo", newData.archivo);
+
+        const response = await postConvocatoria(formData);
         console.log(response);
     };
 
-    function handleConvocatoriaSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    handleSubmit(
-        (data) => {
-            toast.success("Convocatoria creada correctamente");
-            onSubmit(data);
-            navigate("/Convocatorias")
-        },
-        (formErrors) => {
-            toast.error("Ocurrió un error al crear la convocatoria");
-            console.error(formErrors);
-        }
-    )();
-}
+    const handleConvocatoriaSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        handleSubmit(
+            (data) => {
+                toast.success("Convocatoria creada correctamente");
+                onSubmit(data);
+                navigate("/Convocatorias");
+            },
+            (formErrors) => {
+                toast.error("Ocurrió un error al crear la convocatoria");
+                console.error(formErrors);
+            }
+        )();
+    };
 
     return (
-        <>
-            <h2>Subir archivos</h2>
-            <form onSubmit={handleConvocatoriaSubmit}>
-                <Controller
-                    name="file"
-                    control={control}
-                    render={({ field: { onChange, ref } }) => (
-                        <input
-                            ref={ref}
-                            type="file"
-                            accept=".pdf,.docx"
-                            onChange={(e) => {
-                                onChange(e.target.files?.[0]); // Guardar solo el primer archivo
+        <Box
+            component="form"
+            onSubmit={handleConvocatoriaSubmit}
+            sx={{
+                maxWidth: 500,
+                mx: "auto",
+                mt: 6,
+                p: 4,
+                borderRadius: 2,
+                backgroundColor: "#f9f9f9",
+                boxShadow: "0 2px 6px rgba(0,0,0,0.05)",
+            }}
+        >
+            <Typography
+                variant="h5"
+                gutterBottom
+                fontWeight="bold"
+                sx={{ mb: 3, color: "#2c3e50" }}
+            >
+                Subir archivo de convocatoria
+            </Typography>
+
+            <Controller
+                name="file"
+                control={control}
+                render={({ field: { onChange, ref } }) => (
+                    <>
+                        <Button
+                            variant="outlined"
+                            component="label"
+                            fullWidth
+                            sx={{
+                                color: "#3498db",
+                                borderColor: "#3498db",
+                                "&:hover": {
+                                    backgroundColor: "#eaf6fd",
+                                    borderColor: "#3498db",
+                                },
+                                mb: 2,
                             }}
-                        />
-                    )}
-                />
-                {typeof errors.file?.message === 'string' && <p style={{ color: "red" }}>{errors.file.message}</p>}
-                <button type="submit">Submit</button>
-            </form>
-        </>
+                            startIcon={<UploadFileIcon />}
+                        >
+                            Seleccionar archivo
+                            <input
+                                ref={ref}
+                                type="file"
+                                accept=".pdf,.docx"
+                                hidden
+                                onChange={(e) => {
+                                    const file = e.target.files?.[0];
+                                    if (file) {
+                                        setFileName(file.name);
+                                        onChange(file);
+                                    }
+                                }}
+                            />
+                        </Button>
+
+                        {fileName ? (
+                            <Typography
+                                variant="body2"
+                                sx={{ color: "#34495e", mb: 1, minHeight: "24px" }}
+                            >
+                                Archivo seleccionado: <strong>{fileName}</strong>
+                            </Typography>
+                            ) : (
+                            <Box sx={{ minHeight: "24px", mb: 1 }} />
+                        )}
+
+
+                        <Box sx={{ minHeight: "24px", mt: 1 }}>
+                            {typeof errors.file?.message === "string" && (
+                                <FormHelperText error>{errors.file.message}</FormHelperText>
+                            )}
+                        </Box>
+
+                    </>
+                )}
+            />
+
+            <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{
+                    mt: 3,
+                    backgroundColor: "#56A42C",
+                    color: "#fff",
+                    "&:hover": { backgroundColor: "#4a8e2e" },
+                }}
+            >
+                Crear convocatoria
+            </Button>
+        </Box>
     );
 };
 
