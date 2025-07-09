@@ -11,6 +11,7 @@ import { CustomButton } from "@/components/CustomButton/CustomButtons";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { primaryColor, secondaryColor } from "@/styles/colors";
+import { ControlDeAcceso } from "@/components/ControlDeAcceso/ControlDeAcceso";
 
 const MiPerfil: React.FC = () => {
   const { usuario, cerrarSesion } = useContext(UserContext);
@@ -84,8 +85,10 @@ const MiPerfil: React.FC = () => {
             {usuario?.nombre}
             <label className={styles["label"]}>Email:</label>
             {usuario?.email}
+            <ControlDeAcceso rolesPermitidos={["investigador"]}>
             <label className={styles["label"]}>CV:</label>
-            <CvUploader />            
+            <CvUploader />      
+            </ControlDeAcceso>      
             <label className={styles["label"]}>Nueva contraseña:</label>
             <input
               className={styles["input"]}

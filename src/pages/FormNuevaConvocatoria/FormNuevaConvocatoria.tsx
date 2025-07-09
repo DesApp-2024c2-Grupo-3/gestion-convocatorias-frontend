@@ -31,7 +31,7 @@ const FormNuevaConvocatoria = () => {
 
                 {step === 1 && <InformacionGeneral setStep={setStep} savedData={data} setData={setData} />}
                 {step === 2 && <FormFormato setStep={setStep} savedData={data} setData={setData} />}
-                {step === 3 && <FormArchivos savedData={data} />}
+                {step === 3 && <FormArchivos setStep={setStep} savedData={data} />}
                 <button onClick={() => console.log(data)}>show data</button>
             </div>
 

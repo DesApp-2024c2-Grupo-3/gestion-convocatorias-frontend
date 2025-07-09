@@ -1,5 +1,5 @@
 import { Alert, Button, TextField, Breadcrumbs, Typography, FormHelperText } from "@mui/material"
-import React, { forwardRef, useState } from "react"
+import React, { forwardRef, useContext, useState } from "react"
 import { type SubmitHandler, useFieldArray, useForm } from "react-hook-form"
 import DeleteIcon from "@mui/icons-material/Delete"
 import Box from "@mui/material/Box"
@@ -12,6 +12,9 @@ import { formNavAnteriorBtn, formNavSiguienteBtn } from "../../../components/Cus
 import { postProyecto } from "../../../api/proyectos.api"
 import { useNavigate, useParams } from "react-router-dom"
 import Snackbar from "@mui/material/Snackbar"
+import toast from "react-hot-toast"
+import { enviarCorreosMasivo } from "@/api/comunicacion.api"
+import { UserContext } from "@/contexts/userContext"
 
 const MuiAlert = forwardRef(function MuiAlert(props: any, ref) {
   return <Alert elevation={6} ref={ref} variant="filled" {...props} />
@@ -23,6 +26,15 @@ interface Props {
   datosDelFormulario: IFormularioInscripcion
   setDatosDelFormulario: (datos: IFormularioInscripcion) => void
   convocatoria: any
+}
+
+interface EmailDataObject {
+    fromEmail?: string;
+    toEmail: string;
+    toName: string;
+    subject?: string;
+    type?: string;
+    variables?: Record<string, any>;
 }
 
 type Presupuesto = {
@@ -40,6 +52,7 @@ function Presupuesto({ irSiguiente, irAtras, datosDelFormulario, setDatosDelForm
   const { id } = useParams()
   const [openSnackbar, setOpenSnackbar] = useState(false)
   const navigate = useNavigate()
+  const { usuario } = useContext(UserContext)
 
   const {
     register,
@@ -80,6 +93,44 @@ function Presupuesto({ irSiguiente, irAtras, datosDelFormulario, setDatosDelForm
       ...datosDelFormulario,
       presupuesto: data,
     })
+
+
+
+    const listaDeCorreos = datosDelFormulario.invitados;
+
+    toast.loading('Enviando invitaciones...');
+
+    try {
+      const emailsParaEnviar: EmailDataObject[] = listaDeCorreos.map(correo => ({
+        toEmail: correo,
+        toName: correo,
+        type: 'invitacion_grupo_convocatoria',
+        variables: {
+          nombreDelProyecto: convocatoria?.titulo,
+          descripcion: convocatoria?.descripcion,
+          fechaFin: convocatoria?.fechaFin,
+          remitenteEmail: usuario?.email,
+          remitenteNombre: usuario?.nombre,
+        }
+      }));
+
+      const payload = {
+        emails: emailsParaEnviar
+      };
+
+      await enviarCorreosMasivo(payload);
+
+      toast.dismiss();
+      toast.success('¡Invitaciones enviadas con éxito!');
+
+
+      irSiguiente(2);
+
+    } catch (error) {
+      toast.dismiss();
+      toast.error('No se pudieron enviar las invitaciones. Intenta de nuevo.');
+      console.error("Error en el envío de invitaciones:", error);
+    }
 
     if (id) {
       const datosParaEnviar = {
@@ -126,7 +177,7 @@ function Presupuesto({ irSiguiente, irAtras, datosDelFormulario, setDatosDelForm
                   placeholder="Rubro"
                   fullWidth
                   error={!!errors.gastosCapital?.[index]?.rubro}
-                  // Removemos helperText del TextField
+                // Removemos helperText del TextField
                 />
                 {/* Contenedor fijo para el mensaje de error */}
                 <Box sx={{ height: "20px", mt: 0.5 }}>
@@ -150,7 +201,7 @@ function Presupuesto({ irSiguiente, irAtras, datosDelFormulario, setDatosDelForm
                   type="number"
                   fullWidth
                   error={!!errors.gastosCapital?.[index]?.coste}
-                  // Removemos helperText del TextField
+                // Removemos helperText del TextField
                 />
                 {/* Contenedor fijo para el mensaje de error */}
                 <Box sx={{ height: "20px", mt: 0.5 }}>
@@ -180,7 +231,7 @@ function Presupuesto({ irSiguiente, irAtras, datosDelFormulario, setDatosDelForm
                 size="small"
                 placeholder="Descripción"
                 error={!!errors.gastosCapital?.[index]?.descripcion}
-                // Removemos helperText del TextField
+              // Removemos helperText del TextField
               />
               {/* Contenedor fijo para el mensaje de error */}
               <Box sx={{ height: "20px", mt: 0.5 }}>
@@ -218,7 +269,7 @@ function Presupuesto({ irSiguiente, irAtras, datosDelFormulario, setDatosDelForm
                   placeholder="Rubro"
                   fullWidth
                   error={!!errors.gastosCorrientes?.[index]?.rubro}
-                  // Removemos helperText del TextField
+                // Removemos helperText del TextField
                 />
                 {/* Contenedor fijo para el mensaje de error */}
                 <Box sx={{ height: "20px", mt: 0.5 }}>
@@ -242,7 +293,7 @@ function Presupuesto({ irSiguiente, irAtras, datosDelFormulario, setDatosDelForm
                   type="number"
                   fullWidth
                   error={!!errors.gastosCorrientes?.[index]?.coste}
-                  // Removemos helperText del TextField
+                // Removemos helperText del TextField
                 />
                 {/* Contenedor fijo para el mensaje de error */}
                 <Box sx={{ height: "20px", mt: 0.5 }}>
@@ -277,7 +328,7 @@ function Presupuesto({ irSiguiente, irAtras, datosDelFormulario, setDatosDelForm
                 size="small"
                 placeholder="Descripción"
                 error={!!errors.gastosCorrientes?.[index]?.descripcion}
-                // Removemos helperText del TextField
+              // Removemos helperText del TextField
               />
               {/* Contenedor fijo para el mensaje de error */}
               <Box sx={{ height: "20px", mt: 0.5 }}>

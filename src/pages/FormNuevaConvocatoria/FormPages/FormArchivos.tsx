@@ -6,14 +6,19 @@ import { postConvocatoria } from "../../../api/convocatorias.api";
 import { IConvocatoria } from "../FormNuevaConvocatoria";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { Typography, Box, Button, FormHelperText } from "@mui/material";
+import { Typography, Box, Button, FormHelperText, CardActionArea, CardActions } from "@mui/material";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
+import { Add, ArrowBack } from "@mui/icons-material";
+import { formNavAnteriorBtn, btnVerdeUnahur } from "@/components/CustomButton/buttonStyles";
+import { CustomButton } from "@/components/CustomButton/CustomButtons";
+import styles from "../../Home/formularios.module.css";
 
 interface FormArchivosProps {
     savedData: IConvocatoria;
+    setStep: (step: number) => void;
 }
 
-const FormArchivos = ({ savedData }: FormArchivosProps) => {
+const FormArchivos = ({ savedData, setStep }: FormArchivosProps) => {
     const {
         control,
         handleSubmit,
@@ -56,6 +61,7 @@ const FormArchivos = ({ savedData }: FormArchivosProps) => {
     };
 
     return (
+        <>
         <Box
             component="form"
             onSubmit={handleConvocatoriaSubmit}
@@ -121,7 +127,7 @@ const FormArchivos = ({ savedData }: FormArchivosProps) => {
                             >
                                 Archivo seleccionado: <strong>{fileName}</strong>
                             </Typography>
-                            ) : (
+                        ) : (
                             <Box sx={{ minHeight: "24px", mb: 1 }} />
                         )}
 
@@ -135,21 +141,31 @@ const FormArchivos = ({ savedData }: FormArchivosProps) => {
                     </>
                 )}
             />
-
-            <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{
-                    mt: 3,
-                    backgroundColor: "#56A42C",
-                    color: "#fff",
-                    "&:hover": { backgroundColor: "#4a8e2e" },
-                }}
+            <Box
+                display="flex"
+                mt={4}
+                className={styles["nav-btn-group"]}
             >
-                Crear convocatoria
-            </Button>
+
+                <CustomButton
+                    nombre="Anterior"
+                    iconoIzquierdo={<ArrowBack />}
+                    style={formNavAnteriorBtn}
+                    accion={() => setStep(2)}
+                />
+
+
+                <CustomButton
+                    nombre="Crear convocatoria"
+                    style={btnVerdeUnahur}
+                    type="submit"
+                    iconoIzquierdo={<Add />}
+                />
+            </Box>
+            
         </Box>
+        
+            </>
     );
 };
 

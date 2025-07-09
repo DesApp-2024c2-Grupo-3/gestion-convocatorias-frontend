@@ -3,13 +3,14 @@ import FormCrearFormato from "./FormCrearFormato";
 import { CustomButton } from "../../../components/CustomButton/CustomButtons";
 
 import styles from "../../Home/formularios.module.css";
-import { btnVerdeUnahur, formatSelectorBtn, formNavAnteriorBtn, formNavSiguienteBtn } from "../../../components/CustomButton/buttonStyles";
+import { btnAzulUnahur, btnVerdeUnahur, formatSelectorBtn, formNavAnteriorBtn, formNavSiguienteBtn } from "../../../components/CustomButton/buttonStyles";
 import { ArrowBack, ArrowForward } from "@mui/icons-material";
 import { IConvocatoria } from "../FormNuevaConvocatoria";
 import { Button, List, ListItem, ListItemButton, ListItemText, ListSubheader, Typography } from "@mui/material";
 import { getFormatos } from "../../../api/formatos.api";
 import { FormatoProps } from "../../Formatos/Formatos";
 import FormatoDialog from "../../../components/FormatoDialog/FormatoDialog";
+import { ToyBrick } from "lucide-react";
 
 interface FormFormatoProps {
     setStep: (step: number) => void;
@@ -21,10 +22,13 @@ const FormFormato = ({ setStep, savedData, setData }: FormFormatoProps) => {
     const [tipoFormulario, setTipoFormulario] = useState<JSX.Element | null>(null);
     const [formato, setFormato] = useState<string | null>(null);
     const [nombreFormato, setNombreFormato] = useState<string|null>(null)
+    const [errors, setErrors] = useState<string|null>(null)
 
     return (
         <>
-            <h2>Formato de convocatoria</h2>
+            <Typography variant="h5">
+                Formato de convocatoria
+            </Typography>
             <div className={styles["btn-select-formato-group"]}>
                 <CustomButton
                     nombre="Seleccionar Formato"
@@ -58,10 +62,10 @@ const FormFormato = ({ setStep, savedData, setData }: FormFormatoProps) => {
                 <CustomButton
                     nombre="Siguiente"
                     iconoDerecho={<ArrowForward />}
-                    style={formNavSiguienteBtn}
+                    style={formNavAnteriorBtn}
                     accion={() => {
                         if (!formato) {
-                            alert("Por favor seleccione o cree un formato")
+                            alert("Por favor, seleccione o cree un formato")
                         } else {
                             setStep(3)
                             setData({ ...savedData, formato })

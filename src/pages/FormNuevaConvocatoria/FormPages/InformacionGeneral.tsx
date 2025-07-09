@@ -215,7 +215,7 @@ const InformacionGeneral = ({
                     nombre="Siguiente"
                     type="submit"
                     iconoDerecho={<ArrowForward />}
-                    style={formNavSiguienteBtn}
+                    style={formNavAnteriorBtn}
                 />
             </Box>
         </Box>

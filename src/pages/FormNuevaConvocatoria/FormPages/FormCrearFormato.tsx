@@ -212,6 +212,10 @@ const FormCrearFormato = ({
                                                     field.onChange(parseInt(e.target.value) || 0)
                                                 }
                                                 disabled={esFijo}
+                                                error={!!(errors.campos?.[index] as any)?.maxNumeroDeCaracteres}
+                                            helperText={
+                                                (errors.campos?.[index] as any)?.maxNumeroDeCaracteres?.message
+                                            }
                                             />
                                         )}
                                     />
@@ -229,6 +233,10 @@ const FormCrearFormato = ({
                                                 fullWidth
                                                 onBlur={(e) => onOptionsBlur(e, index)}
                                                 disabled={esFijo}
+                                                error={!!(errors.campos?.[index] as any)?.opciones}
+                                            helperText={
+                                                (errors.campos?.[index] as any)?.opciones?.message
+                                            }
                                             />
                                         )}
                                     />

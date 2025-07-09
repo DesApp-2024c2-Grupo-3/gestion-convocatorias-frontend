@@ -33,6 +33,7 @@ export const formNavAnteriorBtn = {
 };
 
 export const formatSelectorBtn = {
+    ...btnAzulUnahur,
     width: "45%",
     margin: "1em"
 };

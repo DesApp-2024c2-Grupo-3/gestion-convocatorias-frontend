@@ -22,16 +22,22 @@ export const nuevoFormatoSchema = z.object({
     nombreDelFormato: z.string().min(1, "El nombre del formato es obligatorio"),
     campos: z.array(z.discriminatedUnion('tipo',[
         z.object({
-            nombreDelCampo: z.string(),
+            nombreDelCampo: z.string().min(1,{
+                message: "El nombre del campo es obligatorio"
+            }),
             tipo: z.literal("selector"),
-            opciones: z.array(z.string())
+            opciones: z.array(z.string()).min(2, {
+                message: "Debe haber al menos dos opciones"
+            })
         }),
         z.object({
             nombreDelCampo: z.string().min(1,{
                 message: "El nombre del campo es obligatorio"
             }),
             tipo: z.literal("texto"),
-            maxNumeroDeCaracteres: z.number()
+            maxNumeroDeCaracteres: z.number().gt(10, {
+                message: "El número máximo de caracteres debe ser mayor a 10"
+            })
         })
     ])).min(1, { message: "Debe haber al menos un campo" })
 });

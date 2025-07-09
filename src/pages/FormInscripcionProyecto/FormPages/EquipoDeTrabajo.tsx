@@ -97,6 +97,7 @@ const EquipoDeTrabajo = ({ irSiguiente, datosDelFormulario, setDatosDelFormulari
 
 
     const onSubmit: SubmitHandler<EquipoDeTrabajoValues> = async (data) => {
+        {/*
         const listaDeCorreos = data.invitados.map((i) => i.invitado);
         const resultadoValidacion = validarYLimpiarCorreos(listaDeCorreos);
 
@@ -140,7 +141,21 @@ const EquipoDeTrabajo = ({ irSiguiente, datosDelFormulario, setDatosDelFormulari
             toast.dismiss();
             toast.error('No se pudieron enviar las invitaciones. Intenta de nuevo.');
             console.error("Error en el envío de invitaciones:", error);
+        }*/}
+
+        const listaDeCorreos = data.invitados.map((i) => i.invitado);
+        const resultadoValidacion = validarYLimpiarCorreos(listaDeCorreos);
+
+        const correosValidos = resultadoValidacion.data || [];
+        setDatosDelFormulario({ ...datosDelFormulario, invitados: correosValidos });
+
+        if (resultadoValidacion.status !== 'success') {
+            toast.error(resultadoValidacion.message || 'Por favor, revisa los correos ingresados.');
+            return;
         }
+
+        setDatosDelFormulario({ ...datosDelFormulario, invitados: correosValidos });
+        irSiguiente(2);
     }
 
     return (
