@@ -52,7 +52,7 @@ const FormCrearFormato = ({
             nombreDelFormato: "",
             campos: [
                 {
-                    nombreDelCampo: "Titulo del proyecto",
+                    nombreDelCampo: "Titulo del Proyecto",
                     tipo: "texto",
                     maxNumeroDeCaracteres: 100,
                 },
