@@ -97,51 +97,6 @@ const EquipoDeTrabajo = ({ irSiguiente, datosDelFormulario, setDatosDelFormulari
 
 
     const onSubmit: SubmitHandler<EquipoDeTrabajoValues> = async (data) => {
-        {/*
-        const listaDeCorreos = data.invitados.map((i) => i.invitado);
-        const resultadoValidacion = validarYLimpiarCorreos(listaDeCorreos);
-
-        if (resultadoValidacion.status !== 'success') {
-            toast.error(resultadoValidacion.message || 'Por favor, revisa los correos ingresados.');
-            return;
-        }
-
-        const correosValidos = resultadoValidacion.data || [];
-        setDatosDelFormulario({ ...datosDelFormulario, invitados: correosValidos });
-
-        toast.loading('Enviando invitaciones...');
-     
-        try {
-            const emailsParaEnviar: EmailDataObject[] = correosValidos.map(correo => ({
-                toEmail: correo,
-                toName: correo,
-                type: 'invitacion_grupo_convocatoria',
-                variables: {
-                    nombreDelProyecto: convocatoria?.titulo,
-                    descripcion: convocatoria?.descripcion,
-                    fechaFin: convocatoria?.fechaFin,
-                    remitenteEmail: usuario?.email,
-                    remitenteNombre: usuario?.nombre,
-                }
-            }));
-
-            const payload = {
-                emails: emailsParaEnviar
-            };
-
-            await enviarCorreosMasivo(payload);
-
-            toast.dismiss();
-            toast.success('¡Invitaciones enviadas con éxito!');
-
-
-            irSiguiente(2);
-
-        } catch (error) {
-            toast.dismiss();
-            toast.error('No se pudieron enviar las invitaciones. Intenta de nuevo.');
-            console.error("Error en el envío de invitaciones:", error);
-        }*/}
 
         const listaDeCorreos = data.invitados.map((i) => i.invitado);
         const resultadoValidacion = validarYLimpiarCorreos(listaDeCorreos);

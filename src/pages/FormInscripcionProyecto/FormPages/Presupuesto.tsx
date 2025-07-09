@@ -123,9 +123,6 @@ function Presupuesto({ irSiguiente, irAtras, datosDelFormulario, setDatosDelForm
       toast.dismiss();
       toast.success('¡Invitaciones enviadas con éxito!');
 
-
-      irSiguiente(2);
-
     } catch (error) {
       toast.dismiss();
       toast.error('No se pudieron enviar las invitaciones. Intenta de nuevo.');
@@ -140,11 +137,12 @@ function Presupuesto({ irSiguiente, irAtras, datosDelFormulario, setDatosDelForm
 
       try {
         await postProyecto(id, datosParaEnviar)
-        setOpenSnackbar(true)
+        toast.success("Postulación creada correctamente")
         setTimeout(() => {
           navigate("/Convocatorias", { state: { success: true } })
         }, 2000)
       } catch (error) {
+        toast.error("Ocurrió un error al crear la postulación")
         console.error("Error al enviar la solicitud:", error)
       }
     }
@@ -368,17 +366,6 @@ function Presupuesto({ irSiguiente, irAtras, datosDelFormulario, setDatosDelForm
             style={formNavSiguienteBtn}
           />
         </div>
-
-        <Snackbar
-          open={openSnackbar}
-          autoHideDuration={2000}
-          onClose={() => setOpenSnackbar(false)}
-          anchorOrigin={{ vertical: "top", horizontal: "center" }}
-        >
-          <MuiAlert severity="success" sx={{ width: "100%" }}>
-            Postulación enviada correctamente
-          </MuiAlert>
-        </Snackbar>
       </form>
     </>
   )
