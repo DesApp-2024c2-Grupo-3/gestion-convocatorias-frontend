@@ -60,11 +60,19 @@ Este sistema permite a investigadores, administradores y super administradores g
 - Node.js (versión 16 o superior)
 - npm o yarn
 
-### Pasos de Instalación
+### Backend
 
-1. **Clonar el repositorio**
+Este proyecto requiere un backend para funcionar correctamente. El backend debe estar ejecutándose antes de iniciar el frontend.
+
+**📁 Repositorio del Backend:** [gestion-convocatorias-backend](https://github.com/tu-usuario/gestion-convocatorias-backend)
+
+Sigue las instrucciones de instalación y configuración en el README del repositorio del backend.
+
+### Frontend
+
+1. **Clonar el repositorio del frontend**
    ```bash
-   git clone <url-del-repositorio>
+   git clone https://github.com/DesApp-2024c2-Grupo-3/gestion-convocatorias-frontend.git
    cd gestion-convocatorias-frontend
    ```
 
